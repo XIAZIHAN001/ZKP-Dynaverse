@@ -19,7 +19,7 @@ Protocols and data structures remain in Rust. Performance-sensitive operators re
 
 ## Validation status
 
-The latest adaptive bundle completed paired n=256/1024 experiments on an RTX 5070 Ti Laptop GPU (sm_120). Each size runs four large updates: two warmups followed by two measured updates. Every update checks Reference verification, proof/witness equality, and its work allowance.
+The initial public snapshot's adaptive bundle completed paired n=256/1024 experiments on an RTX 5070 Ti Laptop GPU (sm_120). Each size runs four large updates: two warmups followed by two measured updates. Every update checks Reference verification, proof/witness equality, and its work allowance.
 
 | n | Window | Baseline: two updates, s | Optimized bundle: two updates, s | Baseline / bundle |
 |---:|---:|---:|---:|---:|
@@ -28,7 +28,9 @@ The latest adaptive bundle completed paired n=256/1024 experiments on an RTX 507
 
 Both routes use the same window and inputs. Timing excludes readback calibration and external Reference verification. Ratios describe the combined configuration, not individual options. These are small local samples, **not H200 speedups, stable tail-latency estimates, or end-to-end speedups**.
 
-At n=256, the full bundle recorded 11 geometry-reuse hits; the separate geometry audit recorded five hits, and the separate linear audit passed. **The adaptive n=65536 H200 matrix has not been run.** See [validation boundaries](docs/VALIDATION.md), [raw events](experiments/adaptive-fullopt/fixtures/n256.log), and [structured results](docs/results/local-2026-10-22.json).
+At n=256, the full bundle recorded 11 geometry-reuse hits; the separate geometry audit recorded five hits, and the separate linear audit passed. See [validation boundaries](docs/VALIDATION.md), [raw events](experiments/adaptive-fullopt/fixtures/n256.log), and [initial structured results](docs/results/local-2026-10-22.json).
+
+Supplemental tests on 2026-10-22 passed all default GPU gates, 13 Python regressions, and a new n=1024 comparison, with a baseline/bundle ratio of 7.523 for the new sample. **H200 job 1157 is running the n=256/65536 matrix; final acceptance is pending.** The [bilingual supplemental report](docs/SUPPLEMENTAL_TESTS.md) records provenance, memory observations, and limits.
 
 ## Size-based strategy
 

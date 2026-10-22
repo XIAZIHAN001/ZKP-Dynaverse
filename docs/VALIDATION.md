@@ -22,7 +22,7 @@ Each size executes four paired large updates: two warmups and two measured updat
 
 ## What is not established / 尚未证明
 
-- The adaptive n=65536 H200 matrix has not run.
+- The adaptive n=256/65536 H200 matrix is running as job 1157; final acceptance is pending. See the dated [supplemental report](SUPPLEMENTAL_TESTS.md).
 - Two measured updates do not establish stable percentiles or statistical significance.
 - Same-window baseline/full comparisons do not isolate individual options or prove the window thresholds optimal.
 - Primitive readback calibration does not establish whole-update gains by itself.
@@ -30,6 +30,10 @@ Each size executes four paired large updates: two warmups and two measured updat
 - The current protocol is unmasked; these experiments do not establish complete zero knowledge or production security.
 
 本轮尚未完成65536规模H200验收，也不据本机小样本宣称尾延迟、单项贡献、全局最优窗口、整个进程的硬内存上界或完整零知识保证。
+
+The public checkout additionally passed all default GPU tests and a fresh n=1024 comparison; 13 Python acceptance regressions passed again. This does not include ignored experiments. Supplemental evidence is separate from the initial fixtures.
+
+公开checkout另已通过全部默认GPU测试和一次新的n=1024对照，13项Python验收回归再次通过；ignored专项不在其中。追加证据与初始fixture分别保存。
 
 ## Reproduction gates / 复现门禁
 

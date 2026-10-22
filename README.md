@@ -19,7 +19,7 @@
 
 ## 验证状态
 
-最近一次自适应组合在RTX 5070 Ti Laptop（sm_120）上完成n=256/1024对照。每档4次大批update，前2次预热、后2次计时；每步检查Reference验证、proof/witness一致性及work allowance。
+初始公开快照的自适应组合在RTX 5070 Ti Laptop（sm_120）上完成n=256/1024对照。每档4次大批update，前2次预热、后2次计时；每步检查Reference验证、proof/witness一致性及work allowance。
 
 | n | 窗口 | baseline两笔update合计/s | 优化组合两笔update合计/s | baseline/优化组合 |
 |---:|---:|---:|---:|---:|
@@ -28,7 +28,9 @@
 
 baseline与优化组合使用相同窗口和输入。时间排除读回校准及外部Reference验证；比值描述整个组合，不能归因于单个开关。这是少量本地样本，**不能外推为H200收益、稳定尾延迟或端到端加速**。
 
-n=256完整组合的geometry复用命中11次，独立geometry审计命中5次，独立linear审计通过。**自适应组合的n=65536 H200验收尚未执行**。详见[验证边界](docs/VALIDATION.md)、[原始事件](experiments/adaptive-fullopt/fixtures/n256.log)和[结构化结果](docs/results/local-2026-10-22.json)。
+n=256完整组合的geometry复用命中11次，独立geometry审计命中5次，独立linear审计通过。详见[验证边界](docs/VALIDATION.md)、[原始事件](experiments/adaptive-fullopt/fixtures/n256.log)和[初始结构化结果](docs/results/local-2026-10-22.json)。
+
+2026-10-22追加测试已通过全部默认GPU门禁、13项Python回归及n=1024新对照；新样本baseline/优化组合比值为7.523。**H200作业1157正在执行n=256/65536矩阵，最终验收待完成**。[双语追加测试说明](docs/SUPPLEMENTAL_TESTS.md)记录了测试来源、内存观测和限制。
 
 ## 按规模选择策略
 

@@ -1,0 +1,172 @@
+{
+  "as_of": "2026-10-22T22:27:18+08:00",
+  "tested_commit": "f55243b5f88b3449da44e485766e3f376c12e836",
+  "status": "LOCAL_PASS_H200_RUNNING",
+  "core_files_unchanged": 198,
+  "gpu_default_suite": {
+    "status": "PASS",
+    "exitcode": 0,
+    "seconds": 528.2839951000001,
+    "command": "cargo test --offline --locked --release -p dynaverse-gpu --features icicle -- --test-threads=1",
+    "raw_log_sha256": "6fd0f11a7cae56d48a89dfd656460fc86f717e7183826995464e36120a4fc529",
+    "native_library_sha256": "f879706fcee01e37719ad8e6c1f66ab68ad559719dd4b0441dd590b5f439d4fa",
+    "ignored_experiments_included": false
+  },
+  "python_acceptance": {
+    "commit": "f55243b5f88b3449da44e485766e3f376c12e836",
+    "exitcode": 0,
+    "tests": 13,
+    "seconds": 0.18568919999984246,
+    "log_sha256": "82d85cb3d1744ff04fcace9bf4d9045ee7bd9a496c4124c04e28a1797090200e"
+  },
+  "local_n1024": {
+    "status": "PASS",
+    "gpu": "RTX 5070 Ti Laptop / sm_120",
+    "command": "cargo run --offline --locked --release --manifest-path experiments/adaptive-fullopt/Cargo.toml -- fullopt-medium",
+    "fixture": "experiments/adaptive-fullopt/fixtures/n1024-supplement-20261022.log",
+    "fixture_sha256": "5e5020996e74a1263fa57281fb49f814760442452224f86fbeff9fdf34374490",
+    "performance": {
+      "setup_mode": "TableBatchNormalize+GpuFrobenius63",
+      "baseline_api": "IncrementalSession defaults + ForceGpu + same size-selected window",
+      "optimized_api": "IncrementalSession size-selected bundle + bounded decode + calibrated readback",
+      "cases": 1,
+      "measured_steps_per_route": 2,
+      "feature_audit_steps_n256": 12,
+      "matrix": [
+        {
+          "case": 0,
+          "n": 1024,
+          "setup_ns": 1501243613,
+          "baseline_initial_ns": 6068302735,
+          "optimized_initial_ns": 5426059933,
+          "baseline_update_ns": 37846863151,
+          "optimized_update_ns": 5031059455,
+          "baseline_over_optimized": 7.522642793137097,
+          "feature_counts": {
+            "cache_reused": 4,
+            "cache_reused_points": 4096,
+            "foreground_linear_reused": 4,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 638976,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 1600,
+            "support_geometry_reused": 0,
+            "transform_packet_calls": 48,
+            "transform_packet_elements": 77824
+          },
+          "observed": {
+            "linear_reused": false,
+            "frozen_linear_captured": true,
+            "foreground_linear_reused": true,
+            "global_g2_reused": true,
+            "support_geometry_reused": false,
+            "cache_reused": true,
+            "transform_packet_calls": 48,
+            "sparse_gpu_g1_points": 1600,
+            "sparse_cpu_g1_points": 0
+          },
+          "configuration": {
+            "bounded_g1_decode": true,
+            "device_affine_readback": true,
+            "foreground_linear_reuse": true,
+            "freeze_linear_capture_limit": 128,
+            "frozen_g2_reuse_limit": 128,
+            "linear_rebuild_reuse": true,
+            "native_limit_bytes": 2147483648,
+            "rebuild_cache_mode": "Product",
+            "rebuild_cache_readback_roots": 64,
+            "rebuild_prepared_cache_roots": 64,
+            "sparse": "ForceGpu",
+            "support_geometry_reuse": true,
+            "transform_packet_max_len": 4096,
+            "transform_row_batch": 16,
+            "unchanged_cache_reuse": true,
+            "undo_bytes": 67108864,
+            "window": 8
+          },
+          "extra_audit": {},
+          "readback_calibration": {
+            "bounded_g1_decode": true,
+            "cofactor_decode_points_per_call": 64,
+            "correct": true,
+            "device_affine_readback_selected": true,
+            "device_bounded_median_ns": 461447,
+            "device_d2h_bytes": 4096,
+            "full_decode_points_per_call": 0,
+            "host_bounded_median_ns": 1908965,
+            "host_d2h_bytes": 6144,
+            "kind": "fullopt_readback_calibration",
+            "n": 1024,
+            "points": 64,
+            "samples_per_route": 6,
+            "selection_margin_percent": 3
+          },
+          "cache_preparation": {
+            "baseline": null,
+            "optimized": {
+              "host_upper_bytes": 4755456,
+              "precompute_ns": 17613503,
+              "prepared_entries": 65,
+              "retained_bytes": 1610640,
+              "roots": 64
+            }
+          },
+          "resource": {
+            "baseline": {
+              "cache_preparation_host_bytes": 0,
+              "cache_readback_host_bytes": 0,
+              "frozen_linear_bytes": 0,
+              "global_g2_host_bytes": 0,
+              "resident_bytes": 109316320,
+              "transaction_bytes": 1507328,
+              "upper_bytes": 285212672,
+              "workspace_reserve": 268435456
+            },
+            "optimized": {
+              "cache_preparation_host_bytes": 4755456,
+              "cache_readback_host_bytes": 36864,
+              "frozen_linear_bytes": 16128,
+              "global_g2_host_bytes": 69632,
+              "resident_bytes": 110692576,
+              "transaction_bytes": 1507328,
+              "upper_bytes": 290090752,
+              "workspace_reserve": 268435456
+            }
+          }
+        }
+      ],
+      "raw_rows": 11
+    }
+  },
+  "h200": {
+    "job_id": "1157",
+    "status": "RUNNING",
+    "sizes": [
+      256,
+      65536
+    ],
+    "source_product_identity": "ccaad7db8397ad024f836460c4aec078d91ef7616989de24c8a6800ed4370218",
+    "session_archive_sha256": "cdcce55b45b9fb1ddd43f6172e14dbcb7e7036b33079ff6c533871ee60452d38",
+    "probe_sha256": {
+      "main.rs": "21e51149f94272649a9c7106678431c76c1d5a111a89a7e24636884246babe0f",
+      "strategy.rs": "f194b7824dc7a5f6631a3e40cb23f56b83ed980ca47976798139261c9686654c",
+      "readback.rs": "434ab1b6a09c4b92ef5193f51775586aec488f7f0d7762e03d4be4a38593e94a"
+    },
+    "snapshot_unix": 1792679236.5148935,
+    "resource_observations_bytes": {
+      "VmRSS_bytes": 1353699328,
+      "VmHWM_bytes": 1362759680,
+      "gpu_process_bytes": 2524971008
+    },
+    "resource_note": "5-second process samples. GPU maxima are lower bounds; observed VmHWM is the kernel host-RSS high-water mark, not a certified aggregate peak."
+  },
+  "cpu_workspace": {
+    "status": "PASS_PREVIOUS_SAME_COMMIT",
+    "rerun_in_this_supplement": false,
+    "raw_log_sha256": "aff29c2c086c251a911b229434f1ad104f48a74769d3c6ea311559d513b5b022"
+  }
+}
