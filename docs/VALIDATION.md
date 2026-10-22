@@ -6,6 +6,10 @@ The public fixtures contain unchanged JSON events and success markers from real 
 
 公开fixture保留了本机RTX 5070 Ti Laptop上n=256/1024实跑产生的原始JSON事件与成功标记，省略构建横幅和机器专用命令包装。结构化矩阵见`docs/results/local-2026-10-22.json`。
 
+H200 job 1157 additionally passed the complete adaptive n=256/65536 matrix with terminal state COMPLETED/0:0. The [H200 fixture](../experiments/adaptive-fullopt/fixtures/h200-20261022.log) preserves actual events; [supplemental results](results/supplemental-2026-10-22.json) record matrices, integrity bindings, and 821 process samples. The public probe files match the sealed remote inputs.
+
+H200作业1157另已通过n=256/65536完整自适应矩阵，终态COMPLETED/0:0。上述H200 fixture及追加结果保留真实事件、矩阵、完整性绑定和821次进程采样；公开探针文件与远端封包输入一致。
+
 Each size executes four paired large updates: two warmups and two measured updates. The n=256 run additionally executes twelve paired same-support updates and separate geometry/linear audits. Every update checks Reference verification, proof/witness equality, and work allowance.
 
 每档运行四次成对大批更新，两次预热、两次计时。n=256另有十二次成对同support更新，以及geometry/linear独立审计。每步均检查公开Reference、proof/witness一致性与work allowance。
@@ -22,14 +26,14 @@ Each size executes four paired large updates: two warmups and two measured updat
 
 ## What is not established / 尚未证明
 
-- The adaptive n=256/65536 H200 matrix is running as job 1157; final acceptance is pending. See the dated [supplemental report](SUPPLEMENTAL_TESTS.md).
+- The H200 acceptance covers this snapshot at n=256/65536; it does not establish larger-scale support or completion of every ignored experiment. See the [supplemental report](SUPPLEMENTAL_TESTS.md).
 - Two measured updates do not establish stable percentiles or statistical significance.
 - Same-window baseline/full comparisons do not isolate individual options or prove the window thresholds optimal.
 - Primitive readback calibration does not establish whole-update gains by itself.
 - Per-owner resource estimates and sampled maxima are not process-wide certified peaks.
 - The current protocol is unmasked; these experiments do not establish complete zero knowledge or production security.
 
-本轮尚未完成65536规模H200验收，也不据本机小样本宣称尾延迟、单项贡献、全局最优窗口、整个进程的硬内存上界或完整零知识保证。
+本轮已完成n=256/65536的H200验收；少量样本仍不足以宣称尾延迟、单项贡献、全局最优窗口、整个进程的硬内存上界或完整零知识保证。
 
 The public checkout additionally passed all default GPU tests and a fresh n=1024 comparison; 13 Python acceptance regressions passed again. This does not include ignored experiments. Supplemental evidence is separate from the initial fixtures.
 

@@ -30,7 +30,14 @@ Both routes use the same window and inputs. Timing excludes readback calibration
 
 At n=256, the full bundle recorded 11 geometry-reuse hits; the separate geometry audit recorded five hits, and the separate linear audit passed. See [validation boundaries](docs/VALIDATION.md), [raw events](experiments/adaptive-fullopt/fixtures/n256.log), and [initial structured results](docs/results/local-2026-10-22.json).
 
-Supplemental tests on 2026-10-22 passed all default GPU gates, 13 Python regressions, and a new n=1024 comparison, with a baseline/bundle ratio of 7.523 for the new sample. **H200 job 1157 is running the n=256/65536 matrix; final acceptance is pending.** The [bilingual supplemental report](docs/SUPPLEMENTAL_TESTS.md) records provenance, memory observations, and limits.
+Supplemental tests on 2026-10-22 passed all default GPU gates, 13 Python regressions, and a new n=1024 comparison, with a baseline/bundle ratio of 7.523 for the new sample. **H200 job 1157 completed the n=256/65536 matrix with terminal state COMPLETED/0:0; raw-event acceptance and integrity checks passed.**
+
+| H200 n | Window | Baseline: two updates, s | Bundle: two updates, s | Baseline / bundle |
+|---:|---:|---:|---:|---:|
+| 256 | 6 | 17.553499 | 2.116730 | 8.293 |
+| 65536 | 16 | 1254.203179 | 379.355222 | 3.306 |
+
+Each H200 size also has only two timed updates, excluding calibration and external Reference verification. These ratios do not establish end-to-end speedup or statistical significance. Across 821 process samples, no OOM occurred; observed host VmHWM was about 1.30 GiB and the largest GPU sample about 2.35 GiB, not certified resource peaks. The [bilingual supplemental report](docs/SUPPLEMENTAL_TESTS.md) and [H200 raw events](experiments/adaptive-fullopt/fixtures/h200-20261022.log) record actual hits, provenance, and limits.
 
 ## Size-based strategy
 
@@ -113,6 +120,6 @@ This public snapshot preserves core Rust/CUDA sources and omits machine-specific
 
 ## Next steps
 
-First complete n=65536 H200 acceptance, then collect more repeated samples and update shapes to evaluate window/readback choices. Further work can account for the actual update support and aggregate memory use. See the [roadmap](docs/ROADMAP.md).
+n=65536 H200 acceptance passed. Next, collect independent repeats and additional update shapes to evaluate window/readback choices, then account for actual update support and aggregate memory use. See the [roadmap](docs/ROADMAP.md).
 
 Pinned dependencies are recorded in [`env/versions.lock`](env/versions.lock). See [third-party references](THIRD_PARTY_NOTICES.md). No repository license has been selected yet.

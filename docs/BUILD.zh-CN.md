@@ -128,4 +128,4 @@ python3 -B -c 'from pathlib import Path; from analysis import analyze_log; print
 
 ICICLE使用架构`90`构建，加载`env/h200.env`，设置`ICICLE_LIB_DIR=/opt/icicle/arch90`，通过`bash scripts/build_native_icicle.sh h200`构建桥接库。构建Rust GPU目标前，设置`DYNAVERSE_NATIVE_LIB_DIR=/workspace/build/native-sm90`。
 
-请在自己的集群资源分配中调度`fullopt`矩阵。公开仓库不包含账户专用的SSH别名、Slurm目录和提交凭据。编译通过不等于H200实际运行通过；本轮自适应n=65536矩阵仍需在该硬件完成验收。
+请在自己的集群资源分配中调度`fullopt`矩阵。公开仓库不包含账户专用的SSH别名、Slurm目录和提交凭据。H200作业1157已对公开探针及对应核心源码完成n=256/65536验收，见[验收报告](SUPPLEMENTAL_TESTS.md)。在其他构建或硬件上复现仍需实际运行并核对原始事件。

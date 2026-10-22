@@ -1,14 +1,14 @@
 # 追加测试 / Supplemental tests
 
-状态截至北京时间2026-10-22 22:27；完整时间戳、命令与哈希见[结构化结果](results/supplemental-2026-10-22.json)。
+测试日期为2026-10-22（北京时间）；完整时间戳、命令与哈希见[结构化结果](results/supplemental-2026-10-22.json)。
 
-Status as of 2026-10-22 22:27 Asia/Shanghai. Exact timestamps, commands, and hashes are in the [structured results](results/supplemental-2026-10-22.json).
+Test date: 2026-10-22 Asia/Shanghai. Exact timestamps, commands, and hashes are in the [structured results](results/supplemental-2026-10-22.json).
 
 ## 已完成 / Completed
 
-测试代码提交为`f55243b5f88b3449da44e485766e3f376c12e836`。本次验证直接使用公开checkout；198个核心文件与源码清单一致。GPU运行链接已有的对应架构native库，库哈希在结果中记录，本次没有重新构建native库。
+公开测试代码提交为`f55243b5f88b3449da44e485766e3f376c12e836`。本地追加测试直接使用公开checkout，198个核心文件与源码清单一致；H200执行封包副本，已核对核心产品身份及三个探针文件与公开源对应。GPU运行链接已有的对应架构native库，库哈希在结果中记录，本次没有重新构建native库。
 
-The tested code commit is `f55243b5f88b3449da44e485766e3f376c12e836`. Tests used the public checkout; all 198 core files matched the source manifest. GPU runs linked the existing architecture-specific native library, whose hash is recorded. This supplement did not rebuild that library.
+The public tested code commit is `f55243b5f88b3449da44e485766e3f376c12e836`. Local supplemental tests used the public checkout; all 198 core files matched the source manifest. H200 executed a sealed deployment, with its core product identity and three probe files checked against the public source. GPU runs linked the existing architecture-specific native library, whose hash is recorded. This supplement did not rebuild that library.
 
 | 检查 / Gate | 结果 / Result |
 |---|---|
@@ -39,16 +39,36 @@ The run recorded frozen capture, foreground linear, global G2, and cache reuse; 
 
 The ratio describes only two timed updates and excludes calibration and external Reference verification. It does not establish end-to-end speedup, statistical significance, or H200 gains. [Raw events](../experiments/adaptive-fullopt/fixtures/n1024-supplement-20261022.log) retain the actual JSON events and final success marker.
 
-## H200进行中 / H200 in progress
+## H200验收通过 / H200 acceptance passed
 
-作业1157正在执行n=256/65536完整矩阵，尚未取得最终验收。n=256序列和独立审计已完成；n=65536已完成setup和读回校准，设备affine读回被选择，初始会话仍在构造。三个公开探针Rust文件与远端已封包输入逐字节一致。
+作业1157于北京时间2026-10-22 23:21:05结束，耗时1小时9分5秒，终态COMPLETED/0:0。n=256/65536完整矩阵及唯一最终成功标记通过；32份远端证据、237个源码文件、支持输入、原生库和探针二进制均完成完整性核对。产品210文件保持封存身份，三个公开Rust探针文件与远端输入相同。
 
-Job 1157 is running the complete n=256/65536 matrix; final acceptance is pending. The n=256 sequence and independent audits completed. n=65536 completed setup and readback calibration, selected device affine readback, and is constructing its initial sessions. The three public Rust probe files exactly match the sealed remote inputs.
+Job 1157 completed at 23:21:05 Asia/Shanghai on 2026-10-22 after 1:09:05, with terminal state COMPLETED/0:0. The complete n=256/65536 matrix and unique final success marker passed. Integrity checks verified 32 remote evidence files, 237 source files, support inputs, native libraries, and the probe binary. The 210 product files retained their sealed identity; the three public Rust probe files match the remote inputs.
 
-截至上述快照，未观察到OOM或校验失败；观测到的主机VmHWM约1.27 GiB，进程显存采样最大值约2.35 GiB。采样周期五秒，显存最大值是下界；这些值不是整个运行的认证峰值。2 GiB仍为单owner配额。
+每档四次成对更新，前两次预热、后两次计时。下表为后两次update的合计，排除读回校准和外部Reference验证；两路窗口及输入相同。
 
-No OOM or verification failure was observed as of this snapshot. Observed host VmHWM was about 1.27 GiB; the largest sampled process GPU allocation was about 2.35 GiB. GPU observations are five-second samples and lower bounds, not certified run-wide peaks. The 2 GiB quota remains per owner.
+Each size used four paired updates: two warmups and two timed updates. The table totals the two timed updates, excluding readback calibration and external Reference verification. Both routes used identical windows and inputs.
 
-只有终态COMPLETED/0:0、原始事件验收及完整性复核均通过后，才能把H200矩阵标为PASS。
+| H200 n | Window | Baseline total, s | Bundle total, s | Baseline / bundle |
+|---:|---:|---:|---:|---:|
+| 256 | 6 | 17.553499 | 2.116730 | 8.293 |
+| 65536 | 16 | 1254.203179 | 379.355222 | 3.306 |
 
-The H200 matrix can be marked PASS only after a COMPLETED/0:0 terminal state, raw-event acceptance, and integrity verification.
+| n | Frozen capture | Foreground linear | Global G2 | Cache reuse | Geometry hits | Packet calls | GPU sparse G1 points | CPU sparse fallback |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 256 | 4 | 16 | 4 | 4 | 11 | 48 | 2341 | 0 |
+| 65536 | 4 | 4 | 4 | 4 | 0 | 0 | 1600 | 0 |
+
+计数包含预热及n=256额外功能序列。n=256独立geometry审计命中5次，独立linear审计通过。n=65536采用分块row batch16，packet为0是规模策略的预期结果；该大批负载也不宣称geometry复用。设备affine读回在n=256关闭，在n=65536经真实64点校准后启用；两档均使用有界G1解码。
+
+Counts include warmups and the extra n=256 feature sequence. The separate n=256 geometry audit recorded five hits, and the independent linear audit passed. n=65536 used tiled transforms with row batch 16; zero packet calls are expected by policy. Its large-update workload does not establish geometry reuse. Device affine readback remained off at n=256 and was selected after actual 64-point calibration at n=65536. Both sizes used bounded G1 decoding.
+
+本次没有OOM或校验失败。821次五秒进程采样中，主机VmHWM为1,396,609,024字节（约1.30 GiB），显存采样最大值2,524,971,008字节（约2.35 GiB），采样器无错误。显存采样最大值是下界，VmHWM为观测到的内核RSS高水位；它们不是全进程所有资源的认证峰值。2 GiB限额属于单owner。n=65536事务需求模型为92 MiB，undo配置128 MiB，资源计划及实际运行均通过。
+
+No OOM or verification failure occurred. Across 821 five-second process samples, observed host VmHWM was 1,396,609,024 bytes (about 1.30 GiB), and the largest GPU sample was 2,524,971,008 bytes (about 2.35 GiB), with no sampler errors. GPU sample maxima are lower bounds; VmHWM is the observed kernel RSS high-water mark. Neither certifies aggregate resource peaks. The 2 GiB quota is per owner. At n=65536, the transaction model required 92 MiB and the configured undo arena was 128 MiB; resource checks and execution passed.
+
+每档只有两笔计时样本，不能据此宣称统计显著性、稳定尾延迟、每个开关的单项贡献或端到端加速。完整默认GPU测试是本地独立门禁，H200本批验收限定于上述矩阵，不包括所有ignored实验。
+
+Each size has only two timed samples. These do not establish statistical significance, stable tail latency, individual option contributions, or end-to-end speedup. The complete default GPU suite was a separate local gate; H200 acceptance covers this matrix, not every ignored experiment.
+
+[H200原始事件 / H200 raw events](../experiments/adaptive-fullopt/fixtures/h200-20261022.log) | [结构化结果 / Structured results](results/supplemental-2026-10-22.json)

@@ -1,7 +1,7 @@
 {
-  "as_of": "2026-10-22T22:27:18+08:00",
+  "as_of": "2026-10-22T23:31:27+08:00",
   "tested_commit": "f55243b5f88b3449da44e485766e3f376c12e836",
-  "status": "LOCAL_PASS_H200_RUNNING",
+  "status": "LOCAL_PASS_H200_PASS",
   "core_files_unchanged": 198,
   "gpu_default_suite": {
     "status": "PASS",
@@ -144,7 +144,7 @@
   },
   "h200": {
     "job_id": "1157",
-    "status": "RUNNING",
+    "status": "PASS",
     "sizes": [
       256,
       65536
@@ -156,13 +156,297 @@
       "strategy.rs": "f194b7824dc7a5f6631a3e40cb23f56b83ed980ca47976798139261c9686654c",
       "readback.rs": "434ab1b6a09c4b92ef5193f51775586aec488f7f0d7762e03d4be4a38593e94a"
     },
-    "snapshot_unix": 1792679236.5148935,
-    "resource_observations_bytes": {
-      "VmRSS_bytes": 1353699328,
-      "VmHWM_bytes": 1362759680,
-      "gpu_process_bytes": 2524971008
+    "resource_note": "5-second samples of the probe process. GPU sample maxima are lower bounds; VmHWM is the observed kernel host-RSS high-water mark. These are not certified aggregate peaks. The 2 GiB quota is per owner.",
+    "terminal": {
+      "state": "COMPLETED",
+      "exitcode": "0:0",
+      "success": true,
+      "started_at": "2026-10-22T22:12:00+08:00",
+      "completed_at": "2026-10-22T23:21:05+08:00",
+      "elapsed": "01:09:05"
     },
-    "resource_note": "5-second process samples. GPU maxima are lower bounds; observed VmHWM is the kernel host-RSS high-water mark, not a certified aggregate peak."
+    "environment": {
+      "gpu": "H200",
+      "compute_capability": "9.0",
+      "rust": "1.89.0",
+      "cuda": "12.9"
+    },
+    "fixture": "experiments/adaptive-fullopt/fixtures/h200-20261022.log",
+    "fixture_sha256": "039473f64f40d9b3e04c56c052110f6d60122b11c4d6332a580caf87d7c4c02f",
+    "performance": {
+      "setup_mode": "TableBatchNormalize+GpuFrobenius63",
+      "baseline_api": "IncrementalSession defaults + ForceGpu + same size-selected window",
+      "optimized_api": "IncrementalSession size-selected bundle + bounded decode + calibrated readback",
+      "cases": 2,
+      "measured_steps_per_route": 2,
+      "feature_audit_steps_n256": 12,
+      "matrix": [
+        {
+          "case": 0,
+          "n": 256,
+          "setup_ns": 108734249,
+          "baseline_initial_ns": 2291474042,
+          "optimized_initial_ns": 2263169245,
+          "baseline_update_ns": 17553499456,
+          "optimized_update_ns": 2116729836,
+          "baseline_over_optimized": 8.29274438214136,
+          "feature_counts": {
+            "cache_reused": 4,
+            "cache_reused_points": 1024,
+            "foreground_linear_reused": 16,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 159744,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 2341,
+            "support_geometry_reused": 11,
+            "transform_packet_calls": 48,
+            "transform_packet_elements": 19456
+          },
+          "observed": {
+            "linear_reused": false,
+            "frozen_linear_captured": true,
+            "foreground_linear_reused": true,
+            "global_g2_reused": true,
+            "support_geometry_reused": true,
+            "cache_reused": true,
+            "transform_packet_calls": 48,
+            "sparse_gpu_g1_points": 2341,
+            "sparse_cpu_g1_points": 0
+          },
+          "configuration": {
+            "bounded_g1_decode": true,
+            "device_affine_readback": false,
+            "foreground_linear_reuse": true,
+            "freeze_linear_capture_limit": 128,
+            "frozen_g2_reuse_limit": 128,
+            "linear_rebuild_reuse": true,
+            "native_limit_bytes": 2147483648,
+            "rebuild_cache_mode": "Product",
+            "rebuild_cache_readback_roots": 64,
+            "rebuild_prepared_cache_roots": 64,
+            "sparse": "ForceGpu",
+            "support_geometry_reuse": true,
+            "transform_packet_max_len": 4096,
+            "transform_row_batch": 16,
+            "unchanged_cache_reuse": true,
+            "undo_bytes": 67108864,
+            "window": 6
+          },
+          "extra_audit": {
+            "geometry_only": {
+              "audit": "geometry_only",
+              "case": 0,
+              "correct": true,
+              "hits": 5,
+              "kind": "fullopt_extra_audit",
+              "n": 256,
+              "sparse_cpu_g1_points": 0,
+              "sparse_gpu_g1_points": 375,
+              "support_geometry_builds": 0
+            },
+            "linear_only": {
+              "audit": "linear_only",
+              "case": 0,
+              "correct": true,
+              "kind": "fullopt_extra_audit",
+              "linear_reused": true,
+              "linear_skipped_g1_points": 39936,
+              "n": 256,
+              "sparse_cpu_g1_points": 0,
+              "sparse_gpu_g1_points": 75
+            }
+          },
+          "readback_calibration": {
+            "bounded_g1_decode": true,
+            "cofactor_decode_points_per_call": 64,
+            "correct": true,
+            "device_affine_readback_selected": false,
+            "device_bounded_median_ns": 257642,
+            "device_d2h_bytes": 4096,
+            "full_decode_points_per_call": 0,
+            "host_bounded_median_ns": 1641214,
+            "host_d2h_bytes": 6144,
+            "kind": "fullopt_readback_calibration",
+            "n": 256,
+            "points": 64,
+            "samples_per_route": 6,
+            "selection_margin_percent": 3
+          },
+          "cache_preparation": {
+            "baseline": null,
+            "optimized": {
+              "host_upper_bytes": 4755456,
+              "precompute_ns": 27909011,
+              "prepared_entries": 65,
+              "retained_bytes": 1610640,
+              "roots": 64
+            }
+          },
+          "resource": {
+            "baseline": {
+              "cache_preparation_host_bytes": 0,
+              "cache_readback_host_bytes": 0,
+              "frozen_linear_bytes": 0,
+              "global_g2_host_bytes": 0,
+              "resident_bytes": 102975712,
+              "transaction_bytes": 376832,
+              "upper_bytes": 272629760,
+              "workspace_reserve": 268435456
+            },
+            "optimized": {
+              "cache_preparation_host_bytes": 4755456,
+              "cache_readback_host_bytes": 36864,
+              "frozen_linear_bytes": 16128,
+              "global_g2_host_bytes": 69632,
+              "resident_bytes": 104351968,
+              "transaction_bytes": 376832,
+              "upper_bytes": 277507840,
+              "workspace_reserve": 268435456
+            }
+          }
+        },
+        {
+          "case": 1,
+          "n": 65536,
+          "setup_ns": 15128344545,
+          "baseline_initial_ns": 284330499096,
+          "optimized_initial_ns": 261732196151,
+          "baseline_update_ns": 1254203178658,
+          "optimized_update_ns": 379355222108,
+          "baseline_over_optimized": 3.3061444935136186,
+          "feature_counts": {
+            "cache_reused": 4,
+            "cache_reused_points": 262144,
+            "foreground_linear_reused": 4,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 40894464,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 1600,
+            "support_geometry_reused": 0,
+            "transform_packet_calls": 0,
+            "transform_packet_elements": 0
+          },
+          "observed": {
+            "linear_reused": false,
+            "frozen_linear_captured": true,
+            "foreground_linear_reused": true,
+            "global_g2_reused": true,
+            "support_geometry_reused": false,
+            "cache_reused": true,
+            "transform_packet_calls": 0,
+            "sparse_gpu_g1_points": 1600,
+            "sparse_cpu_g1_points": 0
+          },
+          "configuration": {
+            "bounded_g1_decode": true,
+            "device_affine_readback": true,
+            "foreground_linear_reuse": true,
+            "freeze_linear_capture_limit": 128,
+            "frozen_g2_reuse_limit": 128,
+            "linear_rebuild_reuse": true,
+            "native_limit_bytes": 2147483648,
+            "rebuild_cache_mode": "Product",
+            "rebuild_cache_readback_roots": 64,
+            "rebuild_prepared_cache_roots": 64,
+            "sparse": "ForceGpu",
+            "support_geometry_reuse": true,
+            "transform_packet_max_len": null,
+            "transform_row_batch": 16,
+            "unchanged_cache_reuse": true,
+            "undo_bytes": 134217728,
+            "window": 16
+          },
+          "extra_audit": {},
+          "readback_calibration": {
+            "bounded_g1_decode": true,
+            "cofactor_decode_points_per_call": 64,
+            "correct": true,
+            "device_affine_readback_selected": true,
+            "device_bounded_median_ns": 252564,
+            "device_d2h_bytes": 4096,
+            "full_decode_points_per_call": 0,
+            "host_bounded_median_ns": 1638696,
+            "host_d2h_bytes": 6144,
+            "kind": "fullopt_readback_calibration",
+            "n": 65536,
+            "points": 64,
+            "samples_per_route": 6,
+            "selection_margin_percent": 3
+          },
+          "cache_preparation": {
+            "baseline": null,
+            "optimized": {
+              "host_upper_bytes": 4755456,
+              "precompute_ns": 27394977,
+              "prepared_entries": 65,
+              "retained_bytes": 1610640,
+              "roots": 64
+            }
+          },
+          "resource": {
+            "baseline": {
+              "cache_preparation_host_bytes": 0,
+              "cache_readback_host_bytes": 0,
+              "frozen_linear_bytes": 0,
+              "global_g2_host_bytes": 0,
+              "resident_bytes": 715131104,
+              "transaction_bytes": 96468992,
+              "upper_bytes": 1342177280,
+              "workspace_reserve": 268435456
+            },
+            "optimized": {
+              "cache_preparation_host_bytes": 4755456,
+              "cache_readback_host_bytes": 36864,
+              "frozen_linear_bytes": 16128,
+              "global_g2_host_bytes": 69632,
+              "resident_bytes": 715131104,
+              "transaction_bytes": 96468992,
+              "upper_bytes": 1347055360,
+              "workspace_reserve": 268435456
+            }
+          }
+        }
+      ],
+      "raw_rows": 48
+    },
+    "resources": {
+      "measurement": "5-second process samples; maxima are lower bounds",
+      "samples": 821,
+      "rss_sample_max_bytes": 1396609024,
+      "hwm_observed_max_bytes": 1396609024,
+      "gpu_sample_max_bytes": 2524971008,
+      "errors": []
+    },
+    "binary_sha256": "7906c25e702f6ab5fea7bb9f5eca05826a61d17785b34d2af244ea3d5e451f71",
+    "native_libraries": [
+      {
+        "name": "libingo_curve_bn254.a",
+        "sha256": "14259487b2e2379b18da109e7a4dabddd05d6721a07d97a19749b254be2c5e34"
+      },
+      {
+        "name": "libingo_field_bn254.a",
+        "sha256": "8865e770f6c6c3f0f5eb781bcb9080bd8331f60906b3f736fce28ce7dd467d3b"
+      },
+      {
+        "name": "libdynaverse_icicle.a",
+        "sha256": "3837b77a9227b349eefaff9c5f4ff4e468f4d634c6fe310fcb66adfef1c14ff8"
+      }
+    ],
+    "integrity": {
+      "source_unchanged": true,
+      "support_unchanged": true,
+      "libraries_unchanged": true,
+      "verified_remote_files": 32,
+      "sealed_archive_sha256": "35b96ab7daa72e212f289752f3f4296001b875a3d9dd547d15baf83776df604a"
+    }
   },
   "cpu_workspace": {
     "status": "PASS_PREVIOUS_SAME_COMMIT",

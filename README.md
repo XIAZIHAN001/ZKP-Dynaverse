@@ -30,7 +30,14 @@ baseline与优化组合使用相同窗口和输入。时间排除读回校准及
 
 n=256完整组合的geometry复用命中11次，独立geometry审计命中5次，独立linear审计通过。详见[验证边界](docs/VALIDATION.md)、[原始事件](experiments/adaptive-fullopt/fixtures/n256.log)和[初始结构化结果](docs/results/local-2026-10-22.json)。
 
-2026-10-22追加测试已通过全部默认GPU门禁、13项Python回归及n=1024新对照；新样本baseline/优化组合比值为7.523。**H200作业1157正在执行n=256/65536矩阵，最终验收待完成**。[双语追加测试说明](docs/SUPPLEMENTAL_TESTS.md)记录了测试来源、内存观测和限制。
+2026-10-22追加测试已通过全部默认GPU门禁、13项Python回归及n=1024新对照；新样本baseline/优化组合比值为7.523。**H200作业1157已完成n=256/65536矩阵，终态COMPLETED/0:0，原始事件和完整性验收通过**。
+
+| H200 n | 窗口 | baseline两笔update合计/s | 优化组合两笔update合计/s | baseline/优化组合 |
+|---:|---:|---:|---:|---:|
+| 256 | 6 | 17.553499 | 2.116730 | 8.293 |
+| 65536 | 16 | 1254.203179 | 379.355222 | 3.306 |
+
+H200每档同样只有两笔计时update，排除校准及外部Reference；这些比值不代表端到端加速或统计显著性。821次进程采样未发现OOM，主机VmHWM约1.30GiB、显存采样最大约2.35GiB，不能当作认证峰值。[双语追加测试说明](docs/SUPPLEMENTAL_TESTS.md)和[H200原始事件](experiments/adaptive-fullopt/fixtures/h200-20261022.log)记录了真实命中、测试来源与限制。
 
 ## 按规模选择策略
 
@@ -113,6 +120,6 @@ docs/                         构建、验证边界与后续方向
 
 ## 后续方向
 
-优先完成65536规模H200验收，再增加重复样本和更新形状，检验窗口与读回策略；之后评估按实际更新支持集和总内存占用调整策略。见[路线图](docs/ROADMAP.md)。
+65536规模H200验收已通过；下一步增加独立重复样本和更新形状，检验窗口与读回策略，再评估按实际更新支持集和总内存占用调整策略。见[路线图](docs/ROADMAP.md)。
 
 依赖固定版本见[`env/versions.lock`](env/versions.lock)，第三方项目见[依赖说明](THIRD_PARTY_NOTICES.md)。本仓库暂未指定许可证。
