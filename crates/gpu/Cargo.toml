@@ -1,0 +1,22 @@
+# GPU operator backends (ICICLE CUDA + CPU fallback).
+
+[package]
+name = "dynaverse-gpu"
+version.workspace = true
+edition.workspace = true
+
+[features]
+default = []
+icicle = []
+
+[dependencies]
+dynaverse-protocol = { path = "../protocol" }
+ark-ff = { workspace = true }
+ark-ec = { workspace = true }
+ark-poly = { workspace = true }
+ark-bn254 = { workspace = true }
+ark-serialize = { workspace = true }
+anyhow = { workspace = true }
+
+[dev-dependencies]
+rand = { workspace = true }

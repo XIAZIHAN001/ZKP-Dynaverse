@@ -1,0 +1,38 @@
+# Build outputs and local caches
+target/
+build/
+.build-cache/
+.codex_tmp/
+__pycache__/
+*.py[cod]
+*.a
+*.so
+*.dll
+*.exe
+*.o
+*.obj
+*.ptx
+*.cubin
+
+# Local measurements, profiler output and deployment packages
+/results/
+*.nsys-rep
+*.nsys-rez
+*.qdrep
+*.ncu-rep
+*.zip
+*.tar
+*.tar.gz
+*.log
+!experiments/adaptive-fullopt/fixtures/*.log
+/docs/g2-validation-20261017/
+
+# Credentials and machine-specific overrides
+.env
+*.local
+*.pem
+*.key
+id_rsa
+id_ed25519
+.DS_Store
+Thumbs.db

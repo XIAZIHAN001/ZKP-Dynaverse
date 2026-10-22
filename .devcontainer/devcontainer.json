@@ -1,0 +1,38 @@
+{
+  "name": "dynaverse-gpu",
+  "build": {
+    "dockerfile": "../env/Dockerfile",
+    "context": "../env",
+    "args": {
+      "CUDA_ARCH": "120"
+    }
+  },
+  "runArgs": [
+    "--gpus=all",
+    "--cap-add=SYS_PTRACE",
+    "--security-opt", "seccomp=unconfined"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-vscode.cpptools",
+        "nvidia.nsight-vscode-edition",
+        "vadimcn.vscode-lldb",
+        "tamasfe.even-better-toml"
+      ]
+    }
+  },
+  "containerEnv": {
+    "CUDA_ARCH": "120",
+    "CMAKE_CUDA_ARCHITECTURES": "120"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=dynaverse-cargo-registry,target=/usr/local/cargo/registry,type=volume",
+    "source=dynaverse-cargo-git,target=/usr/local/cargo/git,type=volume",
+    "source=dynaverse-build-cache,target=/workspace/.build-cache,type=volume"
+  ],
+  "remoteUser": "dev"
+}

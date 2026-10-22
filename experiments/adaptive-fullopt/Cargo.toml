@@ -1,0 +1,24 @@
+[package]
+name = "dynaverse-h200-fullopt-probe"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+dynaverse-protocol = { path = "../../crates/protocol" }
+dynaverse-gpu = { path = "../../crates/gpu", features = ["icicle"] }
+ark-bn254 = "=0.4.0"
+ark-ec = "=0.4.2"
+ark-ff = "=0.4.2"
+anyhow = "=1.0.104"
+rand = "=0.8.8"
+serde_json = "=1.0.151"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+
+[[bin]]
+name = "fullopt_probe"
+path = "main.rs"

@@ -1,0 +1,15 @@
+# Reproducibility inputs; host-specific paths and driver inventory are omitted.
+[cuda]
+base_image = "nvidia/cuda:12.8.1-devel-ubuntu22.04"
+base_image_digest = "sha256:a99a1860ba8e2916e5c3e73b72ec4c4301653a84586e05bfc9a2aa2d58027e97"
+local_arch = 120
+h200_arch = 90
+
+[rust]
+toolchain = "1.89.0"
+
+[icicle]
+version = "v2.8.0"
+commit = "aacec3f72f14f53dd96d835698d2c87cde3a68b8"
+curve = "bn254"
+artifacts = ["libingo_field_bn254.a", "libingo_curve_bn254.a"]

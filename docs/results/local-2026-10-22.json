@@ -1,0 +1,263 @@
+{
+  "date": "2026-10-22",
+  "hardware": "NVIDIA GeForce RTX 5070 Ti Laptop GPU (sm_120)",
+  "timing": "two measured updates after two warmups; same-window paired baseline/full",
+  "h200_adaptive_n65536": "not_run",
+  "matrices": {
+    "256": {
+      "setup_mode": "TableBatchNormalize+GpuFrobenius63",
+      "baseline_api": "IncrementalSession defaults + ForceGpu + same size-selected window",
+      "optimized_api": "IncrementalSession size-selected bundle + bounded decode + calibrated readback",
+      "cases": 1,
+      "measured_steps_per_route": 2,
+      "feature_audit_steps_n256": 12,
+      "matrix": [
+        {
+          "case": 0,
+          "n": 256,
+          "setup_ns": 1527369527,
+          "baseline_initial_ns": 2936940701,
+          "optimized_initial_ns": 2538325347,
+          "baseline_update_ns": 16156809656,
+          "optimized_update_ns": 1711010140,
+          "baseline_over_optimized": 9.442848571312382,
+          "feature_counts": {
+            "cache_reused": 4,
+            "cache_reused_points": 1024,
+            "foreground_linear_reused": 16,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 159744,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 2341,
+            "support_geometry_reused": 11,
+            "transform_packet_calls": 48,
+            "transform_packet_elements": 19456
+          },
+          "observed": {
+            "linear_reused": false,
+            "frozen_linear_captured": true,
+            "foreground_linear_reused": true,
+            "global_g2_reused": true,
+            "support_geometry_reused": true,
+            "cache_reused": true,
+            "transform_packet_calls": 48,
+            "sparse_gpu_g1_points": 2341,
+            "sparse_cpu_g1_points": 0
+          },
+          "configuration": {
+            "bounded_g1_decode": true,
+            "device_affine_readback": false,
+            "foreground_linear_reuse": true,
+            "freeze_linear_capture_limit": 128,
+            "frozen_g2_reuse_limit": 128,
+            "linear_rebuild_reuse": true,
+            "native_limit_bytes": 2147483648,
+            "rebuild_cache_mode": "Product",
+            "rebuild_cache_readback_roots": 64,
+            "rebuild_prepared_cache_roots": 64,
+            "sparse": "ForceGpu",
+            "support_geometry_reuse": true,
+            "transform_packet_max_len": 4096,
+            "transform_row_batch": 16,
+            "unchanged_cache_reuse": true,
+            "undo_bytes": 67108864,
+            "window": 6
+          },
+          "extra_audit": {
+            "geometry_only": {
+              "audit": "geometry_only",
+              "case": 0,
+              "correct": true,
+              "hits": 5,
+              "kind": "fullopt_extra_audit",
+              "n": 256,
+              "sparse_cpu_g1_points": 0,
+              "sparse_gpu_g1_points": 375,
+              "support_geometry_builds": 0
+            },
+            "linear_only": {
+              "audit": "linear_only",
+              "case": 0,
+              "correct": true,
+              "kind": "fullopt_extra_audit",
+              "linear_reused": true,
+              "linear_skipped_g1_points": 39936,
+              "n": 256,
+              "sparse_cpu_g1_points": 0,
+              "sparse_gpu_g1_points": 75
+            }
+          },
+          "readback_calibration": {
+            "bounded_g1_decode": true,
+            "cofactor_decode_points_per_call": 64,
+            "correct": true,
+            "device_affine_readback_selected": false,
+            "device_bounded_median_ns": 418875,
+            "device_d2h_bytes": 4096,
+            "full_decode_points_per_call": 0,
+            "host_bounded_median_ns": 1904982,
+            "host_d2h_bytes": 6144,
+            "kind": "fullopt_readback_calibration",
+            "n": 256,
+            "points": 64,
+            "samples_per_route": 6,
+            "selection_margin_percent": 3
+          },
+          "cache_preparation": {
+            "baseline": null,
+            "optimized": {
+              "host_upper_bytes": 4755456,
+              "precompute_ns": 18974282,
+              "prepared_entries": 65,
+              "retained_bytes": 1610640,
+              "roots": 64
+            }
+          },
+          "resource": {
+            "baseline": {
+              "cache_preparation_host_bytes": 0,
+              "cache_readback_host_bytes": 0,
+              "frozen_linear_bytes": 0,
+              "global_g2_host_bytes": 0,
+              "resident_bytes": 102975712,
+              "transaction_bytes": 376832,
+              "upper_bytes": 272629760,
+              "workspace_reserve": 268435456
+            },
+            "optimized": {
+              "cache_preparation_host_bytes": 4755456,
+              "cache_readback_host_bytes": 36864,
+              "frozen_linear_bytes": 16128,
+              "global_g2_host_bytes": 69632,
+              "resident_bytes": 104351968,
+              "transaction_bytes": 376832,
+              "upper_bytes": 277507840,
+              "workspace_reserve": 268435456
+            }
+          }
+        }
+      ],
+      "raw_rows": 37
+    },
+    "1024": {
+      "setup_mode": "TableBatchNormalize+GpuFrobenius63",
+      "baseline_api": "IncrementalSession defaults + ForceGpu + same size-selected window",
+      "optimized_api": "IncrementalSession size-selected bundle + bounded decode + calibrated readback",
+      "cases": 1,
+      "measured_steps_per_route": 2,
+      "feature_audit_steps_n256": 12,
+      "matrix": [
+        {
+          "case": 0,
+          "n": 1024,
+          "setup_ns": 1904411249,
+          "baseline_initial_ns": 6755490333,
+          "optimized_initial_ns": 5903060219,
+          "baseline_update_ns": 37424205041,
+          "optimized_update_ns": 5249225999,
+          "baseline_over_optimized": 7.129471096906377,
+          "feature_counts": {
+            "cache_reused": 4,
+            "cache_reused_points": 4096,
+            "foreground_linear_reused": 4,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 638976,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 1600,
+            "support_geometry_reused": 0,
+            "transform_packet_calls": 48,
+            "transform_packet_elements": 77824
+          },
+          "observed": {
+            "linear_reused": false,
+            "frozen_linear_captured": true,
+            "foreground_linear_reused": true,
+            "global_g2_reused": true,
+            "support_geometry_reused": false,
+            "cache_reused": true,
+            "transform_packet_calls": 48,
+            "sparse_gpu_g1_points": 1600,
+            "sparse_cpu_g1_points": 0
+          },
+          "configuration": {
+            "bounded_g1_decode": true,
+            "device_affine_readback": true,
+            "foreground_linear_reuse": true,
+            "freeze_linear_capture_limit": 128,
+            "frozen_g2_reuse_limit": 128,
+            "linear_rebuild_reuse": true,
+            "native_limit_bytes": 2147483648,
+            "rebuild_cache_mode": "Product",
+            "rebuild_cache_readback_roots": 64,
+            "rebuild_prepared_cache_roots": 64,
+            "sparse": "ForceGpu",
+            "support_geometry_reuse": true,
+            "transform_packet_max_len": 4096,
+            "transform_row_batch": 16,
+            "unchanged_cache_reuse": true,
+            "undo_bytes": 67108864,
+            "window": 8
+          },
+          "extra_audit": {},
+          "readback_calibration": {
+            "bounded_g1_decode": true,
+            "cofactor_decode_points_per_call": 64,
+            "correct": true,
+            "device_affine_readback_selected": true,
+            "device_bounded_median_ns": 472646,
+            "device_d2h_bytes": 4096,
+            "full_decode_points_per_call": 0,
+            "host_bounded_median_ns": 2156944,
+            "host_d2h_bytes": 6144,
+            "kind": "fullopt_readback_calibration",
+            "n": 1024,
+            "points": 64,
+            "samples_per_route": 6,
+            "selection_margin_percent": 3
+          },
+          "cache_preparation": {
+            "baseline": null,
+            "optimized": {
+              "host_upper_bytes": 4755456,
+              "precompute_ns": 29052165,
+              "prepared_entries": 65,
+              "retained_bytes": 1610640,
+              "roots": 64
+            }
+          },
+          "resource": {
+            "baseline": {
+              "cache_preparation_host_bytes": 0,
+              "cache_readback_host_bytes": 0,
+              "frozen_linear_bytes": 0,
+              "global_g2_host_bytes": 0,
+              "resident_bytes": 109316320,
+              "transaction_bytes": 1507328,
+              "upper_bytes": 285212672,
+              "workspace_reserve": 268435456
+            },
+            "optimized": {
+              "cache_preparation_host_bytes": 4755456,
+              "cache_readback_host_bytes": 36864,
+              "frozen_linear_bytes": 16128,
+              "global_g2_host_bytes": 69632,
+              "resident_bytes": 110692576,
+              "transaction_bytes": 1507328,
+              "upper_bytes": 290090752,
+              "workspace_reserve": 268435456
+            }
+          }
+        }
+      ],
+      "raw_rows": 11
+    }
+  }
+}

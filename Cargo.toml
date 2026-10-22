@@ -1,0 +1,27 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/protocol",
+    "crates/gpu",
+    "crates/bench",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[workspace.dependencies]
+# arkworks stack - pinned for the whole project; upgrade is a deliberate decision
+ark-ff = "0.4"
+ark-ec = "0.4"
+ark-poly = "0.4"
+ark-bn254 = "0.4"
+ark-serialize = "0.4"
+ark-std = "0.4"
+anyhow = "1"
+criterion = "0.5"
+rand = "0.8"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
