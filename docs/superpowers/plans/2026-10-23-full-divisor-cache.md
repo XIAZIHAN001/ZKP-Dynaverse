@@ -1,6 +1,6 @@
 # Full G2 Divisor Cache Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add an opt-in bounded public affine-divisor table shared by initialization and updates, without weakening independent cache equations.
 
@@ -37,12 +37,12 @@
 `ResourcePlan::cache_divisor_host_bytes:u64`; `CacheDivisorStats` exposes roots,
 construction_divisors, retained_bytes, host_upper_bytes, precompute_ns.
 
-- [ ] Add behavior tests in `divisors.rs`: `public_divisors_are_exact_and_bound_to_owner_srs_root`, `divisor_table_admission_precedes_allocations`.
-- [ ] Watch expected failure before implementing table behavior (scaffold may delegate to old calculation without caching).
-- [ ] Implement checked bound from concrete Rust sizes/capacity plus64-root temporary envelope; construct chunks, validate identity and root on lookup.
-- [ ] Add preflight to Program before any allocation and allocate opt-in table; add host accounting/stats getter.
-- [ ] Run `cargo test --offline --locked --release -p dynaverse-protocol --lib divisor -- --test-threads=1`; expect exact/negative tests pass.
-- [ ] Commit table and admission with the approved design/plan.
+- [x] Add behavior tests in `divisors.rs`: `public_divisors_are_exact_and_bound_to_owner_srs_root`, `divisor_table_admission_precedes_allocations`.
+- [x] Watch expected failure before implementing table behavior (scaffold may delegate to old calculation without caching).
+- [x] Implement checked bound from concrete Rust sizes/capacity plus64-root temporary envelope; construct chunks, validate identity and root on lookup.
+- [x] Add preflight to Program before any allocation and allocate opt-in table; add host accounting/stats getter.
+- [x] Run `cargo test --offline --locked --release -p dynaverse-protocol --lib divisor -- --test-threads=1`; expect exact/negative tests pass.
+- [x] Commit table and admission with the approved design/plan.
 
 ### Task 2: Initialization, update reuse and safety
 
@@ -54,13 +54,13 @@ construction_divisors, retained_bytes, host_upper_bytes, precompute_ns.
 `Machine::build_initial` returns `(AnchorProof,InitialCacheStats)`; its only caller stores stats.
 Keep test-only serial wrappers to preserve old exact-check tests.
 
-- [ ] Add test requiring full-table update fallback hits, zero formed divisors and unchanged equations/Miller/final exponents; run RED on unintegrated table.
-- [ ] Pass table into initial and update validators; prepared path stays first, full-table fallback uses affine points while checks remain4-root independent.
-- [ ] Charge extra lookup/copy bookkeeping in Program cache-command upper; do not subtract old conservative certificate.
-- [ ] Add independent exact/constant/partial/end ranges, corrupted commitment/value/opening and cancelling-errors tests through full-table path.
-- [ ] Add late-block corrupt-read rollback/retry test comparing proof/witness/receipt/timings/resident state and clean reference endpoint.
-- [ ] Assert initial construction=n, checker formed=0/hits=n/equations=3n when enabled; off remains formed=n/hits=0.
-- [ ] Run focused tests plus complete protocol suite; fix every regression and commit.
+- [x] Add test requiring full-table update fallback hits, zero formed divisors and unchanged equations/Miller/final exponents; run RED on unintegrated table.
+- [x] Pass table into initial and update validators; prepared path stays first, full-table fallback uses affine points while checks remain4-root independent.
+- [x] Charge extra lookup/copy bookkeeping in Program cache-command upper; do not subtract old conservative certificate.
+- [x] Add independent exact/constant/partial/end ranges, corrupted commitment/value/opening and cancelling-errors tests through full-table path.
+- [x] Add late-block corrupt-read rollback/retry test comparing proof/witness/receipt/timings/resident state and clean reference endpoint.
+- [x] Assert initial construction=n, checker formed=0/hits=n/equations=3n when enabled; off remains formed=n/hits=0.
+- [x] Run focused tests plus complete protocol suite; fix every regression and commit.
 
 ### Task 3: Paired full-flow measurement
 
@@ -71,17 +71,17 @@ reuse immutable R5 size/calibration code by path, without editing original three
 resource/budget,4 updates(2 warmups+2 measured), paired equality, final CPU dense,
 existing nested timing categories and new real hit counts.
 
-- [ ] Add raw-evidence contract tests for missing pair, false correctness, hidden precompute, wrong construction/hits, reduced equations, quota, resource and late pending endpoint; demonstrate RED then implement analyzer.
-- [ ] Run n256/n1024 CPU and GPU with deterministic R5 inputs, prepared64/readback64/row16/window fixed, counterbalanced order.
-- [ ] Require same proof/witness, Reference each call, final CPU dense, all paid rebuilds complete, each own quota and reported conservative-budget delta.
-- [ ] Record update sample ratio and initialization/whole-route phase sums separately. Reject non-gain or resource violation before H200.
-- [ ] Commit probe, sanitized raw fixtures/results and updated core snapshot with explicit change provenance.
+- [x] Add raw-evidence contract tests for missing pair, false correctness, hidden precompute, wrong construction/hits, reduced equations, quota, resource and late pending endpoint; demonstrate RED then implement analyzer.
+- [x] Run n256/n1024 CPU and GPU with deterministic R5 inputs, prepared64/readback64/row16/window fixed, counterbalanced order.
+- [x] Require same proof/witness, Reference each call, final CPU dense, all paid rebuilds complete, each own quota and reported conservative-budget delta.
+- [x] Record update sample ratio and initialization/whole-route phase sums separately. Reject non-gain or resource violation before H200.
+- [x] Commit probe, sanitized raw fixtures/results and updated core snapshot with explicit change provenance.
 
 ### Task 4: Full regression, independent review and H200
 
-- [ ] Run `cargo test --offline --locked --workspace --release -- --test-threads=1` and full default GPU package suite; no source edits while a bound run is active.
-- [ ] Request fresh independent branch review, repair important findings, rerun only affected gates.
-- [ ] If local gates/gain pass, create a new immutable H200 campaign with new Rust source identity and unchanged native library hashes; do not reuse old product identity for modified source.
+- [x] Run `cargo test --offline --locked --workspace --release -- --test-threads=1` and full default GPU package suite; no source edits while a bound run is active.
+- [x] Request fresh independent branch review, repair important findings, rerun only affected gates.
+- [x] If local gates/gain pass, create a new immutable H200 campaign with new Rust source identity and unchanged native library hashes; do not reuse old product identity for modified source.
 - [ ] Verify support/source/dependencies, admission, shell and binary SM90, submit once n65536 off/on with five-second telemetry.
 - [ ] On failure collect evidence once and report; on success require terminal0:0 plus local/remote raw audits and CPU oracle, then seal.
 - [ ] Publish sanitized bilingual evidence on a new draft PR; leave main and previous PR unchanged.

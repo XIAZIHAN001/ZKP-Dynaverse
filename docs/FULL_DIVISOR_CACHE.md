@@ -17,9 +17,9 @@ CPU and RTX5070 Ti Laptop GPU use identical deterministic inputs and R5 policy, 
 | gpu | 256 | 2.170937 | 1.993899 | 1.088790 | 2.970167 | 0.053232 | 1.092676 |
 | gpu | 1024 | 5.843537 | 4.878391 | 1.197841 | 6.424695 | 0.211220 | 1.103086 |
 
-Off/on 只描述本次两笔 update 样本。Phase-sum 是共享 setup + 各路初始化 + 全部4笔 update 的算术和，排除外部验证、校准与程序其他开销，**不是独立测得的端到端墙钟**。不能宣称统计显著性或稳定尾延迟。H200 n=65536 尚未提交；本机结果不能代替其验收。
+Off/on 只描述本次两笔 update 样本。Phase-sum 是共享 setup + 各路初始化 + 全部4笔 update 的算术和，排除外部验证、校准与程序其他开销，**不是独立测得的端到端墙钟**。不能宣称统计显著性或稳定尾延迟。H200 n=65536 已单次提交作业1159，最近调度快照为RUNNING；本机结果不能代替其验收。
 
-Off/on describes only the two measured update samples. Phase-sum adds shared setup, route initialization and all four updates; it excludes external verification, calibration and other process overhead. It is **not an independently measured end-to-end wall time**. No statistical significance or stable tail latency is established. H200 n=65536 has not yet been submitted; local results cannot substitute for that acceptance.
+Off/on describes only the two measured update samples. Phase-sum adds shared setup, route initialization and all four updates; it excludes external verification, calibration and other process overhead. It is **not an independently measured end-to-end wall time**. No statistical significance or stable tail latency is established. H200 n=65536 was submitted once as job1159; the latest scheduler snapshot isRUNNING. Local results cannot substitute for H200 acceptance.
 
 ## 资源和正确性 / Resources and correctness
 
@@ -43,11 +43,11 @@ The probe is a separate Cargo workspace reusing original R5 policy/calibration. 
 
 ```bash
 python -m unittest discover -s experiments/full-divisor-cache -p 'test_*.py'
-cargo run --quiet --offline --locked --release --manifest-path experiments/full-divisor-cache/Cargo.toml -- cpu1024
+cargo run --quiet --offline --locked --release --manifest-path experiments/full-divisor-cache/Cargo.toml -- cpu 1024
 # After the native/GPU build described in BUILD.md:
-cargo run --quiet --offline --locked --release --manifest-path experiments/full-divisor-cache/Cargo.toml --features gpu -- gpu1024
+cargo run --quiet --offline --locked --release --manifest-path experiments/full-divisor-cache/Cargo.toml --features gpu -- gpu 1024
 ```
 
-原始事件位于 `experiments/full-divisor-cache/fixtures/`，仅省略构建横幅与机器路径。派生矩阵见 [JSON](results/full-divisor-cache-2026-10-23.json)，可用 `analysis.analyze` 从原始事件重新计算。CPU 工作区/GPU 全量门禁、独立审查与 H200 结果另行追加，未完成项不得视为通过。当前协议仍未实现完整零知识保证。
+原始事件位于 `experiments/full-divisor-cache/fixtures/`，仅省略构建横幅与机器路径。派生矩阵见 [JSON](results/full-divisor-cache-2026-10-23.json)，可用 `analysis.analyze` 从原始事件重新计算。CPU 工作区285项通过/13项忽略，GPU默认测试154项通过/58项忽略，均0失败；独立审查无Critical/Important，文档命令已修正。H200结果待完成验收后追加，未完成项不得视为通过。当前协议仍未实现完整零知识保证。
 
-Raw events are in `experiments/full-divisor-cache/fixtures/`, omitting only build banners and machine paths. The [JSON](results/full-divisor-cache-2026-10-23.json) is recomputable with `analysis.analyze`. Full CPU workspace/GPU gates, independent review and H200 outcomes will be appended; unfinished gates are not passes. The protocol does not establish complete zero knowledge.
+Raw events are in `experiments/full-divisor-cache/fixtures/`, omitting only build banners and machine paths. The [JSON](results/full-divisor-cache-2026-10-23.json) is recomputable with `analysis.analyze`. The CPU workspace passed285 tests/13 ignored; the default GPU suite passed154/58 ignored, with zero failures. Independent review found no Critical/Important issues; documentation commands were corrected. H200 outcomes await acceptance; unfinished gates are not passes. The protocol does not establish complete zero knowledge.

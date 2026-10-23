@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_PAIRED_PASSED_H200_NOT_SUBMITTED",
+  "status": "LOCAL_GATES_PASSED_H200_RUNNING",
   "date": "2026-10-23",
   "baseline_commit": "518bfed09b5602f175e5027c498a99d3629f103e",
   "current_core_identity": "0c367195b5f7edd9b6cb0489a74205bff2a8612ef35db96fae42c19820289ff4",
@@ -513,5 +513,58 @@
       "raw_rows": 19,
       "scope": "two measured update samples; phase sums are not independent E2E wall"
     }
+  },
+  "full_gates": {
+    "CPU-WORKSPACE": {
+      "head": "2af6c4afae48152f4bf83632090aae1d6867b961",
+      "exitcode": 0,
+      "seconds": 508.17812850000337,
+      "log_sha256": "e2b863918036710ecf7ee16cf0ac773277223e890f4b27ebc97be5ef7109528e",
+      "native_unchanged": true,
+      "passed": 285,
+      "failed": 0,
+      "ignored": 13
+    },
+    "GPU-FULL": {
+      "head": "2af6c4afae48152f4bf83632090aae1d6867b961",
+      "exitcode": 0,
+      "seconds": 683.2984886000049,
+      "log_sha256": "34fc6ec8a886efb9836322ea4dc17ed06d903ef21c851dcb74e90cbc2e449499",
+      "native_unchanged": true,
+      "passed": 154,
+      "failed": 0,
+      "ignored": 58
+    }
+  },
+  "python_regressions": {
+    "full_divisor": 10,
+    "existing_adaptive_and_prepared": 27
+  },
+  "independent_review": {
+    "head": "2af6c4afae48152f4bf83632090aae1d6867b961",
+    "critical": 0,
+    "important": 0,
+    "minor_doc_commands_fixed": true
+  },
+  "h200": {
+    "status_at_last_observation": "RUNNING",
+    "observed_at": "2026-10-23T15:47:05.161845+08:00",
+    "job_id": "1159",
+    "n": 65536,
+    "routes": [
+      "off",
+      "on"
+    ],
+    "measured_updates_per_route": 2,
+    "warmups_per_route": 2,
+    "source_id": "f667c57046d0bc265b655d5a53c65c8cb106912384d4752bb4330faa0d576340",
+    "product_identity": "c6a8da2f78bfd51ecf2fd5b65fe5e88670d1b2dddc64e66b2c98e7138b17cadb",
+    "support_id": "f8ce2eed0a276f2f85d80fc0722d4f0b97a79e39560f4fa3b76c13a7f7b9e78c",
+    "session_archive_sha256": "1274ca3a3eea6d686bc44ffb13e1915b0ab2ecd316b3587a8cab5614bed39b0b",
+    "submission_count": 1,
+    "telemetry_interval_seconds": 5,
+    "accepted": false,
+    "automatic_resubmission": false,
+    "scope": "Scheduler snapshot only; no H200 speedup or completion claim."
   }
 }
