@@ -1,5 +1,7 @@
 # 构建与复现
 
+独立 full-divisor 探针默认 CPU 构建无需 CUDA driver；GPU 需显式 `--features gpu`。见[复现与证据](FULL_DIVISOR_CACHE.md)。
+
 [English](BUILD.md) | [项目说明](../README.md)
 
 ## CPU路径
@@ -129,3 +131,5 @@ python3 -B -c 'from pathlib import Path; from analysis import analyze_log; print
 ICICLE使用架构`90`构建，加载`env/h200.env`，设置`ICICLE_LIB_DIR=/opt/icicle/arch90`，通过`bash scripts/build_native_icicle.sh h200`构建桥接库。构建Rust GPU目标前，设置`DYNAVERSE_NATIVE_LIB_DIR=/workspace/build/native-sm90`。
 
 请在自己的集群资源分配中调度`fullopt`矩阵。公开仓库不包含账户专用的SSH别名、Slurm目录和提交凭据。H200作业1157已对公开探针及对应核心源码完成n=256/65536验收，见[验收报告](SUPPLEMENTAL_TESTS.md)。在其他构建或硬件上复现仍需实际运行并核对原始事件。
+
+H200 n=65536 开关对照已在作业1159验收通过，见[分阶段报告](H200_1159_PHASE_REPORT.md)。

@@ -34,6 +34,8 @@ pub struct CacheCheckTimings {
     /// This is not a count of all live preparations or an allocation/RSS peak.
     pub prepared_peak_entries:usize,
     pub divisors_formed:u64,
+    /// Affine divisor lookups outside the independently prepared prefix.
+    pub divisor_cache_hits:u64,
     /// Successful backend read submissions; checks remain independent per point.
     pub read_batches:u64,
     pub read_points:u64,

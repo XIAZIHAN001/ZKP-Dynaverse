@@ -1,5 +1,7 @@
 # ZKP-Dynaverse
 
+本实验分支新增默认关闭的轻量全域 G2 divisor 缓存。n=1024 GPU 两笔 update 本地样本为5.844→4.878秒（1.198×）；初始化构造成本单独记录，完整独立验证与工作计费保留。CPU工作区285项、GPU默认测试154项通过，独立审查通过；H200作业1159已验收通过：n=65536两笔update为379.445→292.006秒（本次样本1.299×）。[分阶段报告](docs/H200_1159_PHASE_REPORT.md)。详见[双语实验说明](docs/FULL_DIVISOR_CACHE.md)。
+
 [English](README.en.md) | 中文
 
 基于Rust、arkworks BN254与CUDA/ICICLE的Dynaverse增量证明研究原型。项目保留CPU reference，并通过薄Rust接口调用GPU算子，研究稀疏更新、分阶段重建和缓存复用的正确性与性能。

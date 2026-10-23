@@ -49,6 +49,7 @@ pub(super) struct Program {
     pub packet_max_len:Option<usize>,
     pub cache_mode:VerificationMode,
     pub cache_preparation:Option<preparation::PublicPreparation>,
+    pub cache_divisors:Option<divisors::PublicDivisors>,
 }
 
 impl Program {
@@ -121,6 +122,8 @@ impl Program {
     pub fn new<B:RebuildBackend>(params:&DynaverseParams,config:&IncrementalConfig,
         backend:&mut B)->Result<Self> {
         let n=params.circuit.n();
+        let cache_divisor_host_bytes=divisors::PublicDivisors::host_bound(n,
+            config.rebuild_divisor_cache,config.rebuild_cache_mode)?;
         let cache_preparation_host_bytes=preparation::PublicPreparation::host_bound(n,
             config.rebuild_prepared_cache_roots,config.rebuild_cache_mode)?;
         let cache_readback_host_bytes=if let Some(cap)=config.rebuild_cache_readback_roots {
@@ -166,9 +169,13 @@ impl Program {
             .and_then(|bytes| bytes.checked_add(global_g2_host_bytes))
             .and_then(|bytes| bytes.checked_add(cache_preparation_host_bytes))
             .and_then(|bytes| bytes.checked_add(cache_readback_host_bytes))
+            .and_then(|bytes| bytes.checked_add(cache_divisor_host_bytes))
             .ok_or_else(|| anyhow::anyhow!("resource estimate overflow"))?;
         ensure!(upper_bytes<=config.memory_limit_bytes,
             "rebuild resource estimate {upper_bytes} exceeds limit {}",config.memory_limit_bytes);
+        let cache_divisors=if config.rebuild_divisor_cache {
+            Some(divisors::PublicDivisors::new(params,cache_divisor_host_bytes)?)
+        } else {None};
         let cache_preparation=match config.rebuild_prepared_cache_roots {
             Some(cap)=>Some(preparation::PublicPreparation::new(params,cap,cache_preparation_host_bytes)?),
             None=>None,
@@ -230,14 +237,15 @@ impl Program {
             WorkBound::default(),window.horizon)?;
         let resource=ResourcePlan {upper_bytes,resident_bytes:0,workspace_reserve:reserve,
             transaction_bytes:0,tile_len:tile,frozen_linear_bytes,global_g2_host_bytes,global_g2_workspace_bytes,
-            cache_preparation_host_bytes,cache_readback_host_bytes};
+            cache_preparation_host_bytes,cache_readback_host_bytes,cache_divisor_host_bytes};
         let mut p=Self {commands:Vec::new(),witness,budget:dummy,window,resource,
             linear_reuse:config.linear_rebuild_reuse,linear_span:0..0,linear_g1_points:0,
             linear_g1_end:0,capture_limit:config.freeze_linear_capture_limit,
             g2_reuse_limit:config.frozen_g2_reuse_limit,
             linear_correction_upper:WorkBound::default(),sparse_policy:config.sparse,
             cache_reuse:config.unchanged_cache_reuse,cache_spans:std::array::from_fn(|_|0..0),row_batch:config.transform_row_batch,
-            packet_max_len:config.transform_packet_max_len,cache_mode:config.rebuild_cache_mode,cache_preparation};
+            packet_max_len:config.transform_packet_max_len,cache_mode:config.rebuild_cache_mode,
+            cache_preparation,cache_divisors};
         for (start,len) in Self::tiles(6*n,tile) {
             p.add(Command::Materialize {start,len},linear_bound(len,BufferKind::Fr,0),1);
         }
@@ -326,6 +334,13 @@ impl Program {
                     // read/write, plus conservative merged-read bookkeeping.
                     upper=upper.checked_add(WorkBound {field_ops:1024,host_elements:64,
                         copy_bytes:256*len as u64,launches:16,..Default::default()})?;
+                }
+                if config.rebuild_divisor_cache {
+                    // Retain the old arithmetic certificate. Charge public
+                    // owner/SRS validation, root comparison and affine copies.
+                    upper=upper.checked_add(WorkBound {host_elements:128+64*len as u64,
+                        copy_bytes:512*len as u64,field_ops:16*len as u64,
+                        ..Default::default()})?;
                 }
                 p.add(Command::Cache {wire:t,buffer:opening_eval,start,len},upper,1);
             }

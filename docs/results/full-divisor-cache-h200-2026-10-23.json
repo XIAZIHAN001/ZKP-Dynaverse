@@ -1,0 +1,464 @@
+{
+  "status": "PASS_ACCEPTED",
+  "job_id": "1159",
+  "n": 65536,
+  "terminal_observed_at": "2026-10-23T16:19:12.557948+08:00",
+  "scheduler_runtime": "00:32:04",
+  "scheduler_runtime_seconds": 1924,
+  "runner_wall_seconds": 1923.960750579834,
+  "probe_process_wall_seconds": 1906.023993060924,
+  "build_stage_seconds": {
+    "allocated-devices": 0.03295201901346445,
+    "probe-build": 17.24908673716709,
+    "binary-sm90": 0.11484426725655794
+  },
+  "performance": {
+    "n": 65536,
+    "backend": "gpu",
+    "measured_steps": 2,
+    "setup_ns": 14981671768,
+    "cpu_dense_oracle_ns": 24024076649,
+    "two_update_control_over_cached": 1.299440394459426,
+    "phase_sum_control_over_cached": 1.2038590956191404,
+    "routes": [
+      {
+        "route": 0,
+        "initial_ns": 261002065574,
+        "precompute_ns": 0,
+        "construction_divisors": 0,
+        "retained_bytes": 0,
+        "resource": {
+          "cache_divisor_host_bytes": 0,
+          "cache_preparation_host_bytes": 4755456,
+          "cache_readback_host_bytes": 36864,
+          "frozen_linear_bytes": 16128,
+          "global_g2_host_bytes": 69632,
+          "global_g2_workspace_bytes": 67239936,
+          "resident_bytes": 715131104,
+          "tile_len": 512,
+          "transaction_bytes": 96468992,
+          "upper_bytes": 1347055360,
+          "workspace_reserve": 268435456
+        },
+        "budget": {
+          "large": "53162617975936",
+          "max_chunk": "5948719104",
+          "q": "5906957552882",
+          "total": "26581308987968"
+        },
+        "initial_check": {
+          "divisors_formed": 65536,
+          "equations": 196608,
+          "hits": 0
+        },
+        "two_update_ns": 379445029508,
+        "all_four_update_ns": 758953172891,
+        "route_phase_sum_ns": 1034936910233,
+        "external_reference_ns": 650572811,
+        "divisors_formed_per_update": 130944,
+        "rebuild_ns": {
+          "materialize": 59820563,
+          "linear_msm": 733367149,
+          "fr_transform": 2679142363,
+          "g1_transform": 11048412258,
+          "polynomial": 2659697372,
+          "memory": 76852934,
+          "cache_check": 361774066785,
+          "finish": 142168415
+        },
+        "cache_ns": {
+          "read_points": 1252116952,
+          "g1_difference": 4076097678,
+          "g2_divisor": 86484196772,
+          "g2_prepare": 32313650123,
+          "miller": 113588011771,
+          "final_exponentiation": 123832743232,
+          "undo_store": 47823926,
+          "unchanged_copy": 9549764
+        }
+      },
+      {
+        "route": 1,
+        "initial_ns": 260695464425,
+        "precompute_ns": 21395530489,
+        "construction_divisors": 65536,
+        "retained_bytes": 11010416,
+        "resource": {
+          "cache_divisor_host_bytes": 11145584,
+          "cache_preparation_host_bytes": 4755456,
+          "cache_readback_host_bytes": 36864,
+          "frozen_linear_bytes": 16128,
+          "global_g2_host_bytes": 69632,
+          "global_g2_workspace_bytes": 67239936,
+          "resident_bytes": 715131104,
+          "tile_len": 512,
+          "transaction_bytes": 96468992,
+          "upper_bytes": 1358200944,
+          "workspace_reserve": 268435456
+        },
+        "budget": {
+          "large": "53169469371520",
+          "max_chunk": "5948719104",
+          "q": "5907718819058",
+          "total": "26584734685760"
+        },
+        "initial_check": {
+          "divisors_formed": 0,
+          "equations": 196608,
+          "hits": 65536
+        },
+        "two_update_ns": 292006490737,
+        "all_four_update_ns": 584005624023,
+        "route_phase_sum_ns": 859682760216,
+        "external_reference_ns": 648985225,
+        "divisors_formed_per_update": 0,
+        "rebuild_ns": {
+          "materialize": 60532525,
+          "linear_msm": 733502222,
+          "fr_transform": 2720725645,
+          "g1_transform": 11065151526,
+          "polynomial": 2659697912,
+          "memory": 76686639,
+          "cache_check": 274279294086,
+          "finish": 142145051
+        },
+        "cache_ns": {
+          "read_points": 1208798127,
+          "g1_difference": 4052614155,
+          "g2_divisor": 58468498,
+          "g2_prepare": 32095487200,
+          "miller": 113378276405,
+          "final_exponentiation": 123289703182,
+          "undo_store": 25735013,
+          "unchanged_copy": 9427936
+        }
+      }
+    ],
+    "raw_rows": 19,
+    "scope": "two measured update samples; phase sums are not independent E2E wall"
+  },
+  "phase_routes": [
+    {
+      "route": 0,
+      "warmup_ns": 379508143383,
+      "measured_ns": 379445029508,
+      "mean_measured_update_ns": 189722514754.0,
+      "outer_ns": {
+        "normalization_ns": 17347,
+        "constraints_ns": 11708,
+        "preparation_ns": 379420364833,
+        "publication_ns": 17769398,
+        "unassigned_to_outer_ns": 6866222
+      },
+      "preparation_children_ns": {
+        "live_linear_ns": 95149695,
+        "delta_proof_ns": 0,
+        "rebase_ns": 141662427,
+        "rebuild_ns": 379173527839,
+        "unassigned_preparation_ns": 10024872
+      },
+      "cache_unassigned_ns": 169876567
+    },
+    {
+      "route": 1,
+      "warmup_ns": 291999133286,
+      "measured_ns": 292006490737,
+      "mean_measured_update_ns": 146003245368.5,
+      "outer_ns": {
+        "normalization_ns": 19770,
+        "constraints_ns": 9193,
+        "preparation_ns": 291983382527,
+        "publication_ns": 17731071,
+        "unassigned_to_outer_ns": 5348176
+      },
+      "preparation_children_ns": {
+        "live_linear_ns": 95223517,
+        "delta_proof_ns": 0,
+        "rebase_ns": 141418585,
+        "rebuild_ns": 291737735606,
+        "unassigned_preparation_ns": 9004819
+      },
+      "cache_unassigned_ns": 160783570
+    }
+  ],
+  "readback_calibration": {
+    "bounded_g1_decode": true,
+    "cofactor_decode_points_per_call": 64,
+    "correct": true,
+    "device_affine_readback_selected": true,
+    "device_bounded_median_ns": 254326,
+    "device_d2h_bytes": 4096,
+    "full_decode_points_per_call": 0,
+    "host_bounded_median_ns": 1651469,
+    "host_d2h_bytes": 6144,
+    "kind": "fullopt_readback_calibration",
+    "n": 65536,
+    "points": 64,
+    "samples_per_route": 6,
+    "selection_margin_percent": 3
+  },
+  "per_update": [
+    {
+      "step": 0,
+      "route": 0,
+      "measured": false,
+      "wall_ns": 189651926714,
+      "reference_ns": 130580389,
+      "cache_counts": {
+        "divisor_cache_hits": 0,
+        "divisors_formed": 130944,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15469767666816",
+        "allowance": "94511320846112",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 1,
+        "anchor_generation": 1
+      }
+    },
+    {
+      "step": 0,
+      "route": 1,
+      "measured": false,
+      "wall_ns": 145968151693,
+      "reference_ns": 129611694,
+      "cache_counts": {
+        "divisor_cache_hits": 130944,
+        "divisors_formed": 0,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15472051465344",
+        "allowance": "94523501104928",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 1,
+        "anchor_generation": 1
+      }
+    },
+    {
+      "step": 1,
+      "route": 1,
+      "measured": false,
+      "wall_ns": 146030981593,
+      "reference_ns": 129798035,
+      "cache_counts": {
+        "divisor_cache_hits": 130944,
+        "divisors_formed": 0,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15472051465344",
+        "allowance": "94523501104928",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 2,
+        "anchor_generation": 2
+      }
+    },
+    {
+      "step": 1,
+      "route": 0,
+      "measured": false,
+      "wall_ns": 189856216669,
+      "reference_ns": 129815503,
+      "cache_counts": {
+        "divisor_cache_hits": 0,
+        "divisors_formed": 130944,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15469767666816",
+        "allowance": "94511320846112",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 2,
+        "anchor_generation": 2
+      }
+    },
+    {
+      "step": 2,
+      "route": 1,
+      "measured": true,
+      "wall_ns": 146044194037,
+      "reference_ns": 129039631,
+      "cache_counts": {
+        "divisor_cache_hits": 130944,
+        "divisors_formed": 0,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15472051465344",
+        "allowance": "94523501104928",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 3,
+        "anchor_generation": 3
+      }
+    },
+    {
+      "step": 2,
+      "route": 0,
+      "measured": true,
+      "wall_ns": 189775782793,
+      "reference_ns": 129783999,
+      "cache_counts": {
+        "divisor_cache_hits": 0,
+        "divisors_formed": 130944,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15469767666816",
+        "allowance": "94511320846112",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 3,
+        "anchor_generation": 3
+      }
+    },
+    {
+      "step": 3,
+      "route": 0,
+      "measured": true,
+      "wall_ns": 189669246715,
+      "reference_ns": 129092629,
+      "cache_counts": {
+        "divisor_cache_hits": 0,
+        "divisors_formed": 130944,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15469767666816",
+        "allowance": "94511320846112",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 4,
+        "anchor_generation": 4
+      }
+    },
+    {
+      "step": 3,
+      "route": 1,
+      "measured": true,
+      "wall_ns": 145962296700,
+      "reference_ns": 127784000,
+      "cache_counts": {
+        "divisor_cache_hits": 130944,
+        "divisors_formed": 0,
+        "equations": 131072,
+        "final_exponentiations": 131072,
+        "g2_prepare_builds": 163680,
+        "g2_prepare_hits": 98464,
+        "max_read_roots": 64,
+        "miller_calls": 131072,
+        "pairing_terms": 262144,
+        "read_batches": 2048,
+        "read_points": 131072
+      },
+      "receipt": {
+        "changed": 16,
+        "rebuild_units": "15472051465344",
+        "allowance": "94523501104928",
+        "swapped": true,
+        "pending": false,
+        "restarted": false,
+        "generation": 4,
+        "anchor_generation": 4
+      }
+    }
+  ],
+  "process_telemetry": {
+    "samples": 380,
+    "rss_sample_max_bytes": 1551306752,
+    "hwm_observed_max_bytes": 1665712128,
+    "gpu_sample_max_bytes": 2518679552,
+    "errors": []
+  },
+  "telemetry_interval_seconds": 5,
+  "maximum_sample_gap_seconds": 5.02739405632019,
+  "source_id": "f667c57046d0bc265b655d5a53c65c8cb106912384d4752bb4330faa0d576340",
+  "product_identity": "c6a8da2f78bfd51ecf2fd5b65fe5e88670d1b2dddc64e66b2c98e7138b17cadb",
+  "support_id": "f8ce2eed0a276f2f85d80fc0722d4f0b97a79e39560f4fa3b76c13a7f7b9e78c",
+  "raw_fixture_sha256": "66946493ab9ec8ce5ecf17bf5d97ea2fcab97fc80285e4a5dc359be8826befdd",
+  "sealed_private_bundle_sha256": "7ecdc77a2bee40ccfd6755d5301523a519e9d3773f4aae8533b4b64b27374eb9",
+  "scope": [
+    "Two timed updates per route, not statistical significance.",
+    "Route phase sums are arithmetic sums; the shared setup appears once in the actual process.",
+    "Cache details are children of cache_check, itself a child of rebuilding/preparation/update.",
+    "Five-second process samples are not certified RSS/VRAM peaks;2GiB is per owner.",
+    "Complete zero knowledge and larger circuit sizes are not established."
+  ],
+  "probe_unassigned_wall_seconds": 1.0623596949242256
+}

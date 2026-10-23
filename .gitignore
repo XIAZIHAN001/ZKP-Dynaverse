@@ -25,6 +25,7 @@ __pycache__/
 *.tar.gz
 *.log
 !experiments/adaptive-fullopt/fixtures/*.log
+!experiments/full-divisor-cache/fixtures/*.log
 /docs/g2-validation-20261017/
 
 # Credentials and machine-specific overrides

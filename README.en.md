@@ -1,5 +1,7 @@
 # ZKP-Dynaverse
 
+This experimental branch adds an opt-in full-domain public G2 divisor cache. The local n=1024 GPU two-update sample is5.844→4.878s (1.198×), with construction inside separately reported initialization and complete independent validation/work accounting preserved. The CPU workspace passed285 tests and the default GPU suite154; independent review passed. H200 job1159 passed acceptance: n=65536 two-update sample379.445→292.006s (1.299×). See the [phase report](docs/H200_1159_PHASE_REPORT.md). See the [bilingual experiment report](docs/FULL_DIVISOR_CACHE.md).
+
 Prepared-cache tuning is isolated in an experimental branch; the R5 strategy remains unchanged. Local two-update sample ratios against the fully optimized 64-root control are 1.149× at n=256 and 1.348× at n=1024. The H200 n=65536 scan passed acceptance: 64→4096 roots changes the two-update sum from 380.454 s to 373.280 s (1.019×); the large-domain gain is modest. See the [bilingual experiment notes](docs/PREPARED_CACHE_TUNING.md); these ratios are not end-to-end speedups.
 
 English | [中文](README.md)

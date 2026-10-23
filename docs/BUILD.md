@@ -1,5 +1,7 @@
 # Building and reproducing
 
+The separate full-divisor probe defaults to driverless CPU; add `--features gpu` for GPU. See [commands and evidence](FULL_DIVISOR_CACHE.md).
+
 [中文](BUILD.zh-CN.md) | [Project overview](../README.en.md)
 
 ## CPU only
@@ -129,3 +131,5 @@ python3 -B -c 'from pathlib import Path; from analysis import analyze_log; print
 Build ICICLE with architecture `90`, use `env/h200.env`, set `ICICLE_LIB_DIR=/opt/icicle/arch90`, and build the bridge with `bash scripts/build_native_icicle.sh h200`. Set `DYNAVERSE_NATIVE_LIB_DIR=/workspace/build/native-sm90` before building Rust GPU targets.
 
 Schedule the `fullopt` matrix through your own cluster allocation. This public repository intentionally excludes account-specific SSH aliases, Slurm paths, and submission credentials. H200 job 1157 passed the n=256/65536 matrix for the published probe and core sources; see the [acceptance report](SUPPLEMENTAL_TESTS.md). Reproduction on another build or hardware still requires actual execution and raw-event validation.
+
+H200 n=65536 off/on reproduction passed in job1159; see [phase report](H200_1159_PHASE_REPORT.md).
