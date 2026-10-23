@@ -1,5 +1,7 @@
 # ZKP-Dynaverse
 
+Prepared-cache tuning is isolated in an experimental branch; the R5 strategy remains unchanged. Local two-update sample ratios against the fully optimized 64-root control are 1.149× at n=256 and 1.348× at n=1024. The H200 n=65536 scan passed acceptance: 64→4096 roots changes the two-update sum from 380.454 s to 373.280 s (1.019×); the large-domain gain is modest. See the [bilingual experiment notes](docs/PREPARED_CACHE_TUNING.md); these ratios are not end-to-end speedups.
+
 English | [中文](README.md)
 
 A Dynaverse incremental-proof research prototype built with Rust, arkworks BN254, and CUDA/ICICLE. It retains a CPU reference and calls GPU operators through a thin Rust interface to study sparse updates, staged rebuilding, and cache reuse.

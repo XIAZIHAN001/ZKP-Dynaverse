@@ -22,3 +22,7 @@ lto = "thin"
 [[bin]]
 name = "fullopt_probe"
 path = "main.rs"
+
+[[bin]]
+name = "prepared_cache_probe"
+path = "prepared_cache.rs"
