@@ -24,9 +24,18 @@
 
 ### H200及资源边界
 
-H200 n=65536的四档扫描已提交，结果**尚未验收**。本地收益不能直接外推到H200：最大4096根只覆盖该规模的6.25%。最终是否选择更大容量，要同时看实际update收益与初始化/内存代价。
+H200 n=65536四档扫描已完成并通过原始事件、完整重建、Reference/proof/witness、最终CPU稠密锚点、配额和资源验收，终态COMPLETED/0:0。两笔实测update合计如下：
 
-2GiB为每owner配额，四条比较路径同时保留多个owner，进程总RSS或显存可以超过2GiB。最大档的资源计划上界为1,613,360,896字节/owner，其中prepared host envelope为271,060,992字节；undo128MiB覆盖92MiB事务界。这些是计划界，不是RSS或显存测量值。远端会采样五秒进程遥测，采样最大值不能称作认证峰值。未新增完整零知识或生产安全保证。
+| prepared根数 | 两笔update / s | 64根对照 / 本档 |
+|---:|---:|---:|
+|64|380.453942|1.000000|
+|256|380.092028|1.000952|
+|1024|378.743913|1.004515|
+|4096|373.279908|1.019219|
+
+4096根每两笔样本共节省7.174034秒，时间减少约1.886%；额外prepared请求保留内存约95.269MiB，预计算从0.026768秒增至1.777054秒，仍计入初始化。最大前缀只覆盖6.25%根，未减少Miller/最终幂次数，因此大规模收益有限。两笔样本不足以断言统计显著性；R5默认64根保持不变，更大容量作为可选实验配置。
+
+2GiB为每owner配额，四条比较路径同时保留多个owner，进程总RSS或显存可以超过2GiB。最大档的资源计划上界为1,613,360,896字节/owner，其中prepared host envelope为271,060,992字节；undo128MiB覆盖92MiB事务界。这些是计划界，不是RSS或显存测量值。远端取得820次五秒进程采样，VmHWM观测最大2,175,139,840字节（约2.03GiB），显存采样最大4,972,347,392字节（约4.63GiB），采样错误0、未发现OOM。进程合计包含四个owner，不等于单owner用量；这些观测不是认证峰值。未新增完整零知识或生产安全保证。
 
 ## English
 
@@ -38,7 +47,7 @@ The local sm_120 table above reports the sum of the **two measured updates**. At
 
 Actual divisor/G2 preparation work decreases while every update retains 2*n independent Product equations, Miller calls and final exponentiations. Each route must complete its paid rebuild, stay within work/resource limits, match proof/witness after each step, pass Reference, and match the final CPU dense anchor. Existing optimization hits and GPU sparse dispatch are checked. Ten Rust tests and 26 Python regressions pass; repaired harness assertions and independent-review findings have regression coverage. Product code is unchanged.
 
-The H200 n=65536 four-capacity scan is submitted and **not yet accepted**. A 4096-root prefix covers only 6.25% of that domain, so local gains cannot establish H200 gains. The 2 GiB admission is per owner, not aggregate process memory; the comparison retains several owners. At 4096 roots, the planned per-owner upper bound is 1,613,360,896 bytes, including 271,060,992 bytes for the prepared host envelope. The 128 MiB undo arena covers the 92 MiB transaction bound. Planned bounds are not measured RSS/VRAM peaks. Five-second process samples will remain observational measurements. The prototype provides no complete zero-knowledge or production-security guarantee.
+The H200 n=65536 four-capacity scan passed terminal, raw-event, complete rebuild, Reference/proof/witness, final CPU dense-anchor, quota and resource acceptance. The table above reports two measured update sums: 380.453942 s at 64 roots versus 373.279908 s at 4096 roots (1.019219×), a 7.174034 s sample saving or 1.886% less time. The larger table retains about 95.269 MiB extra requested memory and increases precomputation from 0.026768 s to 1.777054 s, charged to initialization. Two samples do not establish statistical significance. R5 keeps its 64-root default; larger prefixes remain optional experiments. A 4096-root prefix covers only 6.25% of that domain, so local gains cannot establish H200 gains. The 2 GiB admission is per owner, not aggregate process memory; the comparison retains several owners. At 4096 roots, the planned per-owner upper bound is 1,613,360,896 bytes, including 271,060,992 bytes for the prepared host envelope. The 128 MiB undo arena covers the 92 MiB transaction bound. Planned bounds are not measured RSS/VRAM peaks. The 820 five-second process samples report an observed VmHWM maximum of 2,175,139,840 bytes (about 2.03 GiB) and GPU sampled maximum of 4,972,347,392 bytes (about 4.63 GiB), with no sampling errors or observed OOM. These aggregate four-owner observations are not certified peaks. The prototype provides no complete zero-knowledge or production-security guarantee.
 
 ## 复现 / Reproduction
 
@@ -55,3 +64,5 @@ python -B experiments/adaptive-fullopt/prepared_analysis.py results.log
 Save the probe stdout as `results.log` before running the analyzer. Use `256 scan` for the small matrix and `65536 scan` for the admitted H200 matrix. Build time, calibration and independent external oracles are outside the two-update timing. The scan does not change protocol defaults.
 
 [Structured results](results/prepared-cache-tuning-2026-10-23.json) · [n256 raw events](../experiments/adaptive-fullopt/fixtures/prepared-n256.log) · [n1024 raw events](../experiments/adaptive-fullopt/fixtures/prepared-n1024.log)
+
+[H200原始事件 / H200 raw events](../experiments/adaptive-fullopt/fixtures/prepared-h200-20261023.log)

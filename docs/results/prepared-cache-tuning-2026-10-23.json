@@ -270,7 +270,7 @@
   },
   "validation": {
     "rust_tests": 10,
-    "python_tests": 26,
+    "python_tests": 27,
     "paired_reference_proof_witness_cpu_dense": true,
     "independent_review": "no unresolved P1/P2 after repairs"
   },
@@ -282,9 +282,217 @@
       1024,
       4096
     ],
-    "status": "SUBMITTED_NOT_ACCEPTED",
+    "status": "PASS_ACCEPTED",
+    "terminal": {
+      "state": "COMPLETED",
+      "exitcode": "0:0",
+      "success": true
+    },
+    "command_wall_seconds": 4117.7534248624,
+    "performance": {
+      "n": 65536,
+      "measured_steps": 2,
+      "setup_ns": 15033261297,
+      "readback_calibration": {
+        "bounded_g1_decode": true,
+        "cofactor_decode_points_per_call": 64,
+        "correct": true,
+        "device_affine_readback_selected": true,
+        "device_bounded_median_ns": 255550,
+        "device_d2h_bytes": 4096,
+        "full_decode_points_per_call": 0,
+        "host_bounded_median_ns": 1646686,
+        "host_d2h_bytes": 6144,
+        "kind": "fullopt_readback_calibration",
+        "n": 65536,
+        "points": 64,
+        "samples_per_route": 6,
+        "selection_margin_percent": 3
+      },
+      "routes": [
+        {
+          "cap": 64,
+          "actual_roots": 64,
+          "initial_ns": 262074879897,
+          "precompute_ns": 26768445,
+          "retained_bytes": 1610640,
+          "resource": {
+            "cache_preparation_host_bytes": 4755456,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 715131104,
+            "tile_len": 512,
+            "transaction_bytes": 96468992,
+            "upper_bytes": 1347055360,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 380453941737,
+          "control_over_candidate": 1.0,
+          "divisors_formed_per_update": 130944,
+          "rebuild_ns": {
+            "materialize": 59307841,
+            "linear_msm": 732067703,
+            "fr_transform": 2693487386,
+            "g1_transform": 11038696600,
+            "polynomial": 2659647229,
+            "memory": 77395686,
+            "cache_check": 362783537662,
+            "finish": 142713520
+          },
+          "cache_ns": {
+            "read_points": 1252106844,
+            "g1_difference": 4051823668,
+            "g2_divisor": 86394265825,
+            "g2_prepare": 32338122359,
+            "miller": 113848491306,
+            "final_exponentiation": 124683484241,
+            "undo_store": 52331936,
+            "unchanged_copy": 8860348
+          }
+        },
+        {
+          "cap": 256,
+          "actual_roots": 256,
+          "initial_ns": 262313372181,
+          "precompute_ns": 108531153,
+          "retained_bytes": 6367632,
+          "resource": {
+            "cache_preparation_host_bytes": 17436672,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 715131104,
+            "tile_len": 512,
+            "transaction_bytes": 96468992,
+            "upper_bytes": 1359736576,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 380092028243,
+          "control_over_candidate": 1.0009521733346343,
+          "divisors_formed_per_update": 130560,
+          "rebuild_ns": {
+            "materialize": 60231603,
+            "linear_msm": 732103456,
+            "fr_transform": 2691847785,
+            "g1_transform": 11045059619,
+            "polynomial": 2659595032,
+            "memory": 76898889,
+            "cache_check": 362415612150,
+            "finish": 142630128
+          },
+          "cache_ns": {
+            "read_points": 1252524000,
+            "g1_difference": 4061057843,
+            "g2_divisor": 86130729839,
+            "g2_prepare": 32249114812,
+            "miller": 113842682926,
+            "final_exponentiation": 124672956028,
+            "undo_store": 44240628,
+            "unchanged_copy": 8881884
+          }
+        },
+        {
+          "cap": 1024,
+          "actual_roots": 1024,
+          "initial_ns": 262221512263,
+          "precompute_ns": 444948648,
+          "retained_bytes": 25395600,
+          "resource": {
+            "cache_preparation_host_bytes": 68161536,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 715131104,
+            "tile_len": 512,
+            "transaction_bytes": 96468992,
+            "upper_bytes": 1410461440,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 378743912768,
+          "control_over_candidate": 1.0045150005355927,
+          "divisors_formed_per_update": 129024,
+          "rebuild_ns": {
+            "materialize": 60354185,
+            "linear_msm": 732336468,
+            "fr_transform": 2709548727,
+            "g1_transform": 11053524915,
+            "polynomial": 2659884593,
+            "memory": 77592946,
+            "cache_check": 361039247813,
+            "finish": 142656072
+          },
+          "cache_ns": {
+            "read_points": 1251729937,
+            "g1_difference": 4060669326,
+            "g2_divisor": 85121167517,
+            "g2_prepare": 31898883514,
+            "miller": 113839113648,
+            "final_exponentiation": 124663315796,
+            "undo_store": 42233629,
+            "unchanged_copy": 8906153
+          }
+        },
+        {
+          "cap": 4096,
+          "actual_roots": 4096,
+          "initial_ns": 263480120959,
+          "precompute_ns": 1777054173,
+          "retained_bytes": 101507472,
+          "resource": {
+            "cache_preparation_host_bytes": 271060992,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 715131104,
+            "tile_len": 512,
+            "transaction_bytes": 96468992,
+            "upper_bytes": 1613360896,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 373279907945,
+          "control_over_candidate": 1.0192189122406692,
+          "divisors_formed_per_update": 122880,
+          "rebuild_ns": {
+            "materialize": 59934894,
+            "linear_msm": 731243101,
+            "fr_transform": 2706165496,
+            "g1_transform": 11056756393,
+            "polynomial": 2659325136,
+            "memory": 76280063,
+            "cache_check": 355580744936,
+            "finish": 142730241
+          },
+          "cache_ns": {
+            "read_points": 1245803401,
+            "g1_difference": 4057774755,
+            "g2_divisor": 81086173966,
+            "g2_prepare": 30496499950,
+            "miller": 113844126091,
+            "final_exponentiation": 124649023678,
+            "undo_store": 42095582,
+            "unchanged_copy": 8769533
+          }
+        }
+      ],
+      "raw_rows": 29,
+      "scope": "two measured updates; nested scopes are separate"
+    },
+    "process_telemetry": {
+      "measurement": "5-second process samples; maxima are lower bounds",
+      "samples": 820,
+      "rss_sample_max_bytes": 2061959168,
+      "hwm_observed_max_bytes": 2175139840,
+      "gpu_sample_max_bytes": 4972347392,
+      "errors": []
+    },
     "native_owner_limit_bytes": 2147483648,
-    "maximum_per_owner_plan_upper_bytes": 1613360896
+    "maximum_per_owner_plan_upper_bytes": 1613360896,
+    "binary_sha256": "b645871854d558ca0f2e9681b89d5023388bb4f608f7bbb27979adf7a96fba5e"
   },
   "scope": [
     "Two measured update sums per route; no statistical significance or end-to-end speedup claim.",
@@ -303,8 +511,9 @@
     "experiments/adaptive-fullopt/prepared_policy.rs": "2b74fdbe9e1090e9b1001663f7e859174ab920c86f5c8fbbd766ba01bdbc04e9",
     "experiments/adaptive-fullopt/prepared_analysis.py": "3550b8307486fb28e19bc6cc3491684acb41f63834028472d9f754a5e4fa0ffd",
     "experiments/adaptive-fullopt/policy.py": "295676cf99b163ce18cf0c4335d3e3616eb8e25da714762274d9f5e6c287bc14",
-    "experiments/adaptive-fullopt/test_prepared_analysis.py": "dbc348bfec75cf3ae92044f4dfaff0f18dc2575e35e16554422dcae57652a9a6",
+    "experiments/adaptive-fullopt/test_prepared_analysis.py": "49f35e7cead5c4e8a8f1ce829c29a3045a1b57ed6a96d3cd5b8fea95512a9141",
     "experiments/adaptive-fullopt/fixtures/prepared-n256.log": "d962dbe54b8b0469d3ca39064130ae6f77140dcf261cbfb20d3db71a8b8fb3c0",
-    "experiments/adaptive-fullopt/fixtures/prepared-n1024.log": "33a1d0d8d00fad2f7d73546f47daad89f851db426ffb3d40ad7638a583429f40"
+    "experiments/adaptive-fullopt/fixtures/prepared-n1024.log": "33a1d0d8d00fad2f7d73546f47daad89f851db426ffb3d40ad7638a583429f40",
+    "experiments/adaptive-fullopt/fixtures/prepared-h200-20261023.log": "3be4fb39fdcaf3d777b3307f96c1714e31ab094a0541e567350d3b74e132ca98"
   }
 }

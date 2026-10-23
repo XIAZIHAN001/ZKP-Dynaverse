@@ -5,6 +5,13 @@ from prepared_analysis import analyze
 
 
 class PreparedEvidenceContract(unittest.TestCase):
+    def test_completed_h200_tiled_partial_prefix_scan_is_accepted(self):
+        text = (Path(__file__).parent / 'fixtures/prepared-h200-20261023.log').read_text(encoding='utf-8')
+        result = analyze(text)
+        self.assertEqual(result['n'], 65536)
+        self.assertEqual([r['cap'] for r in result['routes']], [64,256,1024,4096])
+        self.assertEqual(result['routes'][-1]['divisors_formed_per_update'], 122880)
+
     def setUp(self):
         self.lines = (Path(__file__).parent / 'fixtures/prepared-n256.log').read_text(encoding='utf-8').splitlines()
 
