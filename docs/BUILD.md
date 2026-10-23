@@ -1,5 +1,7 @@
 # Building and reproducing
 
+The separate full-divisor probe defaults to driverless CPU; add `--features gpu` for GPU. See [commands and evidence](FULL_DIVISOR_CACHE.md).
+
 [中文](BUILD.zh-CN.md) | [Project overview](../README.en.md)
 
 ## CPU only

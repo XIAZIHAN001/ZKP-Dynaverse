@@ -1,5 +1,7 @@
 # 构建与复现
 
+独立 full-divisor 探针默认 CPU 构建无需 CUDA driver；GPU 需显式 `--features gpu`。见[复现与证据](FULL_DIVISOR_CACHE.md)。
+
 [English](BUILD.md) | [项目说明](../README.md)
 
 ## CPU路径

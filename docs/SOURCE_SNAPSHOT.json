@@ -1,6 +1,6 @@
 {
   "origin_product_identity": "ccaad7db8397ad024f836460c4aec078d91ef7616989de24c8a6800ed4370218",
-  "core_files_unchanged": true,
+  "core_files_unchanged": false,
   "core_files": {
     "crates/bench/benches/cpu_dynamo.rs": "3fae3646773c8b90f10d03226ed0813eb0bfccdd87fb9c4bcef846587a9273f3",
     "crates/bench/build.rs": "bf765c9982c0077a9fbad315141a8eb2e27ad77731f934ad8810aebc57f29549",
@@ -97,10 +97,10 @@
     "crates/protocol/src/dynamo.rs": "40c25f7975cb3a0347074cf20d7eaff9a90c7fcd8bbb0ca9412b374c1b80eb7b",
     "crates/protocol/src/dynaverse/rebuilding/global_g2.rs": "d5ac0d9d5885a0d54db6790416cde37c4b78dea0261357717ef500daf5ca5b71",
     "crates/protocol/src/dynaverse/rebuilding/linear.rs": "26508ea2456f591f5c0247efe25d8ae913bc5d796753762e3d5e44945c8dea9d",
-    "crates/protocol/src/dynaverse/rebuilding/machine.rs": "008bf205a4f25495c130d9f1a6bcd30fdf7442f67349830724bfddbbe3aae6d2",
+    "crates/protocol/src/dynaverse/rebuilding/machine.rs": "69e4ee7614c73331a885eea4f2f89165e98fc684898cf6906d81a2061657d731",
     "crates/protocol/src/dynaverse/rebuilding/preparation.rs": "67adecd6a516a2878aed1ae76d1b67a7d0920b751d2d234eac5f983512dfa259",
-    "crates/protocol/src/dynaverse/rebuilding/program.rs": "685066503d6f6036849aabb1103861eed15d71c0fe318474487f1003bb60db61",
-    "crates/protocol/src/dynaverse/rebuilding.rs": "78bb8c5b3c2c0402b0ac606361623cee93fa4c93a110b28c11c8dfb9e132ef68",
+    "crates/protocol/src/dynaverse/rebuilding/program.rs": "183acdf5e8e71cba1fcc7563a4f3c50c8b667210ea82a79eb9cba87c3c229191",
+    "crates/protocol/src/dynaverse/rebuilding.rs": "60dae81932e24651c5f3bcf80d7237e833e86edd9b0320bbadeacd7f7c6b8706",
     "crates/protocol/src/dynaverse/session.rs": "7c3e6562c5af300c1c9e1c0c3456b1212cd645495c9e2aa4a4333bcc42dc6213",
     "crates/protocol/src/dynaverse/sparse.rs": "b56703abf9cbcdb2a790367ccf228e3bcb285d29d1363f3e26501686bc5c029b",
     "crates/protocol/src/dynaverse/sparse_geometry.rs": "a1f6b2af3e082b7d7ea4e559a468d2fe3d31117dabddc8b2a86458e22dd726b7",
@@ -110,10 +110,10 @@
     "crates/protocol/src/incremental_rebuild/operators.rs": "7db6fcd4617a374aae5f94ee408526943c990b4bb3995aabc4c3b7db1799657c",
     "crates/protocol/src/incremental_rebuild/operators_tests.rs": "71dd32f425ac9f9fea6e5605eb267fc1b89558fb47fd3553d3f25f6790530dd7",
     "crates/protocol/src/incremental_rebuild/sparse_dispatch.rs": "e9ce5341c58fa01b900939dfc23629b8185a843d68c1d2d198d15d5ada8fc009",
-    "crates/protocol/src/incremental_rebuild/telemetry.rs": "e87d5cc175765e567ecfcf6cb7e1f42a0505b9a89d1edd399951c87064d193e8",
+    "crates/protocol/src/incremental_rebuild/telemetry.rs": "66235ede468f5afc595959d92dad3fd49a5daa2fa6c2100647c4ec2266455e07",
     "crates/protocol/src/incremental_rebuild/work.rs": "6b0f09e230038b51216769f46a4e45bd51db1e9ab2f6d931c5d2f78656368194",
     "crates/protocol/src/incremental_rebuild/work_tests.rs": "890f71b9067f10574e3a62bb35bf6499e5636e5737bd400c9896c087ae30c79c",
-    "crates/protocol/src/incremental_rebuild.rs": "01ec56c5fc98b537972121a0ea94d5127628e5d81b566005fba599dd2de91dd7",
+    "crates/protocol/src/incremental_rebuild.rs": "f9fea8972cea926c60de81b1c01bbdcd328f62673b5656992131b9ed2a3df96d",
     "crates/protocol/src/kzg.rs": "23754df320678436449ae60c144fec3cd7d7e5b35ec8a6ec3f0517c91b67908b",
     "crates/protocol/src/kzg_sparse_tests.rs": "e58254e8e90fcdc986846617fe40539095d73267256737b4257acc286df9c758",
     "crates/protocol/src/lib.rs": "093fed84ad00306a81776aed09d56a162345bdeccc9bc659a79f08579389c237",
@@ -199,11 +199,51 @@
     "native/tests/fail_cuda_alloc.cpp": "d666adf2228f12691203266104493ade381114f26611a9025d0d4ea05f0bd1ac",
     "native/tests/g2_validation_test_api.h": "2c5f0691655e6501d5fc67d51eb821e3929f709fbbdc0f8740da7639eb7aeea9",
     "native/tests/msm_resource_probe.cu": "e84fcd91dc68756b10a6b33d1ab620d6d90c3b7ecff85f01df22634ff48b348f",
-    "native/tests/resident_api_probe.cpp": "45f08766c244cd5694c147e8d217fd32135a50d2eb72d8c7c93623f93ac7be6d"
+    "native/tests/resident_api_probe.cpp": "45f08766c244cd5694c147e8d217fd32135a50d2eb72d8c7c93623f93ac7be6d",
+    "crates/protocol/src/dynaverse/rebuilding/divisors.rs": "68281ca85dcf6e19a4ae9d72a169c4a1c50a234386f5a2fd47fccdecb11a47a0",
+    "crates/protocol/src/dynaverse/rebuilding/divisor_checks_tests.rs": "785ce695184b35687a88d8f8d7d03c6da604885516374a1fafe6b8e69e98a0ed",
+    "crates/protocol/tests/full_divisor_cache.rs": "9c8398fd614aa242fdc02b8b075551582506b5a46cde3bb47ba708aefd83dde9"
   },
   "publication_changes": [
     "documentation",
     "ignore/line-ending rules",
     "external experiment dependency paths"
-  ]
+  ],
+  "baseline_commit": "518bfed09b5602f175e5027c498a99d3629f103e",
+  "native_and_gpu_wrapper_unchanged": true,
+  "source_changes": {
+    "crates/protocol/src/dynaverse/rebuilding/machine.rs": {
+      "before": "008bf205a4f25495c130d9f1a6bcd30fdf7442f67349830724bfddbbe3aae6d2",
+      "after": "69e4ee7614c73331a885eea4f2f89165e98fc684898cf6906d81a2061657d731"
+    },
+    "crates/protocol/src/dynaverse/rebuilding/program.rs": {
+      "before": "685066503d6f6036849aabb1103861eed15d71c0fe318474487f1003bb60db61",
+      "after": "183acdf5e8e71cba1fcc7563a4f3c50c8b667210ea82a79eb9cba87c3c229191"
+    },
+    "crates/protocol/src/dynaverse/rebuilding.rs": {
+      "before": "78bb8c5b3c2c0402b0ac606361623cee93fa4c93a110b28c11c8dfb9e132ef68",
+      "after": "60dae81932e24651c5f3bcf80d7237e833e86edd9b0320bbadeacd7f7c6b8706"
+    },
+    "crates/protocol/src/incremental_rebuild/telemetry.rs": {
+      "before": "e87d5cc175765e567ecfcf6cb7e1f42a0505b9a89d1edd399951c87064d193e8",
+      "after": "66235ede468f5afc595959d92dad3fd49a5daa2fa6c2100647c4ec2266455e07"
+    },
+    "crates/protocol/src/incremental_rebuild.rs": {
+      "before": "01ec56c5fc98b537972121a0ea94d5127628e5d81b566005fba599dd2de91dd7",
+      "after": "f9fea8972cea926c60de81b1c01bbdcd328f62673b5656992131b9ed2a3df96d"
+    },
+    "crates/protocol/src/dynaverse/rebuilding/divisors.rs": {
+      "before": null,
+      "after": "68281ca85dcf6e19a4ae9d72a169c4a1c50a234386f5a2fd47fccdecb11a47a0"
+    },
+    "crates/protocol/src/dynaverse/rebuilding/divisor_checks_tests.rs": {
+      "before": null,
+      "after": "785ce695184b35687a88d8f8d7d03c6da604885516374a1fafe6b8e69e98a0ed"
+    },
+    "crates/protocol/tests/full_divisor_cache.rs": {
+      "before": null,
+      "after": "9c8398fd614aa242fdc02b8b075551582506b5a46cde3bb47ba708aefd83dde9"
+    }
+  },
+  "current_core_identity": "0c367195b5f7edd9b6cb0489a74205bff2a8612ef35db96fae42c19820289ff4"
 }

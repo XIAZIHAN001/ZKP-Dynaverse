@@ -1,5 +1,7 @@
 # Validation boundaries / 验证边界
 
+The new full-divisor experiment passed local CPU/GPU paired checks at n=256/1024. This is separate from accepted1157/1158 evidence; its H200 validation is pending. 新 divisor 缓存的本地配对通过，H200 待执行，见 [report](FULL_DIVISOR_CACHE.md).
+
 ## Evidence included / 已包含的证据
 
 The public fixtures contain unchanged JSON events and success markers from real local n=256/1024 runs on an RTX 5070 Ti Laptop GPU. Build banners and machine-specific command wrappers are omitted. `docs/results/local-2026-10-22.json` contains the derived matrices.

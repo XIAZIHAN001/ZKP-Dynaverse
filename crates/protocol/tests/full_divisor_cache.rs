@@ -48,3 +48,35 @@ fn full_divisor_late_cache_corruption_restores_entire_session_and_retries_exactl
     assert!(params.verifying_key().verify_reference(&instance,s.proof()).unwrap());
     assert_eq!(s.proof().anchor,params.prove_anchor(&instance,s.current_witness()).unwrap().anchor);
 }
+
+#[test]
+fn full_divisor_table_stays_public_across_pending_epochs_and_large_completion() {
+    let n=64;let circuit=ToyCircuit::new(n).unwrap();let(instance,witness)=circuit.valid_instance();
+    let params=DynaverseParams::setup(circuit,&mut StdRng::seed_from_u64(27211)).unwrap();
+    let cfg=IncrementalConfig {window:Some(8),trace_updates:true,rebuild_divisor_cache:true,
+        rebuild_cache_mode:VerificationMode::Product,rebuild_prepared_cache_roots:Some(3),
+        rebuild_cache_readback_roots:Some(8),unchanged_cache_reuse:true,..Default::default()};
+    let mut s=params.start_incremental_session(&instance,&witness,cfg,CpuRebuildBackend::default()).unwrap();
+    let table=s.cache_divisor_stats();let mut saw_pending=false;
+    for i in 1..=12 {
+        let w=s.current_witness();let v=w.wires[4*n+i]+Fr::from(9u64);
+        let update=Update {indices:vec![4*n+i,5*n+i],values:vec![v,w.wires[3*n+i]*v]};
+        s.update(&update).unwrap();saw_pending|=s.rebuild_progress().is_some();
+        assert!(s.last_receipt().rebuild_units<=s.last_receipt().allowance);
+        assert_eq!(s.update_timings().cache_detail.divisors_formed,0);
+        assert_eq!(s.cache_divisor_stats(),table);
+        assert!(params.verifying_key().verify_reference(&instance,s.proof()).unwrap());
+    }
+    assert!(saw_pending,"small calls must exercise a pending job");
+    let w=s.current_witness();let mut finish=Update {indices:Vec::new(),values:Vec::new()};
+    for i in 1..=8 {
+        let v=w.wires[4*n+i]+Fr::from(11u64);
+        finish.indices.extend([4*n+i,5*n+i]);finish.values.extend([v,w.wires[3*n+i]*v]);
+    }
+    s.update(&finish).unwrap();
+    assert!(s.last_receipt().large_batch && s.last_receipt().swapped && s.rebuild_progress().is_none());
+    assert_eq!(s.update_timings().cache_detail.divisors_formed,0);
+    assert_eq!(s.update_timings().cache_detail.equations,128);
+    assert_eq!(s.cache_divisor_stats(),table);
+    assert_eq!(s.proof().anchor,params.prove_anchor(&instance,s.current_witness()).unwrap().anchor);
+}
