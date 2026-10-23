@@ -41,6 +41,8 @@ H200每档同样只有两笔计时update，排除校准及外部Reference；这�
 
 ## 按规模选择策略
 
+独立实验分支正在扫描prepared缓存容量，保留本页R5策略不变。相对64根全优化对照，本地n=256扩大到256根的两笔update样本比值为1.149，n=1024扩大到1024根为1.348；H200大规模扫描尚未验收。详见[双语实验说明](docs/PREPARED_CACHE_TUNING.md)，这些比值不能称作端到端加速。
+
 策略位于[`Strategy::for_size`](experiments/adaptive-fullopt/strategy.rs)，在创建session前固定，不改变协议默认值。
 
 | n | window/H | 变换 | prepared/readback roots | undo |

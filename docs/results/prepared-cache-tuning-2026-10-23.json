@@ -1,0 +1,310 @@
+{
+  "schema": 1,
+  "base_public_commit": "08b1ee621953833bef13bbbed837272f2d26e676",
+  "experiment": "bounded prepared-cache capacity only",
+  "core_files_unchanged": 198,
+  "r5_probe_files_unchanged": true,
+  "local_native_library_sha256": "f879706fcee01e37719ad8e6c1f66ab68ad559719dd4b0441dd590b5f439d4fa",
+  "local_hardware": "NVIDIA GeForce RTX 5070 Ti Laptop GPU (sm_120)",
+  "local": {
+    "256": {
+      "n": 256,
+      "measured_steps": 2,
+      "setup_ns": 1393631044,
+      "readback_calibration": {
+        "bounded_g1_decode": true,
+        "cofactor_decode_points_per_call": 64,
+        "correct": true,
+        "device_affine_readback_selected": false,
+        "device_bounded_median_ns": 386721,
+        "device_d2h_bytes": 4096,
+        "full_decode_points_per_call": 0,
+        "host_bounded_median_ns": 1625682,
+        "host_d2h_bytes": 6144,
+        "kind": "fullopt_readback_calibration",
+        "n": 256,
+        "points": 64,
+        "samples_per_route": 6,
+        "selection_margin_percent": 3
+      },
+      "routes": [
+        {
+          "cap": 64,
+          "actual_roots": 64,
+          "initial_ns": 2782275691,
+          "precompute_ns": 17424784,
+          "retained_bytes": 1610640,
+          "resource": {
+            "cache_preparation_host_bytes": 4755456,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 104351968,
+            "tile_len": 32,
+            "transaction_bytes": 376832,
+            "upper_bytes": 277507840,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 1826540209,
+          "control_over_candidate": 1.0,
+          "divisors_formed_per_update": 384,
+          "rebuild_ns": {
+            "materialize": 6245092,
+            "linear_msm": 72942734,
+            "fr_transform": 8391666,
+            "g1_transform": 192547697,
+            "polynomial": 269403931,
+            "memory": 41903177,
+            "cache_check": 943012199,
+            "finish": 99293168
+          },
+          "cache_ns": {
+            "read_points": 38982409,
+            "g1_difference": 9875903,
+            "g2_divisor": 169327508,
+            "g2_prepare": 65705406,
+            "miller": 314740856,
+            "final_exponentiation": 343658583,
+            "undo_store": 26333,
+            "unchanged_copy": 11392
+          }
+        },
+        {
+          "cap": 256,
+          "actual_roots": 256,
+          "initial_ns": 2524643171,
+          "precompute_ns": 72327687,
+          "retained_bytes": 6367632,
+          "resource": {
+            "cache_preparation_host_bytes": 17436672,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 104351968,
+            "tile_len": 32,
+            "transaction_bytes": 376832,
+            "upper_bytes": 290189056,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 1589571965,
+          "control_over_candidate": 1.149076763567606,
+          "divisors_formed_per_update": 0,
+          "rebuild_ns": {
+            "materialize": 6253190,
+            "linear_msm": 69627718,
+            "fr_transform": 9298059,
+            "g1_transform": 189094306,
+            "polynomial": 265605491,
+            "memory": 43377736,
+            "cache_check": 717826222,
+            "finish": 100661104
+          },
+          "cache_ns": {
+            "read_points": 46263010,
+            "g1_difference": 10012202,
+            "g2_divisor": 1127699,
+            "g2_prepare": 1938857,
+            "miller": 314312687,
+            "final_exponentiation": 343717250,
+            "undo_store": 26183,
+            "unchanged_copy": 11502
+          }
+        }
+      ],
+      "raw_rows": 19,
+      "scope": "two measured updates; nested scopes are separate"
+    },
+    "1024": {
+      "n": 1024,
+      "measured_steps": 2,
+      "setup_ns": 1480417752,
+      "readback_calibration": {
+        "bounded_g1_decode": true,
+        "cofactor_decode_points_per_call": 64,
+        "correct": true,
+        "device_affine_readback_selected": true,
+        "device_bounded_median_ns": 381632,
+        "device_d2h_bytes": 4096,
+        "full_decode_points_per_call": 0,
+        "host_bounded_median_ns": 1661494,
+        "host_d2h_bytes": 6144,
+        "kind": "fullopt_readback_calibration",
+        "n": 1024,
+        "points": 64,
+        "samples_per_route": 6,
+        "selection_margin_percent": 3
+      },
+      "routes": [
+        {
+          "cap": 64,
+          "actual_roots": 64,
+          "initial_ns": 5613441017,
+          "precompute_ns": 17938660,
+          "retained_bytes": 1610640,
+          "resource": {
+            "cache_preparation_host_bytes": 4755456,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 110692576,
+            "tile_len": 64,
+            "transaction_bytes": 1507328,
+            "upper_bytes": 290090752,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 5210872040,
+          "control_over_candidate": 1.0,
+          "divisors_formed_per_update": 1920,
+          "rebuild_ns": {
+            "materialize": 13656245,
+            "linear_msm": 108103621,
+            "fr_transform": 12432078,
+            "g1_transform": 247287939,
+            "polynomial": 586436537,
+            "memory": 104803132,
+            "cache_check": 3844153769,
+            "finish": 97976388
+          },
+          "cache_ns": {
+            "read_points": 74991114,
+            "g1_difference": 36256379,
+            "g2_divisor": 826031175,
+            "g2_prepare": 316810458,
+            "miller": 1234138174,
+            "final_exponentiation": 1353715963,
+            "undo_store": 78799,
+            "unchanged_copy": 41120
+          }
+        },
+        {
+          "cap": 256,
+          "actual_roots": 256,
+          "initial_ns": 5411470068,
+          "precompute_ns": 71892586,
+          "retained_bytes": 6367632,
+          "resource": {
+            "cache_preparation_host_bytes": 17436672,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 110692576,
+            "tile_len": 64,
+            "transaction_bytes": 1507328,
+            "upper_bytes": 302771968,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 4791172743,
+          "control_over_candidate": 1.0875984481280057,
+          "divisors_formed_per_update": 1536,
+          "rebuild_ns": {
+            "materialize": 9835106,
+            "linear_msm": 109643577,
+            "fr_transform": 10893954,
+            "g1_transform": 209000125,
+            "polynomial": 509693356,
+            "memory": 97820790,
+            "cache_check": 3549293768,
+            "finish": 97459134
+          },
+          "cache_ns": {
+            "read_points": 83294086,
+            "g1_difference": 35709170,
+            "g2_divisor": 648019907,
+            "g2_prepare": 249182293,
+            "miller": 1205868118,
+            "final_exponentiation": 1325361077,
+            "undo_store": 75305,
+            "unchanged_copy": 24445
+          }
+        },
+        {
+          "cap": 1024,
+          "actual_roots": 1024,
+          "initial_ns": 5752134538,
+          "precompute_ns": 287076774,
+          "retained_bytes": 25395600,
+          "resource": {
+            "cache_preparation_host_bytes": 68161536,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 110692576,
+            "tile_len": 64,
+            "transaction_bytes": 1507328,
+            "upper_bytes": 353496832,
+            "workspace_reserve": 268435456
+          },
+          "two_update_ns": 3865116491,
+          "control_over_candidate": 1.348179816089274,
+          "divisors_formed_per_update": 0,
+          "rebuild_ns": {
+            "materialize": 11188439,
+            "linear_msm": 108815670,
+            "fr_transform": 12385359,
+            "g1_transform": 209289886,
+            "polynomial": 523260006,
+            "memory": 106429541,
+            "cache_check": 2610388657,
+            "finish": 93701135
+          },
+          "cache_ns": {
+            "read_points": 83782590,
+            "g1_difference": 34904195,
+            "g2_divisor": 3889473,
+            "g2_prepare": 5571522,
+            "miller": 1188050885,
+            "final_exponentiation": 1293028194,
+            "undo_store": 68558,
+            "unchanged_copy": 27669
+          }
+        }
+      ],
+      "raw_rows": 24,
+      "scope": "two measured updates; nested scopes are separate"
+    }
+  },
+  "validation": {
+    "rust_tests": 10,
+    "python_tests": 26,
+    "paired_reference_proof_witness_cpu_dense": true,
+    "independent_review": "no unresolved P1/P2 after repairs"
+  },
+  "h200": {
+    "n": 65536,
+    "caps": [
+      64,
+      256,
+      1024,
+      4096
+    ],
+    "status": "SUBMITTED_NOT_ACCEPTED",
+    "native_owner_limit_bytes": 2147483648,
+    "maximum_per_owner_plan_upper_bytes": 1613360896
+  },
+  "scope": [
+    "Two measured update sums per route; no statistical significance or end-to-end speedup claim.",
+    "Precompute is charged to initialization.",
+    "Nested timing scopes must not be summed twice.",
+    "2 GiB is per owner; process RSS/VRAM may exceed it.",
+    "No full zero-knowledge or production-security guarantee."
+  ],
+  "probe_files_sha256": {
+    "experiments/adaptive-fullopt/Cargo.toml": "7c82ea527aaf66226b39002d7174ac88d8bb5e0ee60f80d28f351148ee7b1fe2",
+    "experiments/adaptive-fullopt/Cargo.lock": "96c0fc4a27bbcbefa0669d7e7ff0594e4981b46829a6d06ba5412d3c702542ef",
+    "experiments/adaptive-fullopt/main.rs": "21e51149f94272649a9c7106678431c76c1d5a111a89a7e24636884246babe0f",
+    "experiments/adaptive-fullopt/strategy.rs": "f194b7824dc7a5f6631a3e40cb23f56b83ed980ca47976798139261c9686654c",
+    "experiments/adaptive-fullopt/readback.rs": "434ab1b6a09c4b92ef5193f51775586aec488f7f0d7762e03d4be4a38593e94a",
+    "experiments/adaptive-fullopt/prepared_cache.rs": "bd880746ba366a7c8208c33592288633365d7b41fc5d106bda4fc51a63759330",
+    "experiments/adaptive-fullopt/prepared_policy.rs": "2b74fdbe9e1090e9b1001663f7e859174ab920c86f5c8fbbd766ba01bdbc04e9",
+    "experiments/adaptive-fullopt/prepared_analysis.py": "3550b8307486fb28e19bc6cc3491684acb41f63834028472d9f754a5e4fa0ffd",
+    "experiments/adaptive-fullopt/policy.py": "295676cf99b163ce18cf0c4335d3e3616eb8e25da714762274d9f5e6c287bc14",
+    "experiments/adaptive-fullopt/test_prepared_analysis.py": "dbc348bfec75cf3ae92044f4dfaff0f18dc2575e35e16554422dcae57652a9a6",
+    "experiments/adaptive-fullopt/fixtures/prepared-n256.log": "d962dbe54b8b0469d3ca39064130ae6f77140dcf261cbfb20d3db71a8b8fb3c0",
+    "experiments/adaptive-fullopt/fixtures/prepared-n1024.log": "33a1d0d8d00fad2f7d73546f47daad89f851db426ffb3d40ad7638a583429f40"
+  }
+}
