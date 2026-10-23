@@ -82,6 +82,6 @@ existing nested timing categories and new real hit counts.
 - [x] Run `cargo test --offline --locked --workspace --release -- --test-threads=1` and full default GPU package suite; no source edits while a bound run is active.
 - [x] Request fresh independent branch review, repair important findings, rerun only affected gates.
 - [x] If local gates/gain pass, create a new immutable H200 campaign with new Rust source identity and unchanged native library hashes; do not reuse old product identity for modified source.
-- [ ] Verify support/source/dependencies, admission, shell and binary SM90, submit once n65536 off/on with five-second telemetry.
-- [ ] On failure collect evidence once and report; on success require terminal0:0 plus local/remote raw audits and CPU oracle, then seal.
-- [ ] Publish sanitized bilingual evidence on a new draft PR; leave main and previous PR unchanged.
+- [x] Verify support/source/dependencies, admission, shell and binary SM90, submit once n65536 off/on with five-second telemetry.
+- [x] On failure collect evidence once and report; on success require terminal0:0 plus local/remote raw audits and CPU oracle, then seal.
+- [x] Publish sanitized bilingual evidence on a new draft PR; leave main and previous PR unchanged.

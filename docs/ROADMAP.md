@@ -1,6 +1,6 @@
 # Next steps / 后续方向
 
-The full-domain affine-divisor cache is now implemented as a default-off experiment. Local n=256/1024 CPU/GPU pairs passed; full regression and independent review passed. H200 n=65536 job1159 is pending acceptance. 轻量全域 divisor 缓存已实现，本地配对、完整门禁和独立审查通过，H200作业1159待验收。见 [report](FULL_DIVISOR_CACHE.md).
+The full-domain affine-divisor cache is now implemented as a default-off experiment. Local n=256/1024 CPU/GPU pairs passed; full regression and independent review passed. H200 n=65536 job1159 passed acceptance; its [phase report](H200_1159_PHASE_REPORT.md) identifies remaining Miller/final-exponentiation cost. 轻量全域 divisor 缓存已实现，本地配对、完整门禁和独立审查通过，H200作业1159已验收；后续精简与性能工作以分阶段报告为基线。见 [report](FULL_DIVISOR_CACHE.md).
 
 The current snapshot is suitable for sharing the implementation and reproducing local experiments. Further optimization remains possible.
 

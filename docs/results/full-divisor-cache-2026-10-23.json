@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_GATES_PASSED_H200_RUNNING",
+  "status": "LOCAL_AND_H200_PASSED",
   "date": "2026-10-23",
   "baseline_commit": "518bfed09b5602f175e5027c498a99d3629f103e",
   "current_core_identity": "0c367195b5f7edd9b6cb0489a74205bff2a8612ef35db96fae42c19820289ff4",
@@ -547,8 +547,8 @@
     "minor_doc_commands_fixed": true
   },
   "h200": {
-    "status_at_last_observation": "RUNNING",
-    "observed_at": "2026-10-23T15:47:05.161845+08:00",
+    "status_at_last_observation": "COMPLETED",
+    "observed_at": "2026-10-23T16:19:12.557948+08:00",
     "job_id": "1159",
     "n": 65536,
     "routes": [
@@ -563,8 +563,144 @@
     "session_archive_sha256": "1274ca3a3eea6d686bc44ffb13e1915b0ab2ecd316b3587a8cab5614bed39b0b",
     "submission_count": 1,
     "telemetry_interval_seconds": 5,
-    "accepted": false,
+    "accepted": true,
     "automatic_resubmission": false,
-    "scope": "Scheduler snapshot only; no H200 speedup or completion claim."
+    "scope": "Accepted raw pairing/proof/Reference/work/resource evidence; only two timed updates per route, no significance or E2E speedup claim.",
+    "scheduler_runtime": "00:32:04",
+    "performance": {
+      "n": 65536,
+      "backend": "gpu",
+      "measured_steps": 2,
+      "setup_ns": 14981671768,
+      "cpu_dense_oracle_ns": 24024076649,
+      "two_update_control_over_cached": 1.299440394459426,
+      "phase_sum_control_over_cached": 1.2038590956191404,
+      "routes": [
+        {
+          "route": 0,
+          "initial_ns": 261002065574,
+          "precompute_ns": 0,
+          "construction_divisors": 0,
+          "retained_bytes": 0,
+          "resource": {
+            "cache_divisor_host_bytes": 0,
+            "cache_preparation_host_bytes": 4755456,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 715131104,
+            "tile_len": 512,
+            "transaction_bytes": 96468992,
+            "upper_bytes": 1347055360,
+            "workspace_reserve": 268435456
+          },
+          "budget": {
+            "large": "53162617975936",
+            "max_chunk": "5948719104",
+            "q": "5906957552882",
+            "total": "26581308987968"
+          },
+          "initial_check": {
+            "divisors_formed": 65536,
+            "equations": 196608,
+            "hits": 0
+          },
+          "two_update_ns": 379445029508,
+          "all_four_update_ns": 758953172891,
+          "route_phase_sum_ns": 1034936910233,
+          "external_reference_ns": 650572811,
+          "divisors_formed_per_update": 130944,
+          "rebuild_ns": {
+            "materialize": 59820563,
+            "linear_msm": 733367149,
+            "fr_transform": 2679142363,
+            "g1_transform": 11048412258,
+            "polynomial": 2659697372,
+            "memory": 76852934,
+            "cache_check": 361774066785,
+            "finish": 142168415
+          },
+          "cache_ns": {
+            "read_points": 1252116952,
+            "g1_difference": 4076097678,
+            "g2_divisor": 86484196772,
+            "g2_prepare": 32313650123,
+            "miller": 113588011771,
+            "final_exponentiation": 123832743232,
+            "undo_store": 47823926,
+            "unchanged_copy": 9549764
+          }
+        },
+        {
+          "route": 1,
+          "initial_ns": 260695464425,
+          "precompute_ns": 21395530489,
+          "construction_divisors": 65536,
+          "retained_bytes": 11010416,
+          "resource": {
+            "cache_divisor_host_bytes": 11145584,
+            "cache_preparation_host_bytes": 4755456,
+            "cache_readback_host_bytes": 36864,
+            "frozen_linear_bytes": 16128,
+            "global_g2_host_bytes": 69632,
+            "global_g2_workspace_bytes": 67239936,
+            "resident_bytes": 715131104,
+            "tile_len": 512,
+            "transaction_bytes": 96468992,
+            "upper_bytes": 1358200944,
+            "workspace_reserve": 268435456
+          },
+          "budget": {
+            "large": "53169469371520",
+            "max_chunk": "5948719104",
+            "q": "5907718819058",
+            "total": "26584734685760"
+          },
+          "initial_check": {
+            "divisors_formed": 0,
+            "equations": 196608,
+            "hits": 65536
+          },
+          "two_update_ns": 292006490737,
+          "all_four_update_ns": 584005624023,
+          "route_phase_sum_ns": 859682760216,
+          "external_reference_ns": 648985225,
+          "divisors_formed_per_update": 0,
+          "rebuild_ns": {
+            "materialize": 60532525,
+            "linear_msm": 733502222,
+            "fr_transform": 2720725645,
+            "g1_transform": 11065151526,
+            "polynomial": 2659697912,
+            "memory": 76686639,
+            "cache_check": 274279294086,
+            "finish": 142145051
+          },
+          "cache_ns": {
+            "read_points": 1208798127,
+            "g1_difference": 4052614155,
+            "g2_divisor": 58468498,
+            "g2_prepare": 32095487200,
+            "miller": 113378276405,
+            "final_exponentiation": 123289703182,
+            "undo_store": 25735013,
+            "unchanged_copy": 9427936
+          }
+        }
+      ],
+      "raw_rows": 19,
+      "scope": "two measured update samples; phase sums are not independent E2E wall"
+    },
+    "process_telemetry": {
+      "samples": 380,
+      "rss_sample_max_bytes": 1551306752,
+      "hwm_observed_max_bytes": 1665712128,
+      "gpu_sample_max_bytes": 2518679552,
+      "errors": []
+    },
+    "phase_report": "docs/H200_1159_PHASE_REPORT.md",
+    "raw_fixture_sha256": "66946493ab9ec8ce5ecf17bf5d97ea2fcab97fc80285e4a5dc359be8826befdd",
+    "sealed_private_bundle_sha256": "7ecdc77a2bee40ccfd6755d5301523a519e9d3773f4aae8533b4b64b27374eb9"
   }
 }

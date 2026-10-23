@@ -1,6 +1,6 @@
 # Validation boundaries / 验证边界
 
-The new full-divisor experiment passed local CPU/GPU paired checks at n=256/1024. This is separate from accepted1157/1158 evidence; its H200 job1159 is awaiting acceptance. CPU workspace285/default GPU154 tests and independent review passed. 新 divisor 缓存本地配对、完整门禁与独立审查通过，H200 作业1159待验收，见 [report](FULL_DIVISOR_CACHE.md).
+The new full-divisor experiment passed local CPU/GPU paired checks at n=256/1024. This is separate from accepted1157/1158 evidence; its H200 job1159 passed full raw-event and resource acceptance. See the [phase report](H200_1159_PHASE_REPORT.md). CPU workspace285/default GPU154 tests and independent review passed. 新 divisor 缓存本地配对、完整门禁与独立审查通过，H200 作业1159已完成原始配对、资源与封存验收，见 [report](FULL_DIVISOR_CACHE.md).
 
 ## Evidence included / 已包含的证据
 
