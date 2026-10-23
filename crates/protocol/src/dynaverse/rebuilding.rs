@@ -2,7 +2,7 @@
 //! buffers are allocated once and exchanged, never cloned at a switch.
 use super::*;
 use crate::incremental_rebuild::{
-    BlockTimings, IncrementalConfig, RebuildProgress, ResourcePlan, UpdateReceipt,UpdateTimings,RebuildPhase,
+    BlockTimings, IncrementalConfig, InitialCacheStats, RebuildProgress, ResourcePlan, UpdateReceipt,UpdateTimings,RebuildPhase,
     SparseBackend,SparseDispatchPolicy,SparseDispatchStats,
     operators::{BufferId,BufferKind,FieldBinaryOp,FourStepPlan,RebuildBackend},
     work::{CachedWindow,RebuildBudget,WorkBound},
@@ -96,6 +96,7 @@ pub struct IncrementalSession<'p,B:RebuildBackend> {
     sparse_stats:Cell<SparseDispatchStats>,
     trace_updates:bool,
     update_timings:UpdateTimings,
+    initial_cache_stats:InitialCacheStats,
     live_fixed:Option<FixedLinear>,
     geometry:Option<Arc<SparseGeometry>>,
     geometry_reuse:bool,
@@ -116,7 +117,7 @@ impl DynaverseParams {
         let mut storage=AnchorStorage {witness:witness.clone(),
             cache:KzgPrecomputation {q4:vec![G1Affine::identity();n],
                 q5:vec![G1Affine::identity();n],q6:vec![G1Affine::identity();n]}};
-        let anchor=Machine::build_initial(self,&program,&mut storage,&mut backend,public_h)?;
+        let (anchor,initial_cache_stats)=Machine::build_initial(self,&program,&mut storage,&mut backend,public_h)?;
         let proof=DynaverseProof {anchor,delta:None,anchor_generation:0,generation:0};
         ensure!(self.verifying.verify(instance,&proof)?,"initial incremental proof failed");
         program.resource.resident_bytes=backend.stats().bytes_allocated;
@@ -135,7 +136,7 @@ impl DynaverseParams {
             current_proof:proof,delta:BTreeMap::new(),public_h,machine:Machine::default(),
             last:UpdateReceipt::default(),timings:BlockTimings::default(),faulted:false,
             sparse_policy:config.sparse,sparse_stats:Cell::new(SparseDispatchStats::default()),
-            trace_updates:config.trace_updates,update_timings:UpdateTimings::default(),live_fixed,
+            trace_updates:config.trace_updates,update_timings:UpdateTimings::default(),initial_cache_stats,live_fixed,
             geometry:None,geometry_reuse:config.support_geometry_reuse})
     }
 }
@@ -159,6 +160,7 @@ impl<B:RebuildBackend> IncrementalSession<'_,B> {
     pub fn last_receipt(&self)->&UpdateReceipt {&self.last}
     pub fn block_timings(&self)->&BlockTimings {&self.timings}
     pub fn update_timings(&self)->&UpdateTimings {&self.update_timings}
+    pub fn initial_cache_stats(&self)->InitialCacheStats {self.initial_cache_stats}
     pub fn is_faulted(&self)->bool {self.faulted}
     pub fn sparse_dispatch_stats(&self)->SparseDispatchStats {self.sparse_stats.get()}
     pub fn rebuild_progress(&self)->Option<RebuildProgress> {

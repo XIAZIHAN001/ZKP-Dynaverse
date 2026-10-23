@@ -335,6 +335,13 @@ impl Program {
                     upper=upper.checked_add(WorkBound {field_ops:1024,host_elements:64,
                         copy_bytes:256*len as u64,launches:16,..Default::default()})?;
                 }
+                if config.rebuild_divisor_cache {
+                    // Retain the old arithmetic certificate. Charge public
+                    // owner/SRS validation, root comparison and affine copies.
+                    upper=upper.checked_add(WorkBound {host_elements:128+64*len as u64,
+                        copy_bytes:512*len as u64,field_ops:16*len as u64,
+                        ..Default::default()})?;
+                }
                 p.add(Command::Cache {wire:t,buffer:opening_eval,start,len},upper,1);
             }
             p.cache_spans[t].end=p.commands.len();

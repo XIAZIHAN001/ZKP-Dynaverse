@@ -7,7 +7,7 @@ impl Machine {
     /// neither a rollback journal nor a synthetic old anchor. Execute the same
     /// commands and exact cache checks used for later rebuilt anchors.
     pub fn build_initial<B:RebuildBackend>(params:&DynaverseParams,program:&Program,
-        storage:&mut AnchorStorage,backend:&mut B,public_h:G1Projective)->Result<AnchorProof> {
+        storage:&mut AnchorStorage,backend:&mut B,public_h:G1Projective)->Result<(AnchorProof,InitialCacheStats)> {
         let mut machine=Self::default();
         let mut unused_undo=Vec::new();
         while machine.cursor<program.commands.len() {
@@ -20,8 +20,9 @@ impl Machine {
             }
         }
         let anchor=machine.anchor();
-        validate_initial_caches(params,storage,&anchor,&mut VerificationTrace::disabled())?;
-        Ok(anchor)
+        let stats=validate_initial_caches_cached(params,storage,&anchor,
+            &mut VerificationTrace::disabled(),program.cache_divisors.as_ref())?;
+        Ok((anchor,stats))
     }
     pub fn anchor(&self)->AnchorProof {
         let p: [G1Affine;POINTS]=std::array::from_fn(|i| self.points[i].into_affine());
@@ -226,8 +227,9 @@ impl Machine {
                 if initial_public_h.is_none() {
                     let mut pairing_trace=if trace.enabled {VerificationTrace::new()}
                         else {VerificationTrace::disabled()};
-                    validate_cache_block_prepared(params,storage,commitment,*wire,*start,&points,
-                        program.cache_mode,&mut pairing_trace,trace,program.cache_preparation.as_ref())?;
+                    validate_cache_block_cached(params,storage,commitment,*wire,*start,&points,
+                        program.cache_mode,&mut pairing_trace,trace,program.cache_preparation.as_ref(),
+                        program.cache_divisors.as_ref())?;
                 }
                 let started=trace.start();
                 let cache=cache_mut(&mut storage.cache,*wire);
@@ -251,6 +253,10 @@ impl Machine {
         Ok(true)
     }
 }
+
+#[cfg(test)]
+#[path="divisor_checks_tests.rs"]
+mod divisor_checks_tests;
 
 /// Keep every cache equation independent. The initial path reuses the existing
 /// exact product checker: two Miller terms, one final exponentiation per point.
@@ -276,11 +282,22 @@ fn validate_cache_block_traced(params:&DynaverseParams,storage:&AnchorStorage,
 }
 
 #[allow(clippy::too_many_arguments)]
+#[cfg(test)]
 fn validate_cache_block_prepared(params:&DynaverseParams,storage:&AnchorStorage,
     commitment:G1Projective,wire:usize,start:usize,points:&[G1Affine],
     mode:VerificationMode,trace:&mut VerificationTrace,
     detail:&mut crate::incremental_rebuild::CacheCheckTimings,
     prepared:Option<&preparation::PublicPreparation>)->Result<()> {
+    validate_cache_block_cached(params,storage,commitment,wire,start,points,mode,trace,detail,prepared,None)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn validate_cache_block_cached(params:&DynaverseParams,storage:&AnchorStorage,
+    commitment:G1Projective,wire:usize,start:usize,points:&[G1Affine],
+    mode:VerificationMode,trace:&mut VerificationTrace,
+    detail:&mut crate::incremental_rebuild::CacheCheckTimings,
+    prepared:Option<&preparation::PublicPreparation>,
+    affine_table:Option<&divisors::PublicDivisors>)->Result<()> {
     let n=params.circuit.n();
     ensure!(wire<3 && start<=n && points.len()<=n-start,
         "cache validation range outside wire");
@@ -289,21 +306,35 @@ fn validate_cache_block_prepared(params:&DynaverseParams,storage:&AnchorStorage,
         ensure!(mode==VerificationMode::Product,"prepared cache requires Product equations");
         prepared.validate_owner(params)?;
     }
+    if let Some(table)=affine_table {
+        ensure!(mode==VerificationMode::Product,"divisor cache requires Product equations");
+        table.validate_owner(params)?;
+    }
     let g2=params.srs.kzg_x.rebuild_g2_powers();
     let g1=params.srs.kzg_x.rebuild_g1_powers()[0];
     for (chunk,openings) in points.chunks(4).enumerate() {
         let first=start+4*chunk;
         let divisors=if mode==VerificationMode::Product {
             let started=detail.start();
-            let mut projective=Vec::with_capacity(openings.len());
-            for j in 0..openings.len() {
-                if prepared.is_some_and(|table|table.contains(first+j)) {continue;}
-                projective.push(G2Projective::from(g2[1])
-                    -G2Projective::from(g2[0])*params.srs.sparse.small_points[first+j]);
-            }
-            let divisors=G2Projective::normalize_batch(&projective);
+            let divisors=if let Some(table)=affine_table {
+                let mut values=Vec::with_capacity(openings.len());
+                for j in 0..openings.len() {
+                    if prepared.is_some_and(|p|p.contains(first+j)) {continue;}
+                    values.push(table.get(first+j,params.srs.sparse.small_points[first+j])?);
+                    if detail.enabled {detail.divisor_cache_hits+=1;}
+                }
+                values
+            } else {
+                let mut projective=Vec::with_capacity(openings.len());
+                for j in 0..openings.len() {
+                    if prepared.is_some_and(|table|table.contains(first+j)) {continue;}
+                    projective.push(G2Projective::from(g2[1])
+                        -G2Projective::from(g2[0])*params.srs.sparse.small_points[first+j]);
+                }
+                if detail.enabled {detail.divisors_formed+=projective.len() as u64;}
+                G2Projective::normalize_batch(&projective)
+            };
             detail.finish(2,started);
-            if detail.enabled {detail.divisors_formed+=projective.len() as u64;}
             Some(divisors)
         } else {None};
         let mut checks=PairingChecks::new(mode,trace);
@@ -355,23 +386,40 @@ fn validate_cache_block_prepared(params:&DynaverseParams,storage:&AnchorStorage,
 
 /// Unpublished initialization only. Four roots bound the prepared-G2 cache;
 /// each divisor is formed once and reused by three separate KZG equations.
+#[cfg(test)]
 fn validate_initial_caches(params:&DynaverseParams,storage:&AnchorStorage,
     anchor:&AnchorProof,trace:&mut VerificationTrace)->Result<usize> {
+    Ok(validate_initial_caches_cached(params,storage,anchor,trace,None)?.divisors_formed as usize)
+}
+
+fn validate_initial_caches_cached(params:&DynaverseParams,storage:&AnchorStorage,
+    anchor:&AnchorProof,trace:&mut VerificationTrace,
+    affine_table:Option<&divisors::PublicDivisors>)->Result<InitialCacheStats> {
     let n=params.circuit.n();
     let powers=params.srs.kzg_x.rebuild_g2_powers();
     let g1=params.srs.kzg_x.rebuild_g1_powers()[0];
     let commitments=[anchor.wires.s4,anchor.wires.s5,anchor.wires.s6];
     let caches=[&storage.cache.q4,&storage.cache.q5,&storage.cache.q6];
-    let mut formed=0;
+    if let Some(table)=affine_table {table.validate_owner(params)?;}
+    let mut stats=InitialCacheStats::default();
     for start in (0..n).step_by(4) {
         let len=4.min(n-start);
-        let mut projective=Vec::with_capacity(len);
-        for i in start..start+len {
-            projective.push(G2Projective::from(powers[1])
-                -G2Projective::from(powers[0])*params.srs.sparse.small_points[i]);
-            formed+=1;
-        }
-        let divisors=G2Projective::normalize_batch(&projective);
+        let divisors=if let Some(table)=affine_table {
+            let mut values=Vec::with_capacity(len);
+            for i in start..start+len {
+                values.push(table.get(i,params.srs.sparse.small_points[i])?);
+                stats.divisor_cache_hits+=1;
+            }
+            values
+        } else {
+            let mut projective=Vec::with_capacity(len);
+            for i in start..start+len {
+                projective.push(G2Projective::from(powers[1])
+                    -G2Projective::from(powers[0])*params.srs.sparse.small_points[i]);
+                stats.divisors_formed+=1;
+            }
+            G2Projective::normalize_batch(&projective)
+        };
         let mut checks=PairingChecks::new(VerificationMode::Product,trace);
         for wire in 0..3 {
             for (j,&divisor) in divisors.iter().enumerate() {
@@ -380,10 +428,11 @@ fn validate_initial_caches(params:&DynaverseParams,storage:&AnchorStorage,
                 let difference=(G1Projective::from(commitments[wire])-G1Projective::from(g1)*value).into_affine();
                 ensure!(checks.equal((difference,powers[0]),&[(caches[wire][i],divisor)]),
                     "incremental anchor opening cache check failed at wire {} index {i}",wire+4);
+                stats.equations+=1;
             }
         }
     }
-    Ok(formed)
+    Ok(stats)
 }
 
 /// Fuse only consecutive partial MSMs with identical destination and contiguous

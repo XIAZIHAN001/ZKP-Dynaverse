@@ -153,6 +153,14 @@ pub struct CacheDivisorStats {
     pub precompute_ns:u128,
 }
 
+/// Logical initial checker work, separate from one-time table construction.
+#[derive(Clone,Copy,Debug,Default,PartialEq,Eq)]
+pub struct InitialCacheStats {
+    pub equations:u64,
+    pub divisors_formed:u64,
+    pub divisor_cache_hits:u64,
+}
+
 /// Initialization cost and requested retained allocation; excludes allocator
 /// metadata/RSS and is not device memory. No acceptance result is retained.
 #[derive(Clone,Copy,Debug,Default,PartialEq,Eq)]
