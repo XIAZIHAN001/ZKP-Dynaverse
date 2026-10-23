@@ -16,6 +16,7 @@ mod machine;
 mod linear;
 mod global_g2;
 mod preparation;
+mod divisors;
 use program::{Program,POINTS};
 use machine::rollback_host;
 use super::sparse_linear::FixedLinear;
@@ -150,6 +151,9 @@ impl<B:RebuildBackend> IncrementalSession<'_,B> {
     pub fn resource_plan(&self)->ResourcePlan {self.program.resource}
     pub fn cache_preparation_stats(&self)->Option<crate::incremental_rebuild::CachePreparationStats> {
         self.program.cache_preparation.as_ref().map(preparation::PublicPreparation::stats)
+    }
+    pub fn cache_divisor_stats(&self)->Option<crate::incremental_rebuild::CacheDivisorStats> {
+        self.program.cache_divisors.as_ref().map(divisors::PublicDivisors::stats)
     }
     pub fn backend(&self)->&B {&self.backend}
     pub fn last_receipt(&self)->&UpdateReceipt {&self.last}

@@ -42,6 +42,9 @@ pub struct IncrementalConfig {
     pub rebuild_cache_mode:crate::VerificationMode,
     /// Opt-in bounded fixed-root public G2 preparation; Product mode only.
     pub rebuild_prepared_cache_roots:Option<usize>,
+    /// Opt-in full-domain public affine divisors, Product mode and n<=65536.
+    /// No prepared coefficients or acceptance results are retained.
+    pub rebuild_divisor_cache:bool,
     /// Opt-in cache read coalescing, Some4..=64 roots; None keeps old tiles.
     /// Independent pairing checkers remain bounded to four roots.
     pub rebuild_cache_readback_roots:Option<usize>,
@@ -56,7 +59,7 @@ impl Default for IncrementalConfig {
             frozen_g2_reuse_limit:None,
             support_geometry_reuse:false,transform_row_batch:1,transform_packet_max_len:None,
             rebuild_cache_mode:crate::VerificationMode::Reference,rebuild_prepared_cache_roots:None,
-            rebuild_cache_readback_roots:None }
+            rebuild_cache_readback_roots:None,rebuild_divisor_cache:false }
     }
 }
 
@@ -136,6 +139,18 @@ pub struct ResourcePlan {
     pub cache_preparation_host_bytes:u64,
     /// Additional bounded host read/decode/undo staging, not device allocation.
     pub cache_readback_host_bytes:u64,
+    /// Immutable full-domain public divisors plus bounded construction scratch.
+    pub cache_divisor_host_bytes:u64,
+}
+
+/// Public affine table allocation and initialization work, not RSS or VRAM.
+#[derive(Clone,Copy,Debug,Default,PartialEq,Eq)]
+pub struct CacheDivisorStats {
+    pub roots:usize,
+    pub construction_divisors:usize,
+    pub retained_bytes:u64,
+    pub host_upper_bytes:u64,
+    pub precompute_ns:u128,
 }
 
 /// Initialization cost and requested retained allocation; excludes allocator
