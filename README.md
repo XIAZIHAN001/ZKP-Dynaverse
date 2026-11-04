@@ -4,6 +4,8 @@
 
 [科研轮转成果最终报告](docs/research-results-20261104/README.md) 汇总优化原理、CPU/GPU实测、时间记录软件及统计口径，并提供Word、图表和结构化数据。主汇报结论为H200在n=65536的Setup阶段相对优化CPU加速超过3倍（实测3.99倍）；各结果保留其历史版本边界。
 
+[组会速通与 PPT 素材](docs/group-meeting-20261105/README.md) 提供 Dynaverse 核心复现流程、优化原理图、逐页讲稿与 Mac 可用配图。
+
 基于Rust、arkworks BN254与CUDA/ICICLE的Dynaverse增量证明研究原型。项目保留CPU reference，并通过薄Rust接口调用GPU算子，研究稀疏更新、分阶段重建和缓存复用的正确性与性能。
 
 当前协议是**未加掩码的正确性研究原型**，不提供完整零知识保证，也不是经过生产安全审计的证明系统。

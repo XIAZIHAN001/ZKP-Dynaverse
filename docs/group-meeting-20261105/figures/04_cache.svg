@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="648pt" viewBox="0 0 1152 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T19:46:29.410721</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648
+L 1152 648
+L 1152 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 47.52 271.44
+L 341.28 271.44
+Q 350.64 271.44 350.64 262.08
+L 350.64 151.92
+Q 350.64 142.56 341.28 142.56
+L 47.52 142.56
+Q 38.16 142.56 38.16 151.92
+L 38.16 262.08
+Q 38.16 271.44 47.52 271.44
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 432.72 271.44
+L 726.48 271.44
+Q 735.84 271.44 735.84 262.08
+L 735.84 151.92
+Q 735.84 142.56 726.48 142.56
+L 432.72 142.56
+Q 423.36 142.56 423.36 151.92
+L 423.36 262.08
+Q 423.36 271.44 432.72 271.44
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 817.92 271.44
+L 1104.48 271.44
+Q 1113.84 271.44 1113.84 262.08
+L 1113.84 151.92
+Q 1113.84 142.56 1104.48 142.56
+L 817.92 142.56
+Q 808.56 142.56 808.56 151.92
+L 808.56 262.08
+Q 808.56 271.44 817.92 271.44
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 358.398413 207.36
+Q 387.000107 207.36 413.365734 207.36
+" clip-path="url(#pef4117c5ff)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 405.765734 203.56
+L 413.365734 207.36
+L 405.765734 211.16
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 743.598413 207.36
+Q 772.200107 207.36 798.565734 207.36
+" clip-path="url(#pef4117c5ff)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 790.965734 203.56
+L 798.565734 207.36
+L 790.965734 211.16
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 47.52 494.64
+L 420.48 494.64
+Q 429.84 494.64 429.84 485.28
+L 429.84 371.52
+Q 429.84 362.16 420.48 362.16
+L 47.52 362.16
+Q 38.16 362.16 38.16 371.52
+L 38.16 485.28
+Q 38.16 494.64 47.52 494.64
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 583.92 494.64
+L 1104.48 494.64
+Q 1113.84 494.64 1113.84 485.28
+L 1113.84 371.52
+Q 1113.84 362.16 1104.48 362.16
+L 583.92 362.16
+Q 574.56 362.16 574.56 371.52
+L 574.56 485.28
+Q 574.56 494.64 583.92 494.64
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 437.604016 428.4
+Q 502.203064 428.4 564.566044 428.4
+" clip-path="url(#pef4117c5ff)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 556.966044 424.6
+L 564.566044 428.4
+L 556.966044 432.2
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 957.6 279.196436
+Q 957.6 316.79689 957.6 352.161276
+" clip-path="url(#pef4117c5ff)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 961.4 344.561276
+L 957.6 352.161276
+L 953.8 344.561276
+z
+" clip-path="url(#pef4117c5ff)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 29px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="54.786328" transform="rotate(-0 39.6 54.786328)">固定数据缓存：保存计算材料，不保存验收结论</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="96.121641" transform="rotate(-0 39.6 96.121641)">Dᵢ = τG₂ − ωᵢG₂ 只依赖固定 SRS 与域根；τG₂ 是公开 SRS 点。</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="194.4" y="181.018594" transform="rotate(-0 194.4 181.018594)">固定公开输入</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="194.4" y="235.357031" transform="rotate(-0 194.4 235.357031)">SRS、域、根 ωᵢ</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="579.6" y="181.018594" transform="rotate(-0 579.6 181.018594)">一次性预计算</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(498.264297 223.356688)">Dᵢ 坐标 / G2 prepare</text>
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(494.6 247.287375)">两类缓存避免不同工作</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="961.2" y="181.018594" transform="rotate(-0 961.2 181.018594)">后续调用复用</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(907.2 222.687844)">省去重复构造</text>
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(916.2 248.026219)">或配对准备</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="234" y="400.618594" transform="rotate(-0 234 400.618594)">每次变化的新输入</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(135.178594 444.369094)">新承诺、opening、数值</text>
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(144 469.811531)">仍需证明本次关系成立</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="844.2" y="400.618594" transform="rotate(-0 844.2 400.618594)">每次独立方程检查</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(725.518281 444.030484)">Miller loop 与最终幂仍执行</text>
+    <text style="font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(717.628828 470.776547)">正式协议的配对算术仍在 CPU</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="576" y="578.733984" transform="rotate(-0 576 578.733984)">类比：复用量具；每一件新产品仍重新检验。</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 13px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="628.105469" transform="rotate(-0 39.6 628.105469)">缓存有初始化与内存成本；prepared 容量和全域 divisor 缓存的实验不能混为一谈。</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pef4117c5ff">
+   <rect x="0" y="0" width="1152" height="648"/>
+  </clipPath>
+ </defs>
+</svg>

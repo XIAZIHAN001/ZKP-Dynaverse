@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="648pt" viewBox="0 0 1152 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T19:46:29.173483</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648
+L 1152 648
+L 1152 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 47.52 264.24
+L 269.28 264.24
+Q 278.64 264.24 278.64 254.88
+L 278.64 144.72
+Q 278.64 135.36 269.28 135.36
+L 47.52 135.36
+Q 38.16 135.36 38.16 144.72
+L 38.16 254.88
+Q 38.16 264.24 47.52 264.24
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 324.72 264.24
+L 546.48 264.24
+Q 555.84 264.24 555.84 254.88
+L 555.84 144.72
+Q 555.84 135.36 546.48 135.36
+L 324.72 135.36
+Q 315.36 135.36 315.36 144.72
+L 315.36 254.88
+Q 315.36 264.24 324.72 264.24
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 601.92 264.24
+L 823.68 264.24
+Q 833.04 264.24 833.04 254.88
+L 833.04 144.72
+Q 833.04 135.36 823.68 135.36
+L 601.92 135.36
+Q 592.56 135.36 592.56 144.72
+L 592.56 254.88
+Q 592.56 264.24 601.92 264.24
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 879.12 264.24
+L 1100.88 264.24
+Q 1110.24 264.24 1110.24 254.88
+L 1110.24 144.72
+Q 1110.24 135.36 1100.88 135.36
+L 879.12 135.36
+Q 869.76 135.36 869.76 144.72
+L 869.76 254.88
+Q 869.76 264.24 879.12 264.24
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 282.799248 200.16
+Q 296.280916 200.16 307.526517 200.16
+" clip-path="url(#pd6db4d7fd8)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 299.926517 196.36
+L 307.526517 200.16
+L 299.926517 203.96
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 559.999248 200.16
+Q 573.480916 200.16 584.726517 200.16
+" clip-path="url(#pd6db4d7fd8)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 577.126517 196.36
+L 584.726517 200.16
+L 577.126517 203.96
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 837.199248 200.16
+Q 850.680916 200.16 861.926517 200.16
+" clip-path="url(#pd6db4d7fd8)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 854.326517 196.36
+L 861.926517 200.16
+L 854.326517 203.96
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 47.52 458.64
+L 492.48 458.64
+Q 501.84 458.64 501.84 449.28
+L 501.84 342.72
+Q 501.84 333.36 492.48 333.36
+L 47.52 333.36
+Q 38.16 333.36 38.16 342.72
+L 38.16 449.28
+Q 38.16 458.64 47.52 458.64
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 601.92 458.64
+L 1100.88 458.64
+Q 1110.24 458.64 1110.24 449.28
+L 1110.24 342.72
+Q 1110.24 333.36 1100.88 333.36
+L 601.92 333.36
+Q 592.56 333.36 592.56 342.72
+L 592.56 449.28
+Q 592.56 458.64 601.92 458.64
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 705.6 271.999819
+Q 705.6 297.720189 705.6 321.204492
+" clip-path="url(#pd6db4d7fd8)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 709.4 313.604492
+L 705.6 321.204492
+L 701.8 313.604492
+z
+" clip-path="url(#pd6db4d7fd8)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 29px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="54.786328" transform="rotate(-0 39.6 54.786328)">先复现核心流程：从基准证明到连续更新</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="96.453672" transform="rotate(-0 39.6 96.453672)">Setup、Session、Update、Rebuild 各有职责；Update 不负责自动求新 witness。</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="158.4" y="173.818594" transform="rotate(-0 158.4 173.818594)">Setup</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(107.4 215.916297)">建立公共参数</text>
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(115.9 239.846984)">与验证材料</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="435.6" y="173.818594" transform="rotate(-0 435.6 173.818594)">Session 初始化</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(371.001328 215.916297)">构造初始 anchor</text>
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(359.1 239.846984)">建立缓存与更新状态</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="712.8" y="174.162344" transform="rotate(-0 712.8 174.162344)">Update 循环</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(661.8 215.916297)">接收一致变更</text>
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(644.8 239.846984)">检查并生成新证明</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="990" y="173.818594" transform="rotate(-0 990 173.818594)">公开验证</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(922 215.916297)">检查当前公开输入</text>
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(939 239.846984)">与证明的关系</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="270" y="371.818594" transform="rotate(-0 270 371.818594)">独立 Prove API</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(142.479844 412.039406)">也可单独生成初始 proof 与 aux</text>
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(124.375781 437.377781)">它与 Session 初始化的计时边界不同</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="851.4" y="371.818594" transform="rotate(-0 851.4 371.818594)">必要时推进 Rebuild</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(678.74625 411.062836)">冻结快照 → 按预算分步重建 → 检查后切换</text>
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(691.669688 437.547164)">冻结后的新变化放在 overlay，不能丢失</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 26px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="576" y="550.760156" transform="rotate(-0 576 550.760156)">证明结构：anchor + 可选 delta + 版本号</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 13px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="628.093281" transform="rotate(-0 39.6 628.093281)">依据 ffc7775 核心流程；原理示意。当前为 ToyCircuit 未加掩码研究原型。</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd6db4d7fd8">
+   <rect x="0" y="0" width="1152" height="648"/>
+  </clipPath>
+ </defs>
+</svg>

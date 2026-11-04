@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="648pt" viewBox="0 0 1152 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T19:46:29.549407</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648
+L 1152 648
+L 1152 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 47.52 505.44
+L 377.28 505.44
+Q 386.64 505.44 386.64 496.08
+L 386.64 151.92
+Q 386.64 142.56 377.28 142.56
+L 47.52 142.56
+Q 38.16 142.56 38.16 151.92
+L 38.16 496.08
+Q 38.16 505.44 47.52 505.44
+z
+" clip-path="url(#p96e3000599)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 411.12 505.44
+L 740.88 505.44
+Q 750.24 505.44 750.24 496.08
+L 750.24 151.92
+Q 750.24 142.56 740.88 142.56
+L 411.12 142.56
+Q 401.76 142.56 401.76 151.92
+L 401.76 496.08
+Q 401.76 505.44 411.12 505.44
+z
+" clip-path="url(#p96e3000599)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 774.72 505.44
+L 1104.48 505.44
+Q 1113.84 505.44 1113.84 496.08
+L 1113.84 151.92
+Q 1113.84 142.56 1104.48 142.56
+L 774.72 142.56
+Q 765.36 142.56 765.36 151.92
+L 765.36 496.08
+Q 765.36 505.44 774.72 505.44
+z
+" clip-path="url(#p96e3000599)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 29px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="55.336875" transform="rotate(-0 39.6 55.336875)">GPU Setup：并行之外，减少昂贵的单点工作</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="96.121641" transform="rotate(-0 39.6 96.121641)">三种机制分别处理参数点生成、坐标转换和 G2 校验。</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="212.4" y="181.018594" transform="rotate(-0 212.4 181.018594)">固定基点查表</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(132.4 282.523438)">相同基点反复使用</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(212.4 310.677188)"/>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(152.4 338.830938)">先构造窗口表</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(132.4 366.984688)">再由设备批量生成</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(212.4 395.138438)"/>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(162.4 423.292188)">省重复准备</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="576" y="181.018594" transform="rotate(-0 576 181.018594)">批量归一化</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(506 282.523438)">逐点求逆代价高</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(576 310.677188)"/>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(487.76875 338.830938)">128 点组成一个 tile</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(482.664062 366.984688)">一次求逆 + 乘法回代</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(576 395.138438)"/>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(516 423.292188)">减少昂贵求逆</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="939.6" y="181.018594" transform="rotate(-0 939.6 181.018594)">等价 G2 子群判断</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(859.6 282.523438)">完整阶乘法较昂贵</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(939.6 310.677188)"/>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(884.64375 338.830938)">BN254 专用</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(857.884375 366.984688)">Frobenius63 关系</text>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(939.6 395.138438)"/>
+    <text style="font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(869.6 423.292188)">逐点检查仍保留</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="576" y="567.107813" transform="rotate(-0 576 567.107813)">规范编码与曲线检查仍是前提；不是省略或随机抵消验证。</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 13px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="628.105469" transform="rotate(-0 39.6 628.105469)">GPU63 是早期本地显式校验路径；不能将后期 H200 Setup 全部收益归因于它。</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p96e3000599">
+   <rect x="0" y="0" width="1152" height="648"/>
+  </clipPath>
+ </defs>
+</svg>

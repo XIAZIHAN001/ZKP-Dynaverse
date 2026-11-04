@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="648pt" viewBox="0 0 1152 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T19:46:29.250890</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648
+L 1152 648
+L 1152 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 180.72 260.64
+L 460.08 260.64
+Q 469.44 260.64 469.44 251.28
+L 469.44 148.32
+Q 469.44 138.96 460.08 138.96
+L 180.72 138.96
+Q 171.36 138.96 171.36 148.32
+L 171.36 251.28
+Q 171.36 260.64 180.72 260.64
+z
+" clip-path="url(#pea61082316)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 501.12 260.64
+L 780.48 260.64
+Q 789.84 260.64 789.84 251.28
+L 789.84 148.32
+Q 789.84 138.96 780.48 138.96
+L 501.12 138.96
+Q 491.76 138.96 491.76 148.32
+L 491.76 251.28
+Q 491.76 260.64 501.12 260.64
+z
+" clip-path="url(#pea61082316)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 821.52 260.64
+L 1100.88 260.64
+Q 1110.24 260.64 1110.24 251.28
+L 1110.24 148.32
+Q 1110.24 138.96 1100.88 138.96
+L 821.52 138.96
+Q 812.16 138.96 812.16 148.32
+L 812.16 251.28
+Q 812.16 260.64 821.52 260.64
+z
+" clip-path="url(#pea61082316)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 47.52 501.84
+L 352.08 501.84
+Q 361.44 501.84 361.44 492.48
+L 361.44 375.12
+Q 361.44 365.76 352.08 365.76
+L 47.52 365.76
+Q 38.16 365.76 38.16 375.12
+L 38.16 492.48
+Q 38.16 501.84 47.52 501.84
+z
+" clip-path="url(#pea61082316)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 424.08 501.84
+L 728.64 501.84
+Q 738 501.84 738 492.48
+L 738 375.12
+Q 738 365.76 728.64 365.76
+L 424.08 365.76
+Q 414.72 365.76 414.72 375.12
+L 414.72 492.48
+Q 414.72 501.84 424.08 501.84
+z
+" clip-path="url(#pea61082316)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 799.92 501.84
+L 1104.48 501.84
+Q 1113.84 501.84 1113.84 492.48
+L 1113.84 375.12
+Q 1113.84 365.76 1104.48 365.76
+L 799.92 365.76
+Q 790.56 365.76 790.56 375.12
+L 790.56 492.48
+Q 790.56 501.84 799.92 501.84
+z
+" clip-path="url(#pea61082316)" style="fill: #eaf2f8; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 369.20083 432
+Q 388.078185 432 404.719472 432
+" clip-path="url(#pea61082316)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 397.119472 428.2
+L 404.719472 432
+L 397.119472 435.8
+z
+" clip-path="url(#pea61082316)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 745.761401 432
+Q 764.282338 432 780.567207 432
+" clip-path="url(#pea61082316)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 772.967207 428.2
+L 780.567207 432
+L 772.967207 435.8
+z
+" clip-path="url(#pea61082316)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 29px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="54.786328" transform="rotate(-0 39.6 54.786328)">固定基点预计算：相同准备只做一次</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="96.121641" transform="rotate(-0 39.6 96.121641)">一批标量作用于相同曲线点 G；标量乘不是普通整数乘法。</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="168.333984" transform="rotate(-0 39.6 168.333984)">原来</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="320.4" y="177.418594" transform="rotate(-0 320.4 177.418594)">s₁G</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="320.4" y="227.881641" transform="rotate(-0 320.4 227.881641)">重复准备倍点与加点</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="640.8" y="177.418594" transform="rotate(-0 640.8 177.418594)">s₂G</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="640.8" y="227.881641" transform="rotate(-0 640.8 227.881641)">重复准备倍点与加点</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="961.2" y="177.418594" transform="rotate(-0 961.2 177.418594)">s₃G</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="961.2" y="227.881641" transform="rotate(-0 961.2 227.881641)">重复准备倍点与加点</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="341.133984" transform="rotate(-0 39.6 341.133984)">改后</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="199.8" y="404.218594" transform="rotate(-0 199.8 404.218594)">预计算窗口表</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(127.8 449.487844)">为各窗口位置保存</text>
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(113.468906 474.826219)">4-bit 分段所需曲线点</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="576.36" y="404.218594" transform="rotate(-0 576.36 404.218594)">标量分段并查表</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(481.116094 449.487844)">同一 owner 的多次调用</text>
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(495.36 474.826219)">复用表，不重复准备</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="952.2" y="404.218594" transform="rotate(-0 952.2 404.218594)">累加得到 sᵢG</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(871.2 448.978078)">结果与原标量乘一致</text>
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; fill: #172b3a" transform="translate(870.588281 475.335984)">首次建表计入 Setup</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 21px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="576" y="578.183203" transform="rotate(-0 576 578.183203)">省下重复准备；代价是一次建表时间与保留空间。</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 13px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="627.820078" transform="rotate(-0 39.6 627.820078)">机制示意，非时间轴；VarMSM 的不同基点不能直接共用这张固定基点表。</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pea61082316">
+   <rect x="0" y="0" width="1152" height="648"/>
+  </clipPath>
+ </defs>
+</svg>

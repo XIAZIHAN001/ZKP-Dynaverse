@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="648pt" viewBox="0 0 1152 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T19:46:29.482156</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648
+L 1152 648
+L 1152 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 47.52 307.44
+L 377.28 307.44
+Q 386.64 307.44 386.64 298.08
+L 386.64 198.72
+Q 386.64 189.36 377.28 189.36
+L 47.52 189.36
+Q 38.16 189.36 38.16 198.72
+L 38.16 298.08
+Q 38.16 307.44 47.52 307.44
+z
+" clip-path="url(#p41917e4892)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 394.400391 248.4
+Q 421.2008 248.4 445.765142 248.4
+" clip-path="url(#p41917e4892)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 438.165142 244.6
+L 445.765142 248.4
+L 438.165142 252.2
+z
+" clip-path="url(#p41917e4892)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 468.72 307.44
+L 654.48 307.44
+Q 663.84 307.44 663.84 298.08
+L 663.84 198.72
+Q 663.84 189.36 654.48 189.36
+L 468.72 189.36
+Q 459.36 189.36 459.36 198.72
+L 459.36 298.08
+Q 459.36 307.44 468.72 307.44
+z
+" clip-path="url(#p41917e4892)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 686.88 307.44
+L 872.64 307.44
+Q 882 307.44 882 298.08
+L 882 198.72
+Q 882 189.36 872.64 189.36
+L 686.88 189.36
+Q 677.52 189.36 677.52 198.72
+L 677.52 298.08
+Q 677.52 307.44 686.88 307.44
+z
+" clip-path="url(#p41917e4892)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 905.04 307.44
+L 1090.8 307.44
+Q 1100.16 307.44 1100.16 298.08
+L 1100.16 198.72
+Q 1100.16 189.36 1090.8 189.36
+L 905.04 189.36
+Q 895.68 189.36 895.68 198.72
+L 895.68 298.08
+Q 895.68 307.44 905.04 307.44
+z
+" clip-path="url(#p41917e4892)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 47.52 530.64
+L 442.08 530.64
+Q 451.44 530.64 451.44 521.28
+L 451.44 429.12
+Q 451.44 419.76 442.08 419.76
+L 47.52 419.76
+Q 38.16 419.76 38.16 429.12
+L 38.16 521.28
+Q 38.16 530.64 47.52 530.64
+z
+" clip-path="url(#p41917e4892)" style="fill: #fff2df; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 459.197314 475.2
+Q 489.600116 475.2 517.76685 475.2
+" clip-path="url(#p41917e4892)" style="fill: none; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 510.16685 471.4
+L 517.76685 475.2
+L 510.16685 479
+z
+" clip-path="url(#p41917e4892)" style="fill: #1d5b85; stroke: #1d5b85; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 540.72 530.64
+L 1104.48 530.64
+Q 1113.84 530.64 1113.84 521.28
+L 1113.84 429.12
+Q 1113.84 419.76 1104.48 419.76
+L 540.72 419.76
+Q 531.36 419.76 531.36 429.12
+L 531.36 521.28
+Q 531.36 530.64 540.72 530.64
+z
+" clip-path="url(#p41917e4892)" style="fill: #e9f4ee; stroke: #c7d6e1; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 29px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="54.786328" transform="rotate(-0 39.6 54.786328)">并行与批处理：改变工作组织方式</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="96.121641" transform="rotate(-0 39.6 96.121641)">有依赖的工作仍须等待；只有独立任务才适合同时执行。</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="161.133984" transform="rotate(-0 39.6 161.133984)">CPU：独立 cache 方程分给多个 worker</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="212.4" y="227.818594" transform="rotate(-0 212.4 227.818594)">单 worker</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="212.4" y="276.481641" transform="rotate(-0 212.4 276.481641)">任务 1 → 任务 2 → 任务 3</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="561.6" y="226.992422" transform="rotate(-0 561.6 226.992422)">worker 1</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="561.6" y="276.757031" transform="rotate(-0 561.6 276.757031)">独立任务</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="779.76" y="226.992422" transform="rotate(-0 779.76 226.992422)">worker 2</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="779.76" y="276.757031" transform="rotate(-0 779.76 276.757031)">独立任务</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="997.92" y="226.992422" transform="rotate(-0 997.92 226.992422)">worker 3</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="997.92" y="276.757031" transform="rotate(-0 997.92 276.757031)">独立任务</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b3a" x="39.6" y="391.533984" transform="rotate(-0 39.6 391.533984)">GPU：同形状小提交合并为批次</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="244.8" y="458.218594" transform="rotate(-0 244.8 458.218594)">逐行小提交</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="244.8" y="503.557031" transform="rotate(-0 244.8 503.557031)">basis 初始化：96 次提交</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="822.6" y="458.218594" transform="rotate(-0 822.6 458.218594)">批量提交并复用工作区</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="822.6" y="503.557031" transform="rotate(-0 822.6 503.557031)">同一历史 n=1024 案例：2 次提交</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b3a" x="576" y="583.117031" transform="rotate(-0 576 583.117031)">省下串行等待和重复提交；小任务也可能被调度与同步成本抵消。</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 13px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #627382" x="39.6" y="628.067891" transform="rotate(-0 39.6 628.067891)">worker 排列仅为示意，不表示实测线性扩展。正式 cache pairing 在 CPU，非 GPU pairing。</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p41917e4892">
+   <rect x="0" y="0" width="1152" height="648"/>
+  </clipPath>
+ </defs>
+</svg>
