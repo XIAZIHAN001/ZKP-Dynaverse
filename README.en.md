@@ -2,6 +2,8 @@
 
 English | [中文](README.md)
 
+[Final research report](docs/research-results-20261104/README.md) provides the Word report, figures, measurements, timing tools and statistical scopes. The conservative headline is over 3x GPU speedup for Setup at n=65536 on H200 (measured 3.99x versus the optimized CPU); each result retains its historical source identity.
+
 A Dynaverse incremental-proof research prototype built with Rust, arkworks BN254, and CUDA/ICICLE. It retains a CPU reference and calls GPU operators through a thin Rust interface to study sparse updates, staged rebuilding, and cache reuse.
 
 The current protocol is an **unmasked correctness prototype**. It does not provide complete zero-knowledge guarantees and has not received a production security audit.

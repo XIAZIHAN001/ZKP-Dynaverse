@@ -1,0 +1,2457 @@
+{
+  "report_date": "2026-11-04",
+  "historical_measurements_end": "2026-10-29",
+  "new_experiments": false,
+  "parameter_convention": "ToyCircuit arithmetic gates = 2*n",
+  "formulas": {
+    "speedup": "before/after",
+    "time_reduction_percent": "100*(1-after/before)"
+  },
+  "main_claim": "H200 Setup speedup exceeds 3x in the recorded n=65536 observation; measured CPU/GPU ratio 3.9851548300993116; not whole-system speedup",
+  "h200_1291": {
+    "records": [
+      {
+        "status": "PASS_SINGLE_MODE_FULL_DIAGNOSTIC_AND_LOCAL_RAW_REAUDIT",
+        "whole_campaign_complete": false,
+        "job_id": "1291",
+        "mode": "parallel",
+        "n": 65536,
+        "identity": {
+          "allocated_cpus": 8,
+          "binary_sha256": "0984115407c538f246a66110b31e80964dc9058c471cc8ff547626906623787a",
+          "core_identity": "31636a5d5926946eed0af70232cb79cfdf19f8dd4966ce92db951858ce999a9a",
+          "features": [
+            "cpu-parallel",
+            "parallel-cache"
+          ],
+          "head": "ffc7775dcf8a93fb4d9aa842316cd0ad67eeae94",
+          "probe_sha256": "bf50b97cb3dd6851e1e9d342196982679ce11935a3474c381827c91acf865e40"
+        },
+        "setup_s": 60.22590253,
+        "prove_s": 663.002598264,
+        "ordinary_initialization_s": 732.432958087,
+        "ordinary_update_s": 0.150180898,
+        "full_rebuild_update_s": 413.0396822045,
+        "complete_diagnostic_s": 9122.277428443,
+        "C3": "INCOMPLETE",
+        "C4": "REFUSAL_RETAINED"
+      },
+      {
+        "status": "PASS_SINGLE_MODE_FULL_DIAGNOSTIC_AND_LOCAL_RAW_REAUDIT",
+        "whole_campaign_complete": false,
+        "job_id": "1291",
+        "mode": "gpu",
+        "n": 65536,
+        "identity": {
+          "allocated_cpus": 8,
+          "binary_sha256": "4464b547cb0711a72d40b7c802da037cd05a49a891a114ed18c38230a1bbbe08",
+          "core_identity": "31636a5d5926946eed0af70232cb79cfdf19f8dd4966ce92db951858ce999a9a",
+          "features": [
+            "gpu",
+            "parallel-cache"
+          ],
+          "head": "ffc7775dcf8a93fb4d9aa842316cd0ad67eeae94",
+          "probe_sha256": "bf50b97cb3dd6851e1e9d342196982679ce11935a3474c381827c91acf865e40"
+        },
+        "setup_s": 15.112562773,
+        "prove_s": 665.867488645,
+        "ordinary_initialization_s": 81.501067616,
+        "ordinary_update_s": 0.222678769,
+        "full_rebuild_update_s": 35.4308190725,
+        "complete_diagnostic_s": 4023.300449139,
+        "C3": "INCOMPLETE",
+        "C4": "REFUSAL_RETAINED"
+      }
+    ],
+    "samples": "One diagnostic process per mode; Setup/Prove/ordinary initialization one API observation; ordinary Update median of 4; full rebuild Update mean of 2 after 2 warmups",
+    "timer": "Rust std::time::Instant; process wall Python time.monotonic_ns"
+  },
+  "cpu_local_final": [
+    {
+      "n": 256,
+      "metric": "setup_s",
+      "unit": "s",
+      "before": 3.194746009,
+      "after": 0.151038752,
+      "speedup": 21.151830021741706,
+      "time_reduction_percent": 95.27227668257493,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "prove_s",
+      "unit": "s",
+      "before": 0.948458427,
+      "after": 0.912990556,
+      "speedup": 1.0388480152033468,
+      "time_reduction_percent": 3.739528269276482,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "ordinary_setup_s",
+      "unit": "s",
+      "before": 3.202624297,
+      "after": 0.137435216,
+      "speedup": 23.302792327986737,
+      "time_reduction_percent": 95.70866878988149,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "ordinary_initialization_s",
+      "unit": "s",
+      "before": 1.167069533,
+      "after": 1.167540696,
+      "speedup": 0.999596448327999,
+      "time_reduction_percent": -0.04037145916995222,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "ordinary_update_s",
+      "unit": "s",
+      "before": 0.0982357375,
+      "after": 0.10314873,
+      "speedup": 0.9523698207433093,
+      "time_reduction_percent": -5.0012272773948485,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "full_rebuild_initialization_s",
+      "unit": "s",
+      "before": 1.142629362,
+      "after": 1.163421064,
+      "speedup": 0.9821288245130141,
+      "time_reduction_percent": -1.8196365935851055,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "full_rebuild_update_s",
+      "unit": "s",
+      "before": 0.701215532,
+      "after": 0.716798177,
+      "speedup": 0.9782607636291463,
+      "time_reduction_percent": -2.222233291888931,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "full_rebuild_two_updates_s",
+      "unit": "s",
+      "before": 1.402431064,
+      "after": 1.433596354,
+      "speedup": 0.9782607636291463,
+      "time_reduction_percent": -2.222233291888931,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "external_reference_two_updates_s",
+      "unit": "s",
+      "before": 0.239041676,
+      "after": 0.245039167,
+      "speedup": 0.9755243577040074,
+      "time_reduction_percent": -2.508972954155486,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 256,
+      "metric": "complete_diagnostic_s",
+      "unit": "s",
+      "before": 27.678101635,
+      "after": 18.894673772,
+      "speedup": 1.4648626363698405,
+      "time_reduction_percent": 31.734213490613918,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "setup_s",
+      "unit": "s",
+      "before": 12.872259204,
+      "after": 0.50452567,
+      "speedup": 25.513586264104262,
+      "time_reduction_percent": 96.0805196507912,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "prove_s",
+      "unit": "s",
+      "before": 4.538054477,
+      "after": 4.354498555,
+      "speedup": 1.0421531709521947,
+      "time_reduction_percent": 4.044815304230209,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "ordinary_setup_s",
+      "unit": "s",
+      "before": 12.880696391,
+      "after": 0.448274849,
+      "speedup": 28.733926116385803,
+      "time_reduction_percent": 96.51979337613129,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "ordinary_initialization_s",
+      "unit": "s",
+      "before": 5.152673559,
+      "after": 5.159144274,
+      "speedup": 0.9987457774668932,
+      "time_reduction_percent": -0.12557975827320877,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "ordinary_update_s",
+      "unit": "s",
+      "before": 0.09800181,
+      "after": 0.103743214,
+      "speedup": 0.9446575464685333,
+      "time_reduction_percent": -5.858467307899717,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "full_rebuild_initialization_s",
+      "unit": "s",
+      "before": 5.136891847,
+      "after": 5.164957678,
+      "speedup": 0.9945661062975316,
+      "time_reduction_percent": -0.5463582227527519,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "full_rebuild_update_s",
+      "unit": "s",
+      "before": 2.99288672,
+      "after": 2.991563974,
+      "speedup": 1.0004421586873944,
+      "time_reduction_percent": 0.04419632694951936,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "full_rebuild_two_updates_s",
+      "unit": "s",
+      "before": 5.98577344,
+      "after": 5.983127948,
+      "speedup": 1.0004421586873944,
+      "time_reduction_percent": 0.04419632694951936,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "external_reference_two_updates_s",
+      "unit": "s",
+      "before": 0.246049288,
+      "after": 0.249794785,
+      "speedup": 0.9850057037820066,
+      "time_reduction_percent": -1.5222547605990178,
+      "repeats_per_mode": 3
+    },
+    {
+      "n": 1024,
+      "metric": "complete_diagnostic_s",
+      "unit": "s",
+      "before": 108.392792382,
+      "after": 71.661550064,
+      "speedup": 1.5125655569157492,
+      "time_reduction_percent": 33.887163076813295,
+      "repeats_per_mode": 3
+    }
+  ],
+  "cpu_local_statistic": "Per scale, 3 alternating fresh-process pairs (reference/candidate, candidate/reference, reference/candidate). Ordinary Update is median of 4 requests per process then median of 3 process medians. Full rebuild is route1 two-update total/2 then median of 3 processes.",
+  "msm_primitive": {
+    "unit": "ns",
+    "n": 2048,
+    "seed": 2026102908,
+    "samples_per_cell": 1,
+    "warm_fixed_tables": true,
+    "rows": [
+      {
+        "feature": false,
+        "workers": 1,
+        "g1_ns": 14838667,
+        "g2_ns": 45729600,
+        "fixed_g1_ns": 26870162,
+        "fixed_g2_ns": 77376340,
+        "pool_ns": 0,
+        "comparisons_vs_feature_off_1": {
+          "g1_ns": {
+            "before": 14838667,
+            "after": 14838667,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          },
+          "g2_ns": {
+            "before": 45729600,
+            "after": 45729600,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          },
+          "fixed_g1_ns": {
+            "before": 26870162,
+            "after": 26870162,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          },
+          "fixed_g2_ns": {
+            "before": 77376340,
+            "after": 77376340,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          }
+        },
+        "comparisons_vs_feature_on_1": {
+          "g1_ns": {
+            "before": 15102359,
+            "after": 14838667,
+            "speedup": 1.0177705989358747,
+            "time_reduction_percent": 1.7460318616449255
+          },
+          "g2_ns": {
+            "before": 46122059,
+            "after": 45729600,
+            "speedup": 1.0085821655995242,
+            "time_reduction_percent": 0.8509138761563118
+          },
+          "fixed_g1_ns": {
+            "before": 27186393,
+            "after": 26870162,
+            "speedup": 1.0117688534963056,
+            "time_reduction_percent": 1.163195867874045
+          },
+          "fixed_g2_ns": {
+            "before": 77432664,
+            "after": 77376340,
+            "speedup": 1.0007279227732921,
+            "time_reduction_percent": 0.07273932871533217
+          }
+        }
+      },
+      {
+        "feature": true,
+        "workers": 1,
+        "g1_ns": 15102359,
+        "g2_ns": 46122059,
+        "fixed_g1_ns": 27186393,
+        "fixed_g2_ns": 77432664,
+        "pool_ns": 45262,
+        "comparisons_vs_feature_off_1": {
+          "g1_ns": {
+            "before": 14838667,
+            "after": 15102359,
+            "speedup": 0.9825396813835507,
+            "time_reduction_percent": -1.7770598935874737
+          },
+          "g2_ns": {
+            "before": 45729600,
+            "after": 46122059,
+            "speedup": 0.9914908612384369,
+            "time_reduction_percent": -0.8582165599524183
+          },
+          "fixed_g1_ns": {
+            "before": 26870162,
+            "after": 27186393,
+            "speedup": 0.9883680413212595,
+            "time_reduction_percent": -1.1768853496305631
+          },
+          "fixed_g2_ns": {
+            "before": 77376340,
+            "after": 77432664,
+            "speedup": 0.9992726067128467,
+            "time_reduction_percent": -0.07279227732921445
+          }
+        },
+        "comparisons_vs_feature_on_1": {
+          "g1_ns": {
+            "before": 15102359,
+            "after": 15102359,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          },
+          "g2_ns": {
+            "before": 46122059,
+            "after": 46122059,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          },
+          "fixed_g1_ns": {
+            "before": 27186393,
+            "after": 27186393,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          },
+          "fixed_g2_ns": {
+            "before": 77432664,
+            "after": 77432664,
+            "speedup": 1.0,
+            "time_reduction_percent": 0.0
+          }
+        }
+      },
+      {
+        "feature": true,
+        "workers": 2,
+        "g1_ns": 8048635,
+        "g2_ns": 24562530,
+        "fixed_g1_ns": 15203750,
+        "fixed_g2_ns": 40041857,
+        "pool_ns": 86731,
+        "comparisons_vs_feature_off_1": {
+          "g1_ns": {
+            "before": 14838667,
+            "after": 8048635,
+            "speedup": 1.8436252855297823,
+            "time_reduction_percent": 45.75904291133429
+          },
+          "g2_ns": {
+            "before": 45729600,
+            "after": 24562530,
+            "speedup": 1.86176261158765,
+            "time_reduction_percent": 46.28745932612575
+          },
+          "fixed_g1_ns": {
+            "before": 26870162,
+            "after": 15203750,
+            "speedup": 1.7673377949519034,
+            "time_reduction_percent": 43.417721113851115
+          },
+          "fixed_g2_ns": {
+            "before": 77376340,
+            "after": 40041857,
+            "speedup": 1.9323864025587025,
+            "time_reduction_percent": 48.250515596886586
+          }
+        },
+        "comparisons_vs_feature_on_1": {
+          "g1_ns": {
+            "before": 15102359,
+            "after": 8048635,
+            "speedup": 1.8763876110669697,
+            "time_reduction_percent": 46.706107304163545
+          },
+          "g2_ns": {
+            "before": 46122059,
+            "after": 24562530,
+            "speedup": 1.8777405666272977,
+            "time_reduction_percent": 46.74450678795584
+          },
+          "fixed_g1_ns": {
+            "before": 27186393,
+            "after": 15203750,
+            "speedup": 1.7881373345391762,
+            "time_reduction_percent": 44.07588384380377
+          },
+          "fixed_g2_ns": {
+            "before": 77432664,
+            "after": 40041857,
+            "speedup": 1.9337930306279252,
+            "time_reduction_percent": 48.28815782445507
+          }
+        }
+      },
+      {
+        "feature": true,
+        "workers": 4,
+        "g1_ns": 4578240,
+        "g2_ns": 13120112,
+        "fixed_g1_ns": 7489553,
+        "fixed_g2_ns": 20350733,
+        "pool_ns": 172193,
+        "comparisons_vs_feature_off_1": {
+          "g1_ns": {
+            "before": 14838667,
+            "after": 4578240,
+            "speedup": 3.241129123855455,
+            "time_reduction_percent": 69.1465547410694
+          },
+          "g2_ns": {
+            "before": 45729600,
+            "after": 13120112,
+            "speedup": 3.4854580509678574,
+            "time_reduction_percent": 71.30936636226863
+          },
+          "fixed_g1_ns": {
+            "before": 26870162,
+            "after": 7489553,
+            "speedup": 3.5876856736309897,
+            "time_reduction_percent": 72.1268781334478
+          },
+          "fixed_g2_ns": {
+            "before": 77376340,
+            "after": 20350733,
+            "speedup": 3.802140198095076,
+            "time_reduction_percent": 73.69902349994844
+          }
+        },
+        "comparisons_vs_feature_on_1": {
+          "g1_ns": {
+            "before": 15102359,
+            "after": 4578240,
+            "speedup": 3.2987259296148737,
+            "time_reduction_percent": 69.6852657257055
+          },
+          "g2_ns": {
+            "before": 46122059,
+            "after": 13120112,
+            "speedup": 3.5153708291514585,
+            "time_reduction_percent": 71.55349894504927
+          },
+          "fixed_g1_ns": {
+            "before": 27186393,
+            "after": 7489553,
+            "speedup": 3.6299086207147475,
+            "time_reduction_percent": 72.45109713524704
+          },
+          "fixed_g2_ns": {
+            "before": 77432664,
+            "after": 20350733,
+            "speedup": 3.8049078625325192,
+            "time_reduction_percent": 73.71815465370015
+          }
+        }
+      },
+      {
+        "feature": true,
+        "workers": 8,
+        "g1_ns": 2539431,
+        "g2_ns": 7266235,
+        "fixed_g1_ns": 4649651,
+        "fixed_g2_ns": 12270288,
+        "pool_ns": 400730,
+        "comparisons_vs_feature_off_1": {
+          "g1_ns": {
+            "before": 14838667,
+            "after": 2539431,
+            "speedup": 5.843303873978068,
+            "time_reduction_percent": 82.88639404065069
+          },
+          "g2_ns": {
+            "before": 45729600,
+            "after": 7266235,
+            "speedup": 6.293438073500238,
+            "time_reduction_percent": 84.11043394212938
+          },
+          "fixed_g1_ns": {
+            "before": 26870162,
+            "after": 4649651,
+            "speedup": 5.778963195302185,
+            "time_reduction_percent": 82.69585795575031
+          },
+          "fixed_g2_ns": {
+            "before": 77376340,
+            "after": 12270288,
+            "speedup": 6.305992165791055,
+            "time_reduction_percent": 84.14206720038709
+          }
+        },
+        "comparisons_vs_feature_on_1": {
+          "g1_ns": {
+            "before": 15102359,
+            "after": 2539431,
+            "speedup": 5.947142883582976,
+            "time_reduction_percent": 83.1852030533773
+          },
+          "g2_ns": {
+            "before": 46122059,
+            "after": 7266235,
+            "speedup": 6.347449401237367,
+            "time_reduction_percent": 84.24564046457684
+          },
+          "fixed_g1_ns": {
+            "before": 27186393,
+            "after": 4649651,
+            "speedup": 5.846974966508239,
+            "time_reduction_percent": 82.89713902098009
+          },
+          "fixed_g2_ns": {
+            "before": 77432664,
+            "after": 12270288,
+            "speedup": 6.310582441096737,
+            "time_reduction_percent": 84.15360215425366
+          }
+        }
+      }
+    ]
+  },
+  "gpu_experiments": {
+    "r5_bundle": {
+      "mechanism_zh": "按规模选择window/变换批大小，复用frozen线性项、前台线性项、global G2和未变缓存；使用有界G1解码及经真实校准选择的affine读回。各规模只按真实计数声明机制命中。",
+      "baseline": "IncrementalSession defaults + ForceGpu + same size-selected window",
+      "candidate": "R5 size-selected complete bundle",
+      "timer": "sum of two measured caller update intervals; excludes calibration, setup, session initialization and external Reference",
+      "rows": [
+        {
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 256,
+          "gates": 512,
+          "window": 6,
+          "before_ns": 16156809656,
+          "after_ns": 1711010140,
+          "before_two_update_seconds": 16.156809656,
+          "after_two_update_seconds": 1.71101014,
+          "sample_ratio": 9.442848571312382,
+          "time_reduction_percent": 89.40997525854618,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "snapshot_commit_recorded": null,
+          "feature_counts_including_warmups_and_extra_n256_sequence": {
+            "cache_reused": 4,
+            "cache_reused_points": 1024,
+            "foreground_linear_reused": 16,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 159744,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 2341,
+            "support_geometry_reused": 11,
+            "transform_packet_calls": 48,
+            "transform_packet_elements": 19456
+          },
+          "setup_seconds": 1.527369527,
+          "before_initial_seconds": 2.936940701,
+          "after_initial_seconds": 2.538325347
+        },
+        {
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 1024,
+          "gates": 2048,
+          "window": 8,
+          "before_ns": 37846863151,
+          "after_ns": 5031059455,
+          "before_two_update_seconds": 37.846863151,
+          "after_two_update_seconds": 5.031059455,
+          "sample_ratio": 7.522642793137097,
+          "time_reduction_percent": 86.70679935896598,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "snapshot_commit_recorded": "f55243b5f88b3449da44e485766e3f376c12e836",
+          "feature_counts_including_warmups_and_extra_n256_sequence": {
+            "cache_reused": 4,
+            "cache_reused_points": 4096,
+            "foreground_linear_reused": 4,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 638976,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 1600,
+            "support_geometry_reused": 0,
+            "transform_packet_calls": 48,
+            "transform_packet_elements": 77824
+          },
+          "setup_seconds": 1.501243613,
+          "before_initial_seconds": 6.068302735,
+          "after_initial_seconds": 5.426059933
+        },
+        {
+          "hardware": "H200 / sm_90",
+          "n": 256,
+          "gates": 512,
+          "window": 6,
+          "before_ns": 17553499456,
+          "after_ns": 2116729836,
+          "before_two_update_seconds": 17.553499456,
+          "after_two_update_seconds": 2.116729836,
+          "sample_ratio": 8.29274438214136,
+          "time_reduction_percent": 87.94126583530627,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "snapshot_commit_recorded": "f55243b5f88b3449da44e485766e3f376c12e836",
+          "feature_counts_including_warmups_and_extra_n256_sequence": {
+            "cache_reused": 4,
+            "cache_reused_points": 1024,
+            "foreground_linear_reused": 16,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 159744,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 2341,
+            "support_geometry_reused": 11,
+            "transform_packet_calls": 48,
+            "transform_packet_elements": 19456
+          },
+          "setup_seconds": 0.108734249,
+          "before_initial_seconds": 2.291474042,
+          "after_initial_seconds": 2.263169245
+        },
+        {
+          "hardware": "H200 / sm_90",
+          "n": 65536,
+          "gates": 131072,
+          "window": 16,
+          "before_ns": 1254203178658,
+          "after_ns": 379355222108,
+          "before_two_update_seconds": 1254.203178658,
+          "after_two_update_seconds": 379.355222108,
+          "sample_ratio": 3.3061444935136186,
+          "time_reduction_percent": 69.7532880985112,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "snapshot_commit_recorded": "f55243b5f88b3449da44e485766e3f376c12e836",
+          "feature_counts_including_warmups_and_extra_n256_sequence": {
+            "cache_reused": 4,
+            "cache_reused_points": 262144,
+            "foreground_linear_reused": 4,
+            "frozen_linear_captured": 4,
+            "frozen_linear_skipped_g1_points": 40894464,
+            "global_g2_inputs": 16,
+            "global_g2_reused": 4,
+            "linear_reused": 0,
+            "linear_skipped_g1_points": 0,
+            "sparse_cpu_g1_points": 0,
+            "sparse_gpu_g1_points": 1600,
+            "support_geometry_reused": 0,
+            "transform_packet_calls": 0,
+            "transform_packet_elements": 0
+          },
+          "setup_seconds": 15.128344545,
+          "before_initial_seconds": 284.330499096,
+          "after_initial_seconds": 261.732196151
+        }
+      ],
+      "limits": [
+        "The local n256 JSON does not record a Git commit; do not silently assign the n1024 supplement commit to it.",
+        "n65536 packet calls and support geometry reuse are 0; these mechanisms are not covered at that size.",
+        "Feature counters include warmups; n256 also includes additional functional sequences.",
+        "Not an original-paper whole-system baseline or end-to-end speedup."
+      ]
+    },
+    "prepared_capacity": {
+      "mechanism_zh": "固定SRS与域的公开根/divisor/prepared-G2前缀预计算并跨epoch复用，减少重复divisor构造及G2 prepare；每笔保留2n条独立Product方程、Miller和最终幂。",
+      "snapshot": "08b1ee621953833bef13bbbed837272f2d26e676",
+      "only_change": "prepared-root capacity 64/256/1024/4096, actual min(n, cap), deduplicated by actual capacity",
+      "timer": "sum of two measured updates; precompute is included in initialization",
+      "rows": [
+        {
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 256,
+          "gates": 512,
+          "cap": 64,
+          "actual_roots": 64,
+          "two_update_ns": 1826540209,
+          "two_update_seconds": 1.826540209,
+          "control64_over_candidate": 1.0,
+          "initial_seconds": 2.782275691,
+          "precompute_seconds_included_in_initial": 0.017424784,
+          "retained_bytes_requested": 1610640,
+          "retained_MiB_requested": 1.5360260009765625,
+          "planned_host_prepared_envelope_bytes": 4755456,
+          "per_owner_plan_upper_bytes": 277507840,
+          "divisors_formed_per_update": 384
+        },
+        {
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 256,
+          "gates": 512,
+          "cap": 256,
+          "actual_roots": 256,
+          "two_update_ns": 1589571965,
+          "two_update_seconds": 1.589571965,
+          "control64_over_candidate": 1.149076763567606,
+          "initial_seconds": 2.524643171,
+          "precompute_seconds_included_in_initial": 0.072327687,
+          "retained_bytes_requested": 6367632,
+          "retained_MiB_requested": 6.0726470947265625,
+          "planned_host_prepared_envelope_bytes": 17436672,
+          "per_owner_plan_upper_bytes": 290189056,
+          "divisors_formed_per_update": 0
+        },
+        {
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 1024,
+          "gates": 2048,
+          "cap": 64,
+          "actual_roots": 64,
+          "two_update_ns": 5210872040,
+          "two_update_seconds": 5.21087204,
+          "control64_over_candidate": 1.0,
+          "initial_seconds": 5.613441017,
+          "precompute_seconds_included_in_initial": 0.01793866,
+          "retained_bytes_requested": 1610640,
+          "retained_MiB_requested": 1.5360260009765625,
+          "planned_host_prepared_envelope_bytes": 4755456,
+          "per_owner_plan_upper_bytes": 290090752,
+          "divisors_formed_per_update": 1920
+        },
+        {
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 1024,
+          "gates": 2048,
+          "cap": 256,
+          "actual_roots": 256,
+          "two_update_ns": 4791172743,
+          "two_update_seconds": 4.791172743,
+          "control64_over_candidate": 1.0875984481280057,
+          "initial_seconds": 5.411470068,
+          "precompute_seconds_included_in_initial": 0.071892586,
+          "retained_bytes_requested": 6367632,
+          "retained_MiB_requested": 6.0726470947265625,
+          "planned_host_prepared_envelope_bytes": 17436672,
+          "per_owner_plan_upper_bytes": 302771968,
+          "divisors_formed_per_update": 1536
+        },
+        {
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 1024,
+          "gates": 2048,
+          "cap": 1024,
+          "actual_roots": 1024,
+          "two_update_ns": 3865116491,
+          "two_update_seconds": 3.865116491,
+          "control64_over_candidate": 1.348179816089274,
+          "initial_seconds": 5.752134538,
+          "precompute_seconds_included_in_initial": 0.287076774,
+          "retained_bytes_requested": 25395600,
+          "retained_MiB_requested": 24.219131469726562,
+          "planned_host_prepared_envelope_bytes": 68161536,
+          "per_owner_plan_upper_bytes": 353496832,
+          "divisors_formed_per_update": 0
+        },
+        {
+          "hardware": "H200 / sm_90",
+          "n": 65536,
+          "gates": 131072,
+          "cap": 64,
+          "actual_roots": 64,
+          "two_update_ns": 380453941737,
+          "two_update_seconds": 380.453941737,
+          "control64_over_candidate": 1.0,
+          "initial_seconds": 262.074879897,
+          "precompute_seconds_included_in_initial": 0.026768445,
+          "retained_bytes_requested": 1610640,
+          "retained_MiB_requested": 1.5360260009765625,
+          "planned_host_prepared_envelope_bytes": 4755456,
+          "per_owner_plan_upper_bytes": 1347055360,
+          "divisors_formed_per_update": 130944
+        },
+        {
+          "hardware": "H200 / sm_90",
+          "n": 65536,
+          "gates": 131072,
+          "cap": 256,
+          "actual_roots": 256,
+          "two_update_ns": 380092028243,
+          "two_update_seconds": 380.092028243,
+          "control64_over_candidate": 1.0009521733346343,
+          "initial_seconds": 262.313372181,
+          "precompute_seconds_included_in_initial": 0.108531153,
+          "retained_bytes_requested": 6367632,
+          "retained_MiB_requested": 6.0726470947265625,
+          "planned_host_prepared_envelope_bytes": 17436672,
+          "per_owner_plan_upper_bytes": 1359736576,
+          "divisors_formed_per_update": 130560
+        },
+        {
+          "hardware": "H200 / sm_90",
+          "n": 65536,
+          "gates": 131072,
+          "cap": 1024,
+          "actual_roots": 1024,
+          "two_update_ns": 378743912768,
+          "two_update_seconds": 378.743912768,
+          "control64_over_candidate": 1.0045150005355927,
+          "initial_seconds": 262.221512263,
+          "precompute_seconds_included_in_initial": 0.444948648,
+          "retained_bytes_requested": 25395600,
+          "retained_MiB_requested": 24.219131469726562,
+          "planned_host_prepared_envelope_bytes": 68161536,
+          "per_owner_plan_upper_bytes": 1410461440,
+          "divisors_formed_per_update": 129024
+        },
+        {
+          "hardware": "H200 / sm_90",
+          "n": 65536,
+          "gates": 131072,
+          "cap": 4096,
+          "actual_roots": 4096,
+          "two_update_ns": 373279907945,
+          "two_update_seconds": 373.279907945,
+          "control64_over_candidate": 1.0192189122406692,
+          "initial_seconds": 263.480120959,
+          "precompute_seconds_included_in_initial": 1.777054173,
+          "retained_bytes_requested": 101507472,
+          "retained_MiB_requested": 96.80506896972656,
+          "planned_host_prepared_envelope_bytes": 271060992,
+          "per_owner_plan_upper_bytes": 1613360896,
+          "divisors_formed_per_update": 122880
+        }
+      ],
+      "h200_64_to_4096": {
+        "saved_two_update_seconds": 7.174033792,
+        "time_reduction_percent": 1.8856510617937694,
+        "extra_requested_retained_bytes": 99896832,
+        "extra_requested_retained_MiB": 95.26904296875,
+        "prefix_coverage_percent": 6.25
+      },
+      "limits": [
+        "Two timed updates per route; fixed deterministic workload; no significance claim.",
+        "Default remained64; larger capacity is opt-in.",
+        "Per-owner envelope and requested retained bytes are not process RSS/VRAM peaks.",
+        "Prepared reuse does not cache acceptance, witnesses, Miller loops or final exponentiations."
+      ]
+    },
+    "full_domain_divisor": {
+      "mechanism_zh": "一次构造公开affine G2 divisor全域表D_r=P1-rP0，update仍先用prepared64，其余按根查表，免去重复点乘；只缓存公开固定数据，所有独立配对方程继续执行。",
+      "historical_checkpoint": "8f41b95 (report label), local baseline commit 518bfed09b5602f175e5027c498a99d3629f103e",
+      "timer": "sum of two measured updates after two warmups; both routes already use R5; only divisor cache toggles",
+      "rows": [
+        {
+          "case": "cpu-256",
+          "hardware": "local CPU",
+          "n": 256,
+          "gates": 512,
+          "off_ns": 2230536733,
+          "on_ns": 2057728303,
+          "off_two_update_seconds": 2.230536733,
+          "on_two_update_seconds": 2.057728303,
+          "off_over_on": 1.0839801978463626,
+          "time_reduction_percent": 7.747392250634588,
+          "off_initial_seconds": 1.665197945,
+          "on_initial_seconds": 1.656059832,
+          "on_precompute_seconds_included_in_initial": 0.054451655,
+          "phase_sum_off_over_on_not_process_wall": 1.03928765681197,
+          "off_divisors_formed_per_update": 384,
+          "on_divisors_formed_per_update": 0
+        },
+        {
+          "case": "cpu-1024",
+          "hardware": "local CPU",
+          "n": 1024,
+          "gates": 2048,
+          "off_ns": 9503292061,
+          "on_ns": 8535913471,
+          "off_two_update_seconds": 9.503292061,
+          "on_two_update_seconds": 8.535913471,
+          "off_over_on": 1.11333041194555,
+          "time_reduction_percent": 10.179405029231582,
+          "off_initial_seconds": 7.167554897,
+          "on_initial_seconds": 7.122544846,
+          "on_precompute_seconds_included_in_initial": 0.217190319,
+          "phase_sum_off_over_on_not_process_wall": 1.0431422657257947,
+          "off_divisors_formed_per_update": 1920,
+          "on_divisors_formed_per_update": 0
+        },
+        {
+          "case": "gpu-256",
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 256,
+          "gates": 512,
+          "off_ns": 2170937446,
+          "on_ns": 1993898582,
+          "off_two_update_seconds": 2.170937446,
+          "on_two_update_seconds": 1.993898582,
+          "off_over_on": 1.0887903053837469,
+          "time_reduction_percent": 8.154950034428587,
+          "off_initial_seconds": 3.307666096,
+          "on_initial_seconds": 2.970167489,
+          "on_precompute_seconds_included_in_initial": 0.053231592,
+          "phase_sum_off_over_on_not_process_wall": 1.0926755928682732,
+          "off_divisors_formed_per_update": 384,
+          "on_divisors_formed_per_update": 0
+        },
+        {
+          "case": "gpu-1024",
+          "hardware": "RTX 5070 Ti Laptop / sm_120",
+          "n": 1024,
+          "gates": 2048,
+          "off_ns": 5843537256,
+          "on_ns": 4878390750,
+          "off_two_update_seconds": 5.843537256,
+          "on_two_update_seconds": 4.87839075,
+          "off_over_on": 1.1978411643224767,
+          "time_reduction_percent": 16.51647732730739,
+          "off_initial_seconds": 6.586432732,
+          "on_initial_seconds": 6.424694995,
+          "on_precompute_seconds_included_in_initial": 0.21121995,
+          "phase_sum_off_over_on_not_process_wall": 1.1030855765984275,
+          "off_divisors_formed_per_update": 1920,
+          "on_divisors_formed_per_update": 0
+        },
+        {
+          "case": "h200-65536",
+          "hardware": "H200 / sm_90",
+          "n": 65536,
+          "gates": 131072,
+          "off_ns": 379445029508,
+          "on_ns": 292006490737,
+          "off_two_update_seconds": 379.445029508,
+          "on_two_update_seconds": 292.006490737,
+          "off_over_on": 1.299440394459426,
+          "time_reduction_percent": 23.043796062996392,
+          "off_initial_seconds": 261.002065574,
+          "on_initial_seconds": 260.695464425,
+          "on_precompute_seconds_included_in_initial": 21.395530489,
+          "phase_sum_off_over_on_not_process_wall": 1.2038590956191404,
+          "off_divisors_formed_per_update": 130944,
+          "on_divisors_formed_per_update": 0
+        }
+      ],
+      "h200_job": "1159",
+      "h200_process_wall_seconds": 1906.023993060924,
+      "h200_two_update_breakdown": {
+        "off": {
+          "update": 379.445029508,
+          "rebuild": 379.173527839,
+          "cache_check": 361.774066785,
+          "cache_children": {
+            "read_points": 1.252116952,
+            "g1_difference": 4.076097678,
+            "g2_divisor": 86.484196772,
+            "g2_prepare": 32.313650123,
+            "miller": 113.588011771,
+            "final_exponentiation": 123.832743232,
+            "undo_store": 0.047823926,
+            "unchanged_copy": 0.009549764
+          }
+        },
+        "on": {
+          "update": 292.006490737,
+          "rebuild": 291.737735606,
+          "cache_check": 274.279294086,
+          "cache_children": {
+            "read_points": 1.208798127,
+            "g1_difference": 4.052614155,
+            "g2_divisor": 0.058468498,
+            "g2_prepare": 32.0954872,
+            "miller": 113.378276405,
+            "final_exponentiation": 123.289703182,
+            "undo_store": 0.025735013,
+            "unchanged_copy": 0.009427936
+          }
+        }
+      },
+      "limits": [
+        "Independent equations/Miller/final-exponentiation count per complete update = 2*n.",
+        "The21.395530 s precompute is already in the260.695464 s On initialization.",
+        "Phase sum is arithmetic of shared setup + route initialization + all4 updates, not an independently timed process.",
+        "Two samples are not statistically significant evidence."
+      ]
+    },
+    "cache_workers_update": {
+      "mechanism_zh": "CPU侧专用有界worker池并行验证cache方程，64根块、每任务4根、最多16任务；每条方程保留独立Miller与最终幂。GPU session顺序重放，同时最多1个owner。",
+      "hardware": "1 H200 and8 allocated CPU slots at every worker setting; n262144 reserves64 GiB host",
+      "only_change": "CPU cache-check workers1/2/4/8; runs in fixed1/2/4/8 order",
+      "timer": "mean of two measured On caller updates; Off means also retained",
+      "rows": [
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 1,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 189.889684772,
+          "on_update_mean_seconds": 146.246805435,
+          "off_two_update_ns": 379779369544,
+          "on_two_update_ns": 292493610870,
+          "process_seconds": 1932.141669260338,
+          "process_minutes": 32.202361154338966,
+          "serial_over_on_update": 1.0,
+          "serial_over_process": 1.0,
+          "setup_seconds": 15.044908692,
+          "on_initial_seconds": 260.822103458,
+          "on_precompute_seconds_included_in_initial": 21.413124374,
+          "owner_limit_bytes": 2147483648,
+          "undo_limit_bytes": 134217728,
+          "on_cache_serial_ns": {
+            "read_points": 1199876164,
+            "g1_difference": 4042132807,
+            "g2_divisor": 55542658,
+            "g2_prepare": 32446967961,
+            "miller": 113613489188,
+            "final_exponentiation": 123256556364,
+            "undo_store": 28369456,
+            "unchanged_copy": 8908000
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        },
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 2,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 99.975604037,
+          "on_update_mean_seconds": 78.090626389,
+          "off_two_update_ns": 199951208074,
+          "on_two_update_ns": 156181252778,
+          "process_seconds": 1100.9932277812622,
+          "process_minutes": 18.349887129687705,
+          "serial_over_on_update": 1.8727831008357825,
+          "serial_over_process": 1.7549078600183747,
+          "setup_seconds": 15.071134402,
+          "on_initial_seconds": 166.621286494,
+          "on_precompute_seconds_included_in_initial": 21.412186402,
+          "owner_limit_bytes": 2147483648,
+          "undo_limit_bytes": 134217728,
+          "on_cache_serial_ns": {
+            "read_points": 1153742935,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 13960835,
+            "unchanged_copy": 3838018
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 4054417932,
+            "g2_divisor": 17967546,
+            "g2_prepare": 32539063851,
+            "miller": 113793618733,
+            "final_exponentiation": 123571293308,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        },
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 4,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 68.3323506185,
+          "on_update_mean_seconds": 53.8494265015,
+          "off_two_update_ns": 136664701237,
+          "on_two_update_ns": 107698853003,
+          "process_seconds": 809.3776364740916,
+          "process_minutes": 13.489627274568193,
+          "serial_over_on_update": 2.7158470374967916,
+          "serial_over_process": 2.387194286312835,
+          "setup_seconds": 15.115071223,
+          "on_initial_seconds": 134.153833794,
+          "on_precompute_seconds_included_in_initial": 21.415310785,
+          "owner_limit_bytes": 2147483648,
+          "undo_limit_bytes": 134217728,
+          "on_cache_serial_ns": {
+            "read_points": 1141224803,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 34098523,
+            "unchanged_copy": 8961752
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 4856015736,
+            "g2_divisor": 83765382,
+            "g2_prepare": 39361049331,
+            "miller": 135326547680,
+            "final_exponentiation": 145250699079,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        },
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 8,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 43.833881913,
+          "on_update_mean_seconds": 35.3866492785,
+          "off_two_update_ns": 87667763826,
+          "on_two_update_ns": 70773298557,
+          "process_seconds": 584.8957599988207,
+          "process_minutes": 9.748262666647012,
+          "serial_over_on_update": 4.132824339597921,
+          "serial_over_process": 3.303394897689519,
+          "setup_seconds": 15.041255458,
+          "on_initial_seconds": 109.669015016,
+          "on_precompute_seconds_included_in_initial": 21.415361918,
+          "owner_limit_bytes": 2147483648,
+          "undo_limit_bytes": 134217728,
+          "on_cache_serial_ns": {
+            "read_points": 1136960831,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 48579337,
+            "unchanged_copy": 9156425
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 6171893263,
+            "g2_divisor": 154666854,
+            "g2_prepare": 50627120887,
+            "miller": 170833012872,
+            "final_exponentiation": 181420957326,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 1,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 747.491955143,
+          "on_update_mean_seconds": 572.7026783265,
+          "off_two_update_ns": 1494983910286,
+          "on_two_update_ns": 1145405356653,
+          "process_seconds": 7577.7218233319,
+          "process_minutes": 126.29536372219833,
+          "serial_over_on_update": 1.0,
+          "serial_over_process": 1.0,
+          "setup_seconds": 63.530644482,
+          "on_initial_seconds": 1023.336286383,
+          "on_precompute_seconds_included_in_initial": 85.695058486,
+          "owner_limit_bytes": 8589934592,
+          "undo_limit_bytes": 536870912,
+          "on_cache_serial_ns": {
+            "read_points": 4812783860,
+            "g1_difference": 17486491814,
+            "g2_divisor": 276149997,
+            "g2_prepare": 129442946281,
+            "miller": 454770543767,
+            "final_exponentiation": 493209521740,
+            "undo_store": 84408416,
+            "unchanged_copy": 38322071
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 2,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 387.6741590775,
+          "on_update_mean_seconds": 299.8927694155,
+          "off_two_update_ns": 775348318155,
+          "on_two_update_ns": 599785538831,
+          "process_seconds": 4250.640466337092,
+          "process_minutes": 70.84400777228487,
+          "serial_over_on_update": 1.9096915188809473,
+          "serial_over_process": 1.7827247172146403,
+          "setup_seconds": 63.527159605,
+          "on_initial_seconds": 647.820384357,
+          "on_precompute_seconds_included_in_initial": 85.715454239,
+          "owner_limit_bytes": 8589934592,
+          "undo_limit_bytes": 536870912,
+          "on_cache_serial_ns": {
+            "read_points": 4620437157,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 261069269,
+            "unchanged_copy": 47366826
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 17540809663,
+            "g2_divisor": 180193345,
+            "g2_prepare": 129647147600,
+            "miller": 455424719039,
+            "final_exponentiation": 494608815662,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 4,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 262.067606852,
+          "on_update_mean_seconds": 203.375485921,
+          "off_two_update_ns": 524135213704,
+          "on_two_update_ns": 406750971842,
+          "process_seconds": 3083.2815722199157,
+          "process_minutes": 51.38802620366526,
+          "serial_over_on_update": 2.8159867731008785,
+          "serial_over_process": 2.457680768310776,
+          "setup_seconds": 63.642658885,
+          "on_initial_seconds": 514.983143418,
+          "on_precompute_seconds_included_in_initial": 85.712769732,
+          "owner_limit_bytes": 8589934592,
+          "undo_limit_bytes": 536870912,
+          "on_cache_serial_ns": {
+            "read_points": 4616967256,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 118491930,
+            "unchanged_copy": 43993114
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 21058287356,
+            "g2_divisor": 322522130,
+            "g2_prepare": 157613510758,
+            "miller": 542052134965,
+            "final_exponentiation": 582134322628,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 8,
+          "allocated_cpu_slots": 8,
+          "gpu": "1 x H200 / sm_90",
+          "process_repetitions": 1,
+          "measured_updates_per_route": 2,
+          "warmups_per_route": 2,
+          "off_update_mean_seconds": 162.733624323,
+          "on_update_mean_seconds": 128.4658704895,
+          "off_two_update_ns": 325467248646,
+          "on_two_update_ns": 256931740979,
+          "process_seconds": 2165.1109504932538,
+          "process_minutes": 36.085182508220896,
+          "serial_over_on_update": 4.458014227002876,
+          "serial_over_process": 3.4999230970613997,
+          "setup_seconds": 63.99854466,
+          "on_initial_seconds": 411.257447085,
+          "on_precompute_seconds_included_in_initial": 85.660112395,
+          "owner_limit_bytes": 8589934592,
+          "undo_limit_bytes": 536870912,
+          "on_cache_serial_ns": {
+            "read_points": 4554792944,
+            "g1_difference": 0,
+            "g2_divisor": 0,
+            "g2_prepare": 0,
+            "miller": 0,
+            "final_exponentiation": 0,
+            "undo_store": 314864711,
+            "unchanged_copy": 71516191
+          },
+          "on_cache_parallel_worker_elapsed_ns": {
+            "read_points": 0,
+            "g1_difference": 26659301176,
+            "g2_divisor": 486550769,
+            "g2_prepare": 202571595153,
+            "miller": 683270331972,
+            "final_exponentiation": 725719807721,
+            "undo_store": 0,
+            "unchanged_copy": 0
+          }
+        }
+      ],
+      "limits": [
+        "One independent process per setting; two timed updates per route; fixed order.",
+        "CPU parallelism reduces wall time, not the equation count or necessarily cumulative worker elapsed work.",
+        "At n262144,8-worker Miller+final-exp worker elapsed across two updates is about1408.99 s vs serial947.98 s.",
+        "Later host-memory and GPU-pairing research is outside this snapshot.",
+        "The old n65536 JSON retains a failed-first-attempt followup field; the later n262144 retry report and sealed JSON govern accepted n262144 data."
+      ]
+    },
+    "cache_workers_full_process": {
+      "mechanism_zh": "与同轮worker实验相同；用独立全进程回执衡量初始化、稳态与验收整体墙钟。",
+      "timer": "independently measured complete two-route benchmark executable; setup, readback calibration, Off/On initialization,4 updates per route (8 total),Reference,exact witness I/O,owner release and2 CPU dense oracles",
+      "rows": [
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 1,
+          "process_seconds": 1932.141669260338,
+          "process_minutes": 32.202361154338966,
+          "serial_over_process": 1.0
+        },
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 2,
+          "process_seconds": 1100.9932277812622,
+          "process_minutes": 18.349887129687705,
+          "serial_over_process": 1.7549078600183747
+        },
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 4,
+          "process_seconds": 809.3776364740916,
+          "process_minutes": 13.489627274568193,
+          "serial_over_process": 2.387194286312835
+        },
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 8,
+          "process_seconds": 584.8957599988207,
+          "process_minutes": 9.748262666647012,
+          "serial_over_process": 3.303394897689519
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 1,
+          "process_seconds": 7577.7218233319,
+          "process_minutes": 126.29536372219833,
+          "serial_over_process": 1.0
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 2,
+          "process_seconds": 4250.640466337092,
+          "process_minutes": 70.84400777228487,
+          "serial_over_process": 1.7827247172146403
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 4,
+          "process_seconds": 3083.2815722199157,
+          "process_minutes": 51.38802620366526,
+          "serial_over_process": 2.457680768310776
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 8,
+          "process_seconds": 2165.1109504932538,
+          "process_minutes": 36.085182508220896,
+          "serial_over_process": 3.4999230970613997
+        }
+      ],
+      "limits": [
+        "Not single-route service latency, single proof verification latency or cold-start+one-update wall time.",
+        "One full-process sample per setting; fixed worker order; no significance claim.",
+        "Do not add nested phase times or multiply full-process and update ratios."
+      ]
+    },
+    "fixed_base_divisor_constructor": {
+      "mechanism_zh": "对同一公开SRS点P0复用固定基点窗口表计算P1-rP0，n<128直接乘，128至2048用4位，n>=4096用8位；最多64根一批，临时表发布前释放。",
+      "hardware": "local CPU constructor component; published result does not record CPU model",
+      "timer": "single fixed-order component interval including table build,multiplication,normalization and output storage; final table/output destruction outside",
+      "rows": [
+        {
+          "n": 128,
+          "window_bits": 4,
+          "direct_ns": 28809462,
+          "fixed_ns": 6680780,
+          "direct_seconds": 0.028809462,
+          "fixed_seconds": 0.00668078,
+          "sample_ratio": 4.3122901816853725
+        },
+        {
+          "n": 1024,
+          "window_bits": 4,
+          "direct_ns": 240827379,
+          "fixed_ns": 42011964,
+          "direct_seconds": 0.240827379,
+          "fixed_seconds": 0.042011964,
+          "sample_ratio": 5.732352312784044
+        },
+        {
+          "n": 4096,
+          "window_bits": 8,
+          "direct_ns": 1013901015,
+          "fixed_ns": 101416620,
+          "direct_seconds": 1.013901015,
+          "fixed_seconds": 0.10141662,
+          "sample_ratio": 9.997385191894583
+        },
+        {
+          "n": 16384,
+          "window_bits": 8,
+          "direct_ns": 3661464039,
+          "fixed_ns": 368783179,
+          "direct_seconds": 3.661464039,
+          "fixed_seconds": 0.368783179,
+          "sample_ratio": 9.928500667868043
+        },
+        {
+          "n": 65536,
+          "window_bits": 8,
+          "direct_ns": 14384526463,
+          "fixed_ns": 1450738588,
+          "direct_seconds": 14.384526463,
+          "fixed_seconds": 1.450738588,
+          "sample_ratio": 9.915312504943172
+        }
+      ],
+      "current_maximum_verified": {
+        "n": 262144,
+        "all_points_equal_to_direct_cpu": true,
+        "construction_seconds": 6.580767061,
+        "external_all_point_oracle": "outside timed construction"
+      },
+      "temporary_table_envelopes_bytes": {
+        "direct": 0,
+        "window4": 524288,
+        "window8": 4194304
+      },
+      "limits": [
+        "One fixed-order single-process sample per strategy/size, not significance.",
+        "Constructor gain is not whole-initialization, update or process speedup.",
+        "Original non--locked attempt excluded; use source-frozen R2 only.",
+        "No new H200/SM90 validation belongs to this local constructor sample;1174 reports its own later absolute constructor times."
+      ]
+    },
+    "basis_initialization_batching": {
+      "mechanism_zh": "Program::new的公开basis FourStep FFT改用已有initialization_plan，n1024/长度2048的行提交96次降为2次，transpose复用初始化tile；每批最多65536元素，数学五阶段、总算术与自然序输出不变。",
+      "hardware": "RTX5070Ti Laptop / sm_120, n1024/window8, same probe/native/image and deterministic inputs",
+      "timer": "basis FFT and Program body are nested host call wall; process wall independently timed",
+      "rows": [
+        {
+          "route": 0,
+          "basis_before_ns": 1641559568,
+          "basis_after_ns": 24370650,
+          "basis_before_ms": 1641.559568,
+          "basis_after_ms": 24.37065,
+          "basis_sample_ratio": 67.35805438098697,
+          "program_body_before_ns": 1681966283,
+          "program_body_after_ns": 61735286,
+          "program_body_before_ms": 1681.966283,
+          "program_body_after_ms": 61.735286,
+          "program_body_sample_ratio": 27.244812359012965
+        },
+        {
+          "route": 1,
+          "basis_before_ns": 1687130147,
+          "basis_after_ns": 23886530,
+          "basis_before_ms": 1687.130147,
+          "basis_after_ms": 23.88653,
+          "basis_sample_ratio": 70.63102706839378,
+          "program_body_before_ns": 1767285222,
+          "program_body_after_ns": 100362130,
+          "program_body_before_ms": 1767.285222,
+          "program_body_after_ms": 100.36213,
+          "program_body_sample_ratio": 17.609084442508344
+        }
+      ],
+      "process": {
+        "before_ns": 24070929089,
+        "after_ns": 16486920218,
+        "before_seconds": 24.070929089,
+        "after_seconds": 16.486920218,
+        "sample_ratio": 1.4600015509700819
+      },
+      "correctness": {
+        "non_timing_ROW_fields_equal": true,
+        "identical_witness_hashes": 5,
+        "cpu_passed": 331,
+        "cpu_ignored": 15,
+        "python_passed": 57
+      },
+      "limits": [
+        "One historical C0 process and one C1 process, not repeated statistical samples.",
+        "Other phases also fluctuate; complete-process difference is not fully attributable to basis batching.",
+        "Process includes shared setup/calibration,2 initializations,8updates,Reference,exact witness I/O and2 CPU dense; excludes build,container startup and hashes.",
+        "No H200,different-circuit cold-start distribution or large-scale execution result.",
+        "No same-n cache,SRS persistent copy or cross-owner device-handle sharing; each session computes its own basis.",
+        "Call wall is not CUDA-event kernel time."
+      ]
+    },
+    "h200_1174_checkpoint": {
+      "mechanism_zh": "冻结历史综合快照的完整验收及热点拆分；Off/On只切换全域divisor缓存。",
+      "frozen_product_commit": "614e9c64f37328375253e0bdd1c3254747f7fc0b",
+      "support_id": "67c73e4191bc704d7240627a8c788dda7036262da8395f0d8dcca99199321070",
+      "completed_beijing": "2026-10-25 21:06:35",
+      "terminal": "COMPLETED/0:0",
+      "gpu_default_tests": {
+        "passed": 188,
+        "failed": 0,
+        "ignored": 65,
+        "roundtrip_markers": 5,
+        "silent_skip": false
+      },
+      "native_archive_reused_from_job": "1173",
+      "hardware": "H200 / sm_90,8CPU cache workers",
+      "rows": [
+        {
+          "n": 65536,
+          "gates": 131072,
+          "workers": 8,
+          "setup_seconds": 15.701407987,
+          "off_initial_seconds": 94.036258214,
+          "on_initial_seconds": 92.067250934,
+          "on_constructor_seconds_included_in_initial": 2.223740256,
+          "off_update_mean_seconds": 43.879875516,
+          "on_update_mean_seconds": 35.2677173695,
+          "cache_off_over_on_sample_ratio": 1.2441938063717135,
+          "process_seconds": 570.2753772791475,
+          "on_rebuild_child_mean_seconds": {
+            "materialize": 0.0291076615,
+            "linear_msm": 0.3681857395,
+            "fr_transform": 1.3516806865,
+            "g1_transform": 5.5281161645,
+            "polynomial": 1.329610059,
+            "memory": 0.038275665,
+            "cache_check": 26.4228548365,
+            "finish": 0.0709838865
+          },
+          "on_rebuild_child_percent_of_outer_update": {
+            "materialize": 0.08253344324793954,
+            "linear_msm": 1.0439738292175722,
+            "fr_transform": 3.832628781552366,
+            "g1_transform": 15.674720613704332,
+            "polynomial": 3.7700485264460717,
+            "memory": 0.10852889796917028,
+            "cache_check": 74.92079671521594,
+            "finish": 0.2012715644630515
+          },
+          "outside_rebuild_child_mean_seconds": 0.1289026705,
+          "on_point_readback_mean_seconds": 0.5666004595,
+          "on_worker_elapsed_sum_seconds": 408.453851874,
+          "on_worker_elapsed_share_percent": {
+            "read_points": 0.0,
+            "g1_difference": 1.5034521782143335,
+            "g2_divisor": 0.014205525724335429,
+            "g2_prepare": 12.43337153536406,
+            "miller": 41.60607503205127,
+            "final_exponentiation": 44.442895728646,
+            "undo_store": 0.0,
+            "unchanged_copy": 0.0
+          },
+          "owner_limit_bytes": 2147483648,
+          "undo_limit_bytes": 134217728,
+          "on_plan_upper_bytes": 1396015232,
+          "exact_pairs": 5,
+          "cpu_dense_oracles": 2,
+          "raw_ROW_events": 34
+        },
+        {
+          "n": 262144,
+          "gates": 524288,
+          "workers": 8,
+          "setup_seconds": 67.12559933,
+          "off_initial_seconds": 343.437559389,
+          "on_initial_seconds": 335.97889183,
+          "on_constructor_seconds_included_in_initial": 8.844103498,
+          "off_update_mean_seconds": 162.9752550115,
+          "on_update_mean_seconds": 128.4783444835,
+          "cache_off_over_on_sample_ratio": 1.2685036973871524,
+          "process_seconds": 2104.1354094268754,
+          "on_rebuild_child_mean_seconds": {
+            "materialize": 0.093408072,
+            "linear_msm": 1.2392730955,
+            "fr_transform": 5.239241917,
+            "g1_transform": 12.8870268865,
+            "polynomial": 2.6481399625,
+            "memory": 0.0815282145,
+            "cache_check": 106.0390727365,
+            "finish": 0.071192127
+          },
+          "on_rebuild_child_percent_of_outer_update": {
+            "materialize": 0.0727033589789103,
+            "linear_msm": 0.9645774161256844,
+            "fr_transform": 4.07791829670786,
+            "g1_transform": 10.03050509275128,
+            "polynomial": 2.0611566666319328,
+            "memory": 0.0634567754026986,
+            "cache_check": 82.53458834855877,
+            "finish": 0.055411771755155936
+          },
+          "outside_rebuild_child_mean_seconds": 0.179461472,
+          "on_point_readback_mean_seconds": 2.270476533,
+          "on_worker_elapsed_sum_seconds": 1636.454706498,
+          "on_worker_elapsed_share_percent": {
+            "read_points": 0.0,
+            "g1_difference": 1.6278661588506702,
+            "g2_divisor": 0.027324235875546762,
+            "g2_prepare": 12.418636468521678,
+            "miller": 41.519486273470555,
+            "final_exponentiation": 44.40668686328155,
+            "undo_store": 0.0,
+            "unchanged_copy": 0.0
+          },
+          "owner_limit_bytes": 8589934592,
+          "undo_limit_bytes": 536870912,
+          "on_plan_upper_bytes": 4650270848,
+          "exact_pairs": 5,
+          "cpu_dense_oracles": 2,
+          "raw_ROW_events": 34
+        }
+      ],
+      "report_seal_checks": {
+        "FINAL_AUDIT.json": "f72f43642e620ae991fa9340c122bd59010aa73d3a6eb8c2cac87fea841c9508",
+        "FINAL_REPORT.md": "d8067cac700d52dbee650dbf9a3ad3f034caabcd65357dff76f5624e6cd8c251",
+        "SCHEDULED_FEEDBACK_EVIDENCE.json": "f57731b31c10391d8a113b88165f3c5d6f20ab79a9c22883c1711d412dffc91d"
+      },
+      "limits": [
+        "One process per scale and two measured updates per route; Off then On.",
+        "The ratio is marginal cache gain within shared optimizations, not total project gain.",
+        "No uniformly controlled original-Dynaverse-vs-latest end-to-end baseline exists.",
+        "Native reuse is not new compilation or runtime algorithm speedup.",
+        "Cache worker elapsed sums are not process wall or CPU cycles.",
+        "n262144 uses8GiB/owner, not2GiB; resource observations are5s samples, not certified peaks.",
+        "n4194304 whole circuit remains unadmitted."
+      ]
+    }
+  },
+  "report_tables": [
+    {
+      "caption": "表 1　该主结论的比较条件",
+      "headers": [
+        "项目",
+        "CPU 路线",
+        "GPU 路线"
+      ],
+      "rows": [
+        [
+          "源码",
+          "ffc7775dcf8a93fb4d9aa842316cd0ad67eeae94",
+          "相同源码与探针"
+        ],
+        [
+          "硬件",
+          "AMD EPYC 9V74 主机；8 Slurm 逻辑 CPU 配额",
+          "同主机；1 张 NVIDIA H200 NVL，SM90"
+        ],
+        [
+          "算法状态",
+          "启用三项 CPU 候选，缓存 worker=8",
+          "正式 GPU 算子与既有协议缓存优化，缓存 worker=8"
+        ],
+        [
+          "统计量",
+          "一次 prove_setup API 墙钟 60.225902530 s",
+          "一次 prove_setup API 墙钟 15.112562773 s"
+        ],
+        [
+          "比值定义",
+          "S = T_CPU / T_GPU",
+          "S = 3.985154830；时间降幅 74.906872%"
+        ]
+      ]
+    },
+    {
+      "caption": "表 2　H200 n=65536，同源码完整诊断通过的两种模式，单位 s",
+      "headers": [
+        "阶段",
+        "CPU 候选",
+        "GPU 模式",
+        "CPU / GPU"
+      ],
+      "rows": [
+        [
+          "Setup",
+          "60.225903",
+          "15.112563",
+          "3.985×"
+        ],
+        [
+          "Prove + aux",
+          "663.002598",
+          "665.867489",
+          "0.996×"
+        ],
+        [
+          "Session 初始化",
+          "732.432958",
+          "81.501068",
+          "8.987×"
+        ],
+        [
+          "普通 Update",
+          "0.150181",
+          "0.222679",
+          "0.674×"
+        ],
+        [
+          "完整重建 Update",
+          "413.039682",
+          "35.430819",
+          "11.658×"
+        ]
+      ]
+    },
+    {
+      "caption": "表 3　同两笔完整重建 Update 的互斥子阶段均值，单位 s",
+      "headers": [
+        "模式",
+        "总 Update",
+        "G1 变换",
+        "cache 检查",
+        "多项式"
+      ],
+      "rows": [
+        [
+          "CPU 候选",
+          "413.039682",
+          "357.821951",
+          "26.323522",
+          "27.423197"
+        ],
+        [
+          "GPU",
+          "35.430819",
+          "5.537075",
+          "26.554128",
+          "1.329849"
+        ]
+      ]
+    },
+    {
+      "caption": "表 4　主要证据组的软件身份与运行约束",
+      "headers": [
+        "证据组",
+        "运行与编译软件",
+        "硬件及限制"
+      ],
+      "rows": [
+        [
+          "E1 本地 CPU 最终配对",
+          "Rust 1.89.0，release、locked/offline；cpu-parallel 候选；RAYON_NUM_THREADS=1；ark-poly parallel 关闭",
+          "Intel Core Ultra 9 275HX；8 逻辑 CPU 配额，512 MiB，swap=0，pids=64；参考 MSM 1 worker，候选 8，cache 均 8"
+        ],
+        [
+          "E7 H200 主汇报组",
+          "Rust 1.89.0；SM90 native；ICICLE 锁定提交 aacec3f72f14f53dd96d835698d2c87cde3a68b8；RAYON_NUM_THREADS=1、OMP_NUM_THREADS=1",
+          "AMD EPYC 9V74；H200 NVL，nvidia-smi 报告 143771 MiB；驱动 595.84；8 逻辑 slots 实际覆盖 4 物理核、2 NUMA"
+        ],
+        [
+          "E10 早期本地 GPU Setup",
+          "Rust 1.89.0，CUDA 12.8.1，固定 ICICLE 提交；Rust 显式 G2-6 测试探针；TableBatchNormalize + GPU63",
+          "RTX 5070 Ti Laptop，SM120；自然 CPU 对照已使用当时 FixedBaseCpuBackend；正式值为同进程暖态"
+        ],
+        [
+          "E5 H200 缓存并行",
+          "历史构建 37c8f4a，同一二进制；专用 cache pool 1/2/4/8 workers",
+          "固定 8 CPU slots + 1 H200；n=65536 每 owner 2 GiB 配额，n=262144 为 8 GiB"
+        ]
+      ]
+    },
+    {
+      "caption": "表 5　记录工具 时钟及输出含义",
+      "headers": [
+        "记录层",
+        "软件与时钟",
+        "原始输出",
+        "解释"
+      ],
+      "rows": [
+        [
+          "API 与协议子阶段",
+          "自研 Rust full_divisor_probe；std::time::Instant::now 与 elapsed().as_nanos()",
+          "stdout 的 CPU_OPT / GPU_OPT API 事件；divisor_initial、divisor_update 与 timings；离线生成 ANALYSIS.json",
+          "调用者墙钟，可能包含 CPU、提交、读回、同步和内部检查；不是 CPU 指令时间或纯 GPU kernel 时间"
+        ],
+        [
+          "完整诊断进程",
+          "Python 3 subprocess 包装器；time.monotonic_ns()",
+          "PROCESS.json 中 process_wall_ns、exitcode、timed_out",
+          "记录独立可执行进程生命周期；H200 wrapper 还计入监测线程收尾与输出关闭，不是单次 API"
+        ],
+        [
+          "设备子阶段",
+          "CUDA runtime events；cudaEventRecord 与 cudaEventElapsedTime",
+          "device_generate_ns、device_normalize_ns、subgroup_kernel_event_ns 等",
+          "设备 stream 上两个 event 之间的范围；仅用于对应子阶段，不能替代 Rust API 墙钟"
+        ],
+        [
+          "调度作业时间",
+          "Slurm scontrol；已结束子进程采用 PROCESS 回执",
+          "RunTime、状态及分阶段回执",
+          "包括编译、测试和多个串行阶段；排队等待不算计算 RunTime；不作为算法延迟"
+        ],
+        [
+          "资源观察",
+          "Python 监测 /proc 状态并调用 nvidia-smi；约 5 秒一次",
+          "samples.jsonl；VmRSS、VmHWM、Threads、进程显存观察值",
+          "资源采样；不用于计算算法加速比，也不是完整物理峰值认证"
+        ],
+        [
+          "统计与审计",
+          "项目 Python JSON/CSV 解析脚本，median / mean 与原值算术复算",
+          "MODE_RESULT.json、FINAL_RESULTS.json、CSV 汇总及哈希回执",
+          "由选定合法样本计算统计量；不从截图读数，不把构建/回归测试时长当 Setup 或 Prove"
+        ]
+      ]
+    },
+    {
+      "caption": "表 6　E7 API 钟的边界 适用于主汇报组",
+      "headers": [
+        "字段或阶段",
+        "计时起止",
+        "包含",
+        "计时外"
+      ],
+      "rows": [
+        [
+          "Setup / prove_setup",
+          "cpu_optimization.rs 111–114：Instant 开始后 make 后端，再创建 RNG 并执行 setup / setup_with_backend；随后停止",
+          "后端创建、该调用内的固定表准备及 Setup 算术；实际发生的 GPU 交互",
+          "ToyCircuit 及 valid_instance 已在此前建立；独立 CPU oracle、后续 Prove 与外部验证"
+        ],
+        [
+          "Prove + aux",
+          "115–126：围住 prove 闭包，得到 proof 与 aux 后立即取 elapsed",
+          "AnchorOpeningPolicy::Precompute 路径的证明和 aux 预计算",
+          "verify_reference、独立重新 Setup 的 oracle 与 proof/aux 比较；这些仍在完整进程里"
+        ],
+        [
+          "ordinary Session 初始化",
+          "153–158：围住 start_incremental_session，返回 session 即停",
+          "已有参数上的增量状态、resident、初始 anchor/cache 与内部验证",
+          "前一阶段 Setup；调用后的 exact state 比较与 verify_reference；后端在 Setup 时已创建"
+        ],
+        [
+          "普通 Update",
+          "160 起：围住 session.update，proof 返回即停",
+          "应用两 wire 变更及内部实际执行的增量/重建工作",
+          "调用后 receipt/完整 witness 比较、verify_reference 与额外 dense oracle"
+        ],
+        [
+          "完整重建 Update",
+          "flow.rs 55–56：围住 s.update；正式样本 step≥2",
+          "16-wire large_batch 更新、完整重建及其内部独立 cache 方程检查",
+          "调用后的外部 Reference 和额外验收；前两笔预热也不进入正式均值"
+        ]
+      ]
+    },
+    {
+      "caption": "表 7　各实验组的采样与汇总规则",
+      "headers": [
+        "实验组",
+        "采样设计",
+        "报告统计量",
+        "适用边界"
+      ],
+      "rows": [
+        [
+          "E7 H200 同源码 CPU/GPU",
+          "每模式 1 个完整诊断进程；普通更新 4 笔；重建路线先 2 预热再 2 正式",
+          "Setup/Prove/初始化各一次；普通取 4 笔中位数；完整重建取 2 笔均值；各阶段 CPU 统计量 / GPU 统计量",
+          "主汇报 3.985×对应 Setup；未提供重复进程方差或置信区间"
+        ],
+        [
+          "E1 CPU 最终 V",
+          "每 n 三对独立进程；顺序 ref→cand、cand→ref、ref→cand",
+          "各进程 Setup/Prove 后取三进程中位数；普通先每进程四笔中位数再三进程中位数；重建先每进程两笔均值再三进程中位数",
+          "倍率是两组汇总统计量之比，不是逐对倍率的均值或中位数"
+        ],
+        [
+          "E1 固定表 / NTT 阶段",
+          "每配置一个历史单次对照",
+          "单次 API 墙钟与样本比值",
+          "不与最终 V 结果混作多次重复"
+        ],
+        [
+          "E1 MSM 原语",
+          "2048 点、固定 seed；每格预热后仅一次；1/2/4/8 workers",
+          "同 cpu-parallel feature 的 1-worker / 各 worker 用时",
+          "固定表暖态；不是完整 Setup 或 Update"
+        ],
+        [
+          "E2 GPU 组合策略",
+          "各硬件/规模独立；每路线 2 预热 + 2 正式",
+          "两笔正式 Update 合计之比；同组使用相同 window",
+          "对照双方均为 GPU 路线，不能称 CPU/GPU 加速比"
+        ],
+        [
+          "E3 / E4 缓存消融",
+          "各轮按记录切换 prepared 容量或 divisor 开关",
+          "正文早期表用两笔合计；1174 表用两笔均值，表题标清",
+          "各轮源码与并行度不同，倍数不串联"
+        ],
+        [
+          "E5 cache workers",
+          "同历史二进制，workers 1/2/4/8 固定顺序，每档一进程",
+          "On 两笔正式 Update 均值；完整进程使用独立 PROCESS 钟",
+          "n 两种规模的 owner 配额不同；不宣称线性扩展"
+        ],
+        [
+          "E6 basis / divisor 部件",
+          "basis 前后各一进程；divisor 同进程固定次序每档一次",
+          "部件墙钟和完整诊断墙钟分别报告",
+          "不将部件 67–71×或 9.9×写成整体加速"
+        ],
+        [
+          "E10 早期 GPU Setup",
+          "3 规模 × 7 路径；首调用另列；2 预热 + 10 正式，轮换顺序",
+          "10 个暖态样本中位数；natural_cpu / GPU63",
+          "共 231 条 Setup 记录；不是 231 次独立冷启动"
+        ],
+        [
+          "E0 早期 CPU/hybrid 序列",
+          "n1024 每模式 8、n8192 每模式 4 稳态序列；每序列 16 updates",
+          "完整序列中位数；CPU / calibrated batch hybrid",
+          "排除共享 Setup 和前台后端初始化，不是单次 Prove"
+        ]
+      ]
+    },
+    {
+      "caption": "表 8　2048 点暖态 CPU 原语，用时单位 ms；同一并行 feature 内比较",
+      "headers": [
+        "原语",
+        "1 worker",
+        "2 workers",
+        "4 workers",
+        "8 workers",
+        "1 / 8"
+      ],
+      "rows": [
+        [
+          "G1 VarMSM",
+          "15.102",
+          "8.049",
+          "4.578",
+          "2.539",
+          "5.947×"
+        ],
+        [
+          "G2 VarMSM",
+          "46.122",
+          "24.563",
+          "13.120",
+          "7.266",
+          "6.347×"
+        ],
+        [
+          "FixG1",
+          "27.186",
+          "15.204",
+          "7.490",
+          "4.650",
+          "5.847×"
+        ],
+        [
+          "FixG2",
+          "77.433",
+          "40.042",
+          "20.351",
+          "12.270",
+          "6.311×"
+        ]
+      ]
+    },
+    {
+      "caption": "表 9　CPU 参考与组合候选，单位 s；末列为加速比 / 时间降幅",
+      "headers": [
+        "n",
+        "阶段",
+        "参考",
+        "候选",
+        "S / R"
+      ],
+      "rows": [
+        [
+          "256",
+          "Setup",
+          "3.194746",
+          "0.151039",
+          "21.152× / +95.27%"
+        ],
+        [
+          "256",
+          "Prove + aux",
+          "0.948458",
+          "0.912991",
+          "1.039× / +3.74%"
+        ],
+        [
+          "256",
+          "Session 初始化",
+          "1.167070",
+          "1.167541",
+          "1.000× / -0.04%"
+        ],
+        [
+          "256",
+          "普通 Update",
+          "0.098236",
+          "0.103149",
+          "0.952× / -5.00%"
+        ],
+        [
+          "256",
+          "完整重建 Update",
+          "0.701216",
+          "0.716798",
+          "0.978× / -2.22%"
+        ],
+        [
+          "1024",
+          "Setup",
+          "12.872259",
+          "0.504526",
+          "25.514× / +96.08%"
+        ],
+        [
+          "1024",
+          "Prove + aux",
+          "4.538054",
+          "4.354499",
+          "1.042× / +4.04%"
+        ],
+        [
+          "1024",
+          "Session 初始化",
+          "5.152674",
+          "5.159144",
+          "0.999× / -0.13%"
+        ],
+        [
+          "1024",
+          "普通 Update",
+          "0.098002",
+          "0.103743",
+          "0.945× / -5.86%"
+        ],
+        [
+          "1024",
+          "完整重建 Update",
+          "2.992887",
+          "2.991564",
+          "1.000× / +0.04%"
+        ]
+      ]
+    },
+    {
+      "caption": "表 10　RTX 5070 Ti Laptop 完整 Setup，中位数，单位 ms",
+      "headers": [
+        "n",
+        "自然 CPU",
+        "GPU 完整阶校验",
+        "GPU Frobenius63",
+        "CPU / GPU63"
+      ],
+      "rows": [
+        [
+          "64",
+          "186.906",
+          "103.602",
+          "79.176",
+          "2.361×"
+        ],
+        [
+          "256",
+          "733.128",
+          "145.183",
+          "114.877",
+          "6.382×"
+        ],
+        [
+          "1024",
+          "2726.451",
+          "306.877",
+          "258.279",
+          "10.556×"
+        ]
+      ]
+    },
+    {
+      "caption": "表 11　组合优化的有效 GPU 样本；两笔正式 Update 合计，单位 s",
+      "headers": [
+        "硬件",
+        "n / window",
+        "默认路线",
+        "组合优化",
+        "S / R"
+      ],
+      "rows": [
+        [
+          "RTX",
+          "256 / 6",
+          "16.156810",
+          "1.711010",
+          "9.443× / +89.41%"
+        ],
+        [
+          "RTX",
+          "1024 / 8",
+          "37.846863",
+          "5.031059",
+          "7.523× / +86.71%"
+        ],
+        [
+          "H200",
+          "256 / 6",
+          "17.553499",
+          "2.116730",
+          "8.293× / +87.94%"
+        ],
+        [
+          "H200",
+          "65536 / 16",
+          "1254.203179",
+          "379.355222",
+          "3.306× / +69.75%"
+        ]
+      ]
+    },
+    {
+      "caption": "表 12　早期本机完整更新序列，单位 s；并非单次 Prove API",
+      "headers": [
+        "规模与输入",
+        "CPU 中位数",
+        "batch hybrid 中位数",
+        "S / R",
+        "稳态序列/模式"
+      ],
+      "rows": [
+        [
+          "n=1024，dense，跨阈值",
+          "6.53",
+          "5.288",
+          "1.235× / +19.02%",
+          "8"
+        ],
+        [
+          "n=8192，dense，跨阈值",
+          "88.981",
+          "77.548",
+          "1.147× / +12.85%",
+          "4"
+        ]
+      ]
+    },
+    {
+      "caption": "表 13　缓存容量与全域 divisor 的独立对照，单位 s",
+      "headers": [
+        "实验",
+        "对照→候选",
+        "两笔 Update",
+        "S / R"
+      ],
+      "rows": [
+        [
+          "Prepared，RTX n=256",
+          "64→256 根",
+          "1.826540→1.589572",
+          "1.149× / +12.97%"
+        ],
+        [
+          "Prepared，RTX n=1024",
+          "64→1024 根",
+          "5.210872→3.865116",
+          "1.348× / +25.83%"
+        ],
+        [
+          "Prepared，H200 n=65536",
+          "64→4096 根",
+          "380.453942→373.279908",
+          "1.019× / +1.89%"
+        ],
+        [
+          "Divisor，H200 1159 n=65536",
+          "全域缓存 Off→On",
+          "379.445030→292.006491",
+          "1.299× / +23.04%"
+        ]
+      ]
+    },
+    {
+      "caption": "表 14　缓存 On 的完整重建 Update 均值，单位 s",
+      "headers": [
+        "n",
+        "1 worker",
+        "2 workers",
+        "4 workers",
+        "8 workers",
+        "1 / 8"
+      ],
+      "rows": [
+        [
+          "65536",
+          "146.247",
+          "78.091",
+          "53.849",
+          "35.387",
+          "4.133×"
+        ],
+        [
+          "262144",
+          "572.703",
+          "299.893",
+          "203.375",
+          "128.466",
+          "4.458×"
+        ]
+      ]
+    },
+    {
+      "caption": "表 15　H200 1174 各阶段绝对用时，单位 s；Update 取两笔正式样本均值",
+      "headers": [
+        "n",
+        "Setup",
+        "On 初始化",
+        "Off Update均值",
+        "On Update均值",
+        "Off / On"
+      ],
+      "rows": [
+        [
+          "65536",
+          "15.701408",
+          "92.067251",
+          "43.879876",
+          "35.267717",
+          "1.244×"
+        ],
+        [
+          "262144",
+          "67.125599",
+          "335.978892",
+          "162.975255",
+          "128.478344",
+          "1.269×"
+        ]
+      ]
+    },
+    {
+      "caption": "表 16　请求分配峰值的历史独立对照",
+      "headers": [
+        "阶段",
+        "优化前 / bytes",
+        "优化后 / bytes",
+        "降幅"
+      ],
+      "rows": [
+        [
+          "CPU anchor",
+          "1,172,847,935",
+          "1,002,983,639",
+          "14.48%"
+        ],
+        [
+          "Setup",
+          "977,406,652",
+          "951,192,252",
+          "2.68%"
+        ]
+      ]
+    },
+    {
+      "caption": "表 17　相同物理行数口径下的源码收敛",
+      "headers": [
+        "项目",
+        "原版",
+        "精简候选",
+        "净减少"
+      ],
+      "rows": [
+        [
+          "代码文件",
+          "314",
+          "262",
+          "52"
+        ],
+        [
+          "物理代码行",
+          "42,393",
+          "34,271",
+          "8,122（19.16%）"
+        ]
+      ]
+    },
+    {
+      "caption": "表 18　建议的 PPT 内容映射",
+      "headers": [
+        "页次",
+        "内容与核心句",
+        "图表与脚注重点"
+      ],
+      "rows": [
+        [
+          "1",
+          "GPU Setup 在本次大规模实测中获得超过 3 倍加速",
+          "主汇报图 primary_setup.png；n=65536，131072 门；H200 vs 优化 CPU；单进程单次 API"
+        ],
+        [
+          "2",
+          "实验软件和计时方法",
+          "Rust 1.89 full_divisor_probe + Instant；Python monotonic_ns 记录进程；主图不是 CUDA event"
+        ],
+        [
+          "3",
+          "固定表、计划复用和局部并行改善 CPU Setup",
+          "CPU Setup 图与配对表；每 n 三对进程中位数；Prove 仅约 4%，普通 Update 回退保留"
+        ],
+        [
+          "4",
+          "GPU 固定基点生成与等价 G2 校验降低 Setup 开销",
+          "早期 GPU Setup 表；10 次暖态中位数，独立历史版本；不与 H200 主图混用"
+        ],
+        [
+          "5",
+          "增量线性复用与缓存降低重复重建工作",
+          "组合优化图；两笔正式合计；双方为 GPU；H200 n65536 为 3.306×内部优化"
+        ],
+        [
+          "6",
+          "CPU cache 并行将重建 Update 墙钟改善约 4 倍",
+          "worker 图；同二进制、固定 8 CPU slots；n65536/n262144 配额分别 2/8 GiB"
+        ],
+        [
+          "7",
+          "阶段收益不均，GPU 后的主要重建热点是 CPU 配对",
+          "E7 阶段表与重建构成图；Prove 无明显收益，普通 Update 慢 48.27%"
+        ],
+        [
+          "8",
+          "内存治理和代码收敛改善可维护性",
+          "请求分配峰值降低 14.48%；物理行减少 19.16%；不作为运行加速比"
+        ],
+        [
+          "9",
+          "DAG 只保留为 proof 生成阶段后续方向",
+          "依赖图；尚未实现/实验，无加速数据；资源竞争可能抵消收益"
+        ]
+      ]
+    }
+  ],
+  "qualification": "Each measurement belongs to its recorded source/backend/hardware/sample scope. Historical ratios are not multiplied. No performance qualification is transferred to the simplification candidate."
+}
