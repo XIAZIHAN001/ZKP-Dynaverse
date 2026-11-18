@@ -79,6 +79,12 @@ cargo run --locked -p dynaverse-bench --bin cpu_dynaverse --release -- \
 
 benchmark会把Git commit及源码标识写入输出，因此请从Git checkout构建，而不是从不含`.git`的源码ZIP构建。
 
+上面的 CSV 基准和默认 CPU workspace 测试都不启用 Criterion。要运行独立的 `cpu_dynamo` 基准，请显式开启 `criterion-bench`：
+
+```bash
+cargo bench --locked -p dynaverse-bench --bench cpu_dynamo --features criterion-bench
+```
+
 ## GPU构建与实验
 
 GPU路径支持Linux/WSL2，需要NVIDIA驱动、CUDA、CMake和按GPU架构构建的ICICLE v2.8.0。local为sm_120，H200为sm_90；两种架构的编译产物分别构建。

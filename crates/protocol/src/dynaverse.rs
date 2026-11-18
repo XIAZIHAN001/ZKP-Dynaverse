@@ -1,6 +1,6 @@
 //! CPU Fig. 4 initial relation proof using one shared, unmasked SRS.
 
-use crate::consistency::ConsistencyVerifyingKey;
+use crate::consistency::{ConsistencyVerifyingKey, SliceConsistencyKey};
 use crate::domain::{
     affected_set_factorization, divide_exact, divide_exact_by_xn_minus_one, fft_multiply,
     interpolate_at_indices, multiply_polynomials,
@@ -10,8 +10,10 @@ use crate::dynamo::{
     derive_h_sparse, dynamo_prove_unmasked, dynamo_verify_with_key, dynamo_verify_with_checks, DynamoVerifyingKey,
     SparseVector,
 };
+use crate::srs::DynaverseSrs;
+#[cfg(test)]
 use crate::srs::SharedSrs;
-use crate::kzg::combine_single_openings;
+use crate::kzg::combine_cached_openings;
 use crate::toy_circuit::ToyCircuit;
 use crate::trace::{BatchOpenPhase, CpuPhase, CpuTrace, VerificationPhase, VerificationTrace};
 use crate::verification::PairingChecks;
@@ -42,10 +44,17 @@ mod sparse_tests;
 #[derive(Clone, Debug)]
 pub struct DynaverseParams {
     circuit: ToyCircuit,
-    srs: SharedSrs,
+    srs: DynaverseSrs,
     verifying: DynaverseVerifyingKey,
     // Fixed to this circuit's public root set; immutable and prover-owned.
     public_division: PreparedExactDivision,
+}
+
+// Return a complete proof plus owned cache inputs only for Precompute. Keeping
+// them separate lets a synchronous rebuild verify the proof before building its cache.
+struct BuiltAnchor {
+    proof: DynaverseProof,
+    opening_coefficients: Option<[Vec<Fr>; 3]>,
 }
 
 // Owned intermediates cross the timing boundary without retaining a borrow
@@ -106,7 +115,7 @@ impl DynaverseParams {
         let n = circuit.n();
         let m = circuit.m();
         let sigma = circuit.permutation();
-        let srs = SharedSrs::setup_with_backend_traced(m,n,sigma.clone(),rng,backend,trace)?;
+        let srs = DynaverseSrs::setup_traced(m, n, sigma.clone(), rng, backend, trace)?;
         let started=trace.start();
         let big = radix2_domain(m)?;
         let public_indices: Vec<usize> = (6 * n..m).collect();
@@ -143,13 +152,15 @@ impl DynaverseParams {
     }
 
     pub fn prove_anchor(&self, instance: &Instance, witness: &Witness) -> Result<DynaverseProof> {
-        self.prove_anchor_traced(instance, witness, None, &mut CpuTrace::disabled())
+        let built = self.prove_anchor_traced(instance, witness, AnchorOpeningPolicy::Dense,
+            None, &mut CpuTrace::disabled())?;
+        Ok(built.proof)
     }
 
     fn prove_anchor_traced(
-        &self, instance: &Instance, witness: &Witness,
+        &self, instance: &Instance, witness: &Witness, policy: AnchorOpeningPolicy,
         kzg_backend: Option<&dyn OperatorBackend>, trace: &mut CpuTrace,
-    ) -> Result<DynaverseProof> {
+    ) -> Result<BuiltAnchor> {
         let started = trace.start();
         let n = self.circuit.n();
         let m = self.circuit.m();
@@ -194,12 +205,7 @@ impl DynaverseParams {
         let s5_g2 = self.srs.kzg_x.commit_g2(&wire_coefficients[4])?;
         trace.finish(CpuPhase::KzgCommit, started);
         let started = trace.start();
-        let slices = (0..6)
-            .map(|i| self.srs.consistency[i].prove(&w, &w[i * n..(i + 1) * n], &backend))
-            .collect::<Result<Vec<_>>>()?
-            .try_into()
-            .map_err(|_| anyhow::anyhow!("expected six consistency proofs"))?;
-        let consistency = ConsistencyProof { slices };
+        let consistency = SliceConsistencyKey::prove_anchor_slices(&self.srs.consistency, &w, &backend)?;
         trace.finish(CpuPhase::Consistency, started);
 
         let started = trace.start();
@@ -214,7 +220,7 @@ impl DynaverseParams {
         let multiplication_quotient = self.commit_g1(&quotient, kzg_backend)?;
         trace.finish(CpuPhase::BatchOpen, started);
 
-        Ok(DynaverseProof {
+        let proof = DynaverseProof {
             anchor: AnchorProof {
                 wires,
                 s5_g2,
@@ -228,7 +234,15 @@ impl DynaverseParams {
             delta: None,
             anchor_generation: 0,
             generation: 0,
-        })
+        };
+        let opening_coefficients = if policy == AnchorOpeningPolicy::Precompute {
+            // Move the three buffers into the cache inputs, without cloning.
+            let [_, _, _, s4, s5, s6] = wire_coefficients;
+            Some([s4, s5, s6])
+        } else {
+            None
+        };
+        Ok(BuiltAnchor { proof, opening_coefficients })
     }
 
     pub fn prove_with_aux(
@@ -270,8 +284,11 @@ impl DynaverseParams {
         let started = trace.start();
         self.circuit.validate(instance, witness)?;
         trace.finish(CpuPhase::Validation, started);
-        let proof = self.prove_anchor_traced(instance, witness, kzg_backend, trace)?;
-        let kzg = self.prepare_opening_cache(witness, policy, kzg_backend, trace)?;
+        let BuiltAnchor { proof, opening_coefficients } =
+            self.prove_anchor_traced(instance, witness, policy, kzg_backend, trace)?;
+        let kzg = self.prepare_opening_cache(opening_coefficients, trace)?;
+        #[cfg(test)]
+        let kzg = tests::corrupt_worker_cache_if_requested(kzg);
         let rebuild_interval = ceil_sqrt(self.circuit.n()) as u64;
         let aux = ProverAux {
             anchor_witness: witness.clone(),
@@ -290,27 +307,34 @@ impl DynaverseParams {
     }
 
     fn prepare_opening_cache(
-        &self, witness: &Witness, policy: AnchorOpeningPolicy,
-        backend: Option<&dyn OperatorBackend>, trace: &mut CpuTrace,
+        &self, coefficients: Option<[Vec<Fr>; 3]>, trace: &mut CpuTrace,
     ) -> Result<KzgPrecomputation> {
+        let Some([s4, s5, s6]) = coefficients else {
+            return Ok(KzgPrecomputation { q4: Vec::new(), q5: Vec::new(), q6: Vec::new() });
+        };
+        let started = trace.start();
+        let small = radix2_domain(self.circuit.n())?;
+        let q4 = self.srs.kzg_x.precompute_single_openings(&s4, &small)?;
+        let q5 = self.srs.kzg_x.precompute_single_openings(&s5, &small)?;
+        let q6 = self.srs.kzg_x.precompute_single_openings(&s6, &small)?;
+        trace.finish(CpuPhase::CachePrecompute, started);
+        Ok(KzgPrecomputation { q4, q5, q6 })
+    }
+
+    fn reference_opening_cache(&self, witness: &Witness, policy: AnchorOpeningPolicy) -> Result<KzgPrecomputation> {
         if policy == AnchorOpeningPolicy::Dense {
             return Ok(KzgPrecomputation { q4: Vec::new(), q5: Vec::new(), q6: Vec::new() });
         }
-        let started = trace.start();
-        let cache = self.precompute_anchor_openings(witness, backend)?;
-        trace.finish(CpuPhase::CachePrecompute, started);
-        Ok(cache)
-    }
-
-    fn precompute_anchor_openings(&self, witness: &Witness, backend: Option<&dyn OperatorBackend>) -> Result<KzgPrecomputation> {
         let n = self.circuit.n();
         let small = radix2_domain(n)?;
-        let openings = (3..6).map(|t| {
-            let coefficients = self.interpolate(&witness.wires[t * n..(t + 1) * n], backend)?;
-            self.srs.kzg_x.precompute_single_openings(&coefficients, &small)
-        }).collect::<Result<Vec<_>>>()?;
-        let [q4, q5, q6]: [Vec<G1Affine>; 3] = openings.try_into()
-            .map_err(|_| anyhow::anyhow!("expected three opening caches"))?;
+        let mut openings = [Vec::new(), Vec::new(), Vec::new()];
+        for (i, cache) in openings.iter_mut().enumerate() {
+            // Reinterpolate the original wire values on CPU, not the
+            // backend-generated coefficients used to construct the candidate.
+            let coefficients = self.interpolate(&witness.wires[(i + 3) * n..(i + 4) * n], None)?;
+            *cache = self.srs.kzg_x.precompute_single_openings(&coefficients, &small)?;
+        }
+        let [q4, q5, q6] = openings;
         Ok(KzgPrecomputation { q4, q5, q6 })
     }
 
@@ -426,22 +450,23 @@ impl DynaverseParams {
             .ok_or_else(|| anyhow::anyhow!("proof generation overflow"))?;
         let rebuilt = true_delta >= ceil_sqrt(self.circuit.n());
         trace.finish(CpuPhase::Validation, started);
-        let updated = if rebuilt {
+        let (updated, rebuild_coefficients) = if rebuilt {
             let started = trace.start();
             // The rebuild is one exclusive phase: nested anchor timing is off.
-            let mut rebuilt = self.prove_anchor_traced(new_instance, &new_witness,
-                kzg_backend, &mut CpuTrace::disabled())?;
+            let BuiltAnchor { proof: mut rebuilt, opening_coefficients } = self.prove_anchor_traced(
+                new_instance, &new_witness, aux.opening_policy, kzg_backend, &mut CpuTrace::disabled(),
+            )?;
             rebuilt.generation = generation;
             rebuilt.anchor_generation = generation;
             trace.finish(CpuPhase::AnchorRebuild, started);
-            rebuilt
+            (rebuilt, opening_coefficients)
         } else {
             let delta = self.prove_delta(&aux.anchor_witness, &new_witness,
                 &proof.anchor.wires, &aux.kzg, aux.opening_policy, batch_mode, kzg_backend, trace)?;
             let mut updated = proof.clone();
             updated.delta = Some(delta);
             updated.generation = generation;
-            updated
+            (updated, None)
         };
         let started = trace.start();
         let verification = self.verifying.verify_traced(new_instance, &updated, mode, trace.verification_mut());
@@ -452,12 +477,10 @@ impl DynaverseParams {
         // Prepare all fallible replacement state before changing the live aux.
         // Committing new state clones the full witness and instance.
         crate::workcount::record_scan(new_witness.wires.len() + new_instance.public_inputs.len());
-        let refreshed_cache = if rebuilt {
-            Some(self.prepare_opening_cache(&new_witness, aux.opening_policy, kzg_backend, trace)?)
-        } else { None };
         if rebuilt {
+            let refreshed_cache = self.prepare_opening_cache(rebuild_coefficients, trace)?;
             aux.anchor_witness = new_witness.clone();
-            aux.kzg = refreshed_cache.unwrap();
+            aux.kzg = refreshed_cache;
             aux.scheduler.updates_since_rebuild = 0;
         } else {
             aux.scheduler.updates_since_rebuild += 1;
@@ -496,8 +519,7 @@ impl DynaverseParams {
         // Public anchor verification does not cover the private opening cache.
         // Check the whole cache against the independent CPU construction before
         // publishing it. This extra CPU work runs on the background thread.
-        let expected = self.prepare_opening_cache(&candidate.anchor_witness,
-            candidate.opening_policy, None, &mut CpuTrace::disabled())?;
+        let expected = self.reference_opening_cache(&candidate.anchor_witness, candidate.opening_policy)?;
         ensure!(candidate.kzg == expected, "background opening cache differs from CPU reference");
         Ok(())
     }
@@ -690,11 +712,8 @@ impl DynaverseParams {
                 s4: anchor_wires.s4, s5: anchor_wires.s5, s6: anchor_wires.s6,
             }
         } else if policy == AnchorOpeningPolicy::Precompute {
-            MultiplicationWireCommitments {
-                s4: combine_single_openings(&small, &affected, &cache.q4)?,
-                s5: combine_single_openings(&small, &affected, &cache.q5)?,
-                s6: combine_single_openings(&small, &affected, &cache.q6)?,
-            }
+            let [s4, s5, s6] = combine_cached_openings(&small, &affected, [&cache.q4, &cache.q5, &cache.q6])?;
+            MultiplicationWireCommitments { s4, s5, s6 }
         } else {
             // Reconstruct the original dense quotient using known local values,
             // so this baseline does not add generic open_batch evaluation work.
@@ -1167,7 +1186,79 @@ impl OperatorBackend for ArkReferenceBackend {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::background::{BackgroundRebuilder, SwapOutcome};
     use rand::{rngs::StdRng, SeedableRng};
+    use std::{cell::Cell, sync::Arc, thread, time::{Duration, Instant}};
+
+    thread_local! {
+        // Only the worker under test arms this flag, for its next candidate.
+        static CORRUPT_WORKER_CACHE: Cell<bool> = const { Cell::new(false) };
+    }
+
+    pub(super) fn corrupt_worker_cache_if_requested(mut cache: KzgPrecomputation) -> KzgPrecomputation {
+        if CORRUPT_WORKER_CACHE.with(|flag| flag.replace(false)) {
+            cache.q4[0] = (G1Projective::from(cache.q4[0]) + G1Projective::generator()).into_affine();
+        }
+        cache
+    }
+
+    #[test]
+    fn corrupted_private_cache_is_rejected_before_publication() {
+        let n = 16;
+        let circuit = ToyCircuit::new(n).unwrap();
+        let (instance, witness) = circuit.valid_instance();
+        let params = Arc::new(DynaverseParams::setup(circuit, &mut StdRng::seed_from_u64(20605)).unwrap());
+        let (initial, mut aux) = params.prove_with_aux(&instance, &witness).unwrap();
+        let value = witness.wires[4 * n + 1] + Fr::one();
+        let update = Update { indices: vec![4 * n + 1, 5 * n + 1],
+            values: vec![value, witness.wires[3 * n + 1] * value] };
+        let mut proof = params.update_proof(&instance, &instance, &witness, &update, &initial, &mut aux).unwrap();
+        let before = aux.clone();
+        let before_proof = proof.clone();
+        let mut worker = BackgroundRebuilder::new(params, || {
+            CORRUPT_WORKER_CACHE.with(|flag| flag.set(true));
+            Ok(ArkReferenceBackend)
+        }).unwrap();
+        assert!(worker.start(&aux).unwrap());
+        let deadline = Instant::now() + Duration::from_secs(15);
+        let error = loop {
+            match worker.try_swap(&mut proof, &mut aux, None) {
+                Ok(SwapOutcome::Building { .. }) => {
+                    assert!(Instant::now() < deadline, "background worker did not finish");
+                    thread::sleep(Duration::from_millis(1));
+                }
+                Ok(outcome) => panic!("expected corrupted cache to be rejected, got {outcome:?}"),
+                Err(error) => break error,
+            }
+        };
+        assert!(error.to_string().contains("cache differs from CPU"), "{error:#}");
+        assert_eq!(aux, before);
+        assert_eq!(proof, before_proof);
+    }
+
+    #[test]
+    fn anchor_slices_match_six_independent_proofs_with_five_fewer_full_msms() {
+        for n in [1, 8] {
+            let circuit = ToyCircuit::new(n).unwrap();
+            let m = circuit.m();
+            let (instance, witness) = circuit.valid_instance();
+            let params = DynaverseParams::setup(circuit, &mut StdRng::seed_from_u64(3102)).unwrap();
+            let mut w = witness.wires.clone();
+            w.resize(m, Fr::zero());
+            let backend = ArkReferenceBackend;
+            let keys = &params.srs.consistency;
+            let (separate, baseline): ([_; 6], _) = crate::workcount::measure(|| {
+                std::array::from_fn(|i| keys[i].prove(&w, &w[i * n..(i + 1) * n], &backend).unwrap())
+            });
+            let (shared, work) = crate::workcount::measure(|| {
+                SliceConsistencyKey::prove_anchor_slices(keys, &w, &backend).unwrap()
+            });
+            assert_eq!(shared.slices, separate);
+            assert_eq!(baseline.msm_points, (6 * (2 * m + 5 * n)) as u64);
+            assert_eq!(baseline.msm_points, work.msm_points + (5 * m) as u64);
+            assert_eq!(params.prove_anchor(&instance, &witness).unwrap().anchor.consistency, shared);
+        }
+    }
 
     #[test]
     fn anchor_multiplication_relation_matches_original_dense_constraint() {
@@ -1268,6 +1359,8 @@ mod tests {
         let mut rng = StdRng::seed_from_u64(2802);
         let params = DynaverseParams::setup(circuit, &mut rng).unwrap();
         let (proof, mut aux) = params.prove_with_aux(&instance, &witness).unwrap();
+        let reference_cache = params.reference_opening_cache(&witness, AnchorOpeningPolicy::Precompute).unwrap();
+        assert_eq!(aux.kzg, reference_cache);
         let small = radix2_domain(n).unwrap();
         for (t, cache) in [&aux.kzg.q4, &aux.kzg.q5, &aux.kzg.q6].iter().enumerate() {
             let coefficients = small.ifft(&witness.wires[(t + 3) * n..(t + 4) * n]);
@@ -1309,7 +1402,10 @@ mod tests {
         };
         let rebuilt = params.update_proof(&instance, &instance, &witness, &update, &proof, &mut aux).unwrap();
         assert!(rebuilt.delta.is_none());
+        assert_eq!(rebuilt.anchor, params.prove_anchor(&instance, &aux.anchor_witness).unwrap().anchor);
         assert_ne!(aux.kzg, original_cache);
+        let reference_cache = params.reference_opening_cache(&aux.anchor_witness, AnchorOpeningPolicy::Precompute).unwrap();
+        assert_eq!(aux.kzg, reference_cache);
         let small = radix2_domain(n).unwrap();
         let coefficients = small.ifft(&aux.anchor_witness.wires[4 * n..5 * n]);
         assert_eq!(aux.kzg.q5[0], params.srs.kzg_x.open_single(&coefficients, &small, 0).unwrap().witness);

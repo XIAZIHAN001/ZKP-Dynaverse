@@ -77,6 +77,12 @@ cargo run --locked -p dynaverse-bench --bin cpu_dynaverse --release -- \
 
 The benchmark records the Git commit and build-source identity. Build from a Git checkout rather than a source ZIP without `.git` metadata.
 
+The CSV benchmark above and the default CPU workspace tests do not enable Criterion. To run the separate `cpu_dynamo` benchmark, opt in with `criterion-bench`:
+
+```bash
+cargo bench --locked -p dynaverse-bench --bench cpu_dynamo --features criterion-bench
+```
+
 ## GPU build and experiments
 
 GPU execution requires Linux/WSL2, an NVIDIA driver, CUDA, CMake, and ICICLE v2.8.0 libraries built for the target architecture. Local runs use sm_120; H200 uses sm_90. Build their artifacts separately.

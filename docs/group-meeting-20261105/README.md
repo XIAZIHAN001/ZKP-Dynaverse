@@ -5,7 +5,7 @@
 - [组会速通讲义](组会速通讲义.md)：第一篇章为核心协议复现，随后解释优化原理、实验结果、一天复习安排和常见问答。
 - [PPT 逐页素材与讲稿](PPT逐页素材与讲稿.md)：12 页素材，含逐页口头讲法；第 6、11 页可放备份，适合 10—12 分钟汇报。
 - [配图目录](figures)：6 张原理图同时提供 PNG/SVG，另有 3 张实测结果图。
-- [整包下载](Dynaverse_组会速通与PPT素材_20261105.zip)：讲义、PPT 素材、配图和本说明。
+- [原发布整包下载](https://raw.githubusercontent.com/XIAZIHAN001/ZKP-Dynaverse/486074e46bd7a526597cefc3f0781076a599aeec/docs/group-meeting-20261105/Dynaverse_%E7%BB%84%E4%BC%9A%E9%80%9F%E9%80%9A%E4%B8%8EPPT%E7%B4%A0%E6%9D%90_20261105.zip)：固定提交中的 ZIP，含讲义、PPT 素材、配图和原版说明；当前源码树只保留散件。
 - [完整成果报告与计时口径](../research-results-20261104/README.md)。
 
 ## 在 Mac 上使用
@@ -26,4 +26,4 @@ git pull --ff-only origin main
 
 当前复现是 ToyCircuit 上未加掩码的核心正确性研究原型。主汇报可说“本次 H200 实测的 Setup 阶段加速超过 3 倍”；不能推广为完整系统统一加速比。DAG 仍是未实验的后续方向。
 
-历史实验条件、负结果和验证范围沿用完整成果报告。本次发布仅整理文档，没有新增实验。文件校验值见 CHECKSUMS.sha256。
+历史实验条件、负结果和验证范围沿用完整成果报告。本次发布仅整理文档，没有新增实验。文件校验值见 [CHECKSUMS.sha256](CHECKSUMS.sha256)；验证完整清单前请把下载的 ZIP 放在本目录。

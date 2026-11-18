@@ -24,6 +24,11 @@ use super::sparse_geometry::SparseGeometry;
 struct AnchorStorage {witness:Witness,cache:KzgPrecomputation}
 struct AnchorEpoch {storage:AnchorStorage,proof:AnchorProof,generation:u64}
 
+enum SparseAnchor<'a> {
+    Active,
+    Candidate {proof:&'a AnchorProof,generation:u64},
+}
+
 #[derive(Clone)]
 struct Frozen {
     anchor:Arc<AnchorEpoch>,
@@ -334,8 +339,8 @@ impl<B:RebuildBackend> IncrementalSession<'_,B> {
         }
         let mut proof=if large {None} else {
             let started=trace.start();
-            let value=self.sparse_proof(&self.active.storage,&self.active.proof,
-                self.active.generation,&delta,generation,public_h,live_fixed.as_ref(),&mut geometry,&mut receipt,&mut trace.delta_detail)?;
+            let value=self.sparse_proof(SparseAnchor::Active,
+                &delta,generation,public_h,live_fixed.as_ref(),&mut geometry,&mut receipt,&mut trace.delta_detail)?;
             trace.delta_proof_ns+=UpdateTimings::elapsed(started);
             Some(value)
         };
@@ -368,7 +373,7 @@ impl<B:RebuildBackend> IncrementalSession<'_,B> {
                 let source=self.machine.source.as_ref().unwrap();
                 delta=self.machine.overlay.clone();
                 let started=trace.start();
-                proof=Some(self.sparse_proof(&self.candidate,&anchor,source.generation,
+                proof=Some(self.sparse_proof(SparseAnchor::Candidate {proof:&anchor,generation:source.generation},
                     &delta,generation,public_h,live_fixed.as_ref(),&mut geometry,&mut receipt,&mut trace.rebase_detail)?);
                 trace.rebase_ns+=UpdateTimings::elapsed(started);
                 install=true;
@@ -396,10 +401,18 @@ impl<B:RebuildBackend> IncrementalSession<'_,B> {
         Ok(Prepared {proof,delta,public_h,install,receipt,live_fixed,geometry})
     }
 
-    fn sparse_proof(&self,storage:&AnchorStorage,anchor:&AnchorProof,anchor_generation:u64,
-        delta:&BTreeMap<usize,Fr>,generation:u64,public_h:G1Projective,
+    fn sparse_proof(&self,base:SparseAnchor<'_>,delta:&BTreeMap<usize,Fr>,generation:u64,public_h:G1Projective,
         live_fixed:Option<&FixedLinear>,geometry:&mut Option<Arc<SparseGeometry>>,
         receipt:&mut UpdateReceipt,trace:&mut crate::incremental_rebuild::SparseProofTimings)->Result<DynaverseProof> {
+        let (storage,anchor,anchor_generation)=match base {
+            SparseAnchor::Active=>{
+                // Only the session's immutable epoch can reuse verification.
+                // Initialization and installation both verify it before publication.
+                let active=self.active.as_ref();
+                (&active.storage,&active.proof,active.generation)
+            }
+            SparseAnchor::Candidate {proof,generation}=>(&self.candidate,proof,generation),
+        };
         let selected=SparseBackend {backend:&self.backend,policy:self.sparse_policy,stats:&self.sparse_stats};
         let changed=if generation==anchor_generation {
             ensure!(delta.is_empty(),"new anchor has a nonempty same-generation delta");
@@ -420,7 +433,13 @@ impl<B:RebuildBackend> IncrementalSession<'_,B> {
         let proof=DynaverseProof {anchor:anchor.clone(),delta:changed,anchor_generation,generation};
         let validation_started=trace.start();
         let vk=&self.params.verifying;
-        ensure!(vk.verify_anchor_core(&proof.anchor)?,"incremental anchor check failed");
+        // Keep the candidate's rebase check after Finish; only Active takes
+        // its proof directly from an already published, verified epoch.
+        if !matches!(base,SparseAnchor::Active) {
+            #[cfg(test)]
+            SPARSE_ANCHOR_CORE_CHECKS.with(|checks| checks.set(checks.get()+1));
+            ensure!(vk.verify_anchor_core(&proof.anchor)?,"incremental anchor check failed");
+        }
         let delta_h=if let Some(delta)=&proof.delta {
             ensure!(vk.verify_delta_core(&proof.anchor,delta)?,"incremental sparse delta check failed");
             G1Projective::from(delta.changed_h_commitment)
@@ -429,5 +448,58 @@ impl<B:RebuildBackend> IncrementalSession<'_,B> {
             "incremental public input binding failed");
         trace.finish(6,validation_started);
         Ok(proof)
+    }
+}
+
+#[cfg(test)]
+thread_local! {
+    // Count only the sparse proof's own anchor check, not Machine::Finish or
+    // initialization. The pairing operations do not report WorkCount events.
+    static SPARSE_ANCHOR_CORE_CHECKS: Cell<usize> = const { Cell::new(0) };
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::incremental_rebuild::operators::CpuRebuildBackend;
+    use rand::{rngs::StdRng, SeedableRng};
+
+    #[test]
+    fn active_delta_skips_anchor_core_but_due_rebase_rechecks_candidate() {
+        let n = 8;
+        let circuit = ToyCircuit::new(n).unwrap();
+        let (instance, witness) = circuit.valid_instance();
+        let params = DynaverseParams::setup(circuit, &mut StdRng::seed_from_u64(5003)).unwrap();
+        let config = IncrementalConfig { trace_updates: true, ..Default::default() };
+        let mut session = params.start_incremental_session(
+            &instance, &witness, config, CpuRebuildBackend::default(),
+        ).unwrap();
+        assert_eq!(session.horizon(), 2);
+        let anchor = session.proof().anchor.clone();
+        let before = SPARSE_ANCHOR_CORE_CHECKS.with(Cell::get);
+
+        // Gate zero has zero sum: one edit is valid and below the horizon.
+        let proof = session.update(&Update {
+            indices: vec![4 * n], values: vec![witness.wires[4 * n] + Fr::one()],
+        }).unwrap();
+        assert_eq!(proof.anchor, anchor);
+        assert!(proof.anchor_generation < proof.generation && proof.delta.is_some());
+        assert!(session.rebuild_progress().is_none());
+        assert_eq!(SPARSE_ANCHOR_CORE_CHECKS.with(Cell::get), before);
+        assert_eq!(session.update_timings().delta_detail.calls[6], 1);
+        assert!(params.verifying.verify(session.current_instance(), &proof).unwrap());
+
+        // Two edits pay for a due rebuild without taking the large-batch path.
+        let next = witness.wires[4 * n + 1] + Fr::one();
+        session.update(&Update {
+            indices: vec![4 * n + 1, 5 * n + 1],
+            values: vec![next, witness.wires[3 * n + 1] * next],
+        }).unwrap();
+        let receipt = session.last_receipt();
+        assert!(receipt.swapped && !receipt.large_batch);
+        let trace = session.update_timings();
+        assert_eq!(trace.delta_detail.calls[6], 1, "old-anchor proof must still be checked");
+        assert_eq!(trace.rebase_detail.calls[6], 1);
+        assert_eq!(SPARSE_ANCHOR_CORE_CHECKS.with(Cell::get), before + 1);
     }
 }

@@ -74,14 +74,32 @@ pub fn combine_single_openings(
     indices: &[usize],
     single_openings: &[G1Affine],
 ) -> Result<G1Affine> {
+    let [opening] = combine_cached_openings(domain, indices, [single_openings])?;
+    Ok(opening)
+}
+
+/// The weights depend only on the domain and ordered indices, not on the wire.
+/// Compute them once, then combine each cache in caller order with its own MSM.
+pub(crate) fn combine_cached_openings<const COUNT: usize>(
+    domain: &Radix2EvaluationDomain<Fr>,
+    indices: &[usize],
+    caches: [&[G1Affine]; COUNT],
+) -> Result<[G1Affine; COUNT]> {
     ensure!(!indices.is_empty(), "cached opening index set must not be empty");
-    ensure!(single_openings.len() == domain.size(), "opening cache size differs from domain");
+    for cache in &caches {
+        ensure!(cache.len() == domain.size(), "opening cache size differs from domain");
+    }
+    // This also validates bounds and uniqueness before indexing any cache.
     let mut weights = vanishing_derivative_values(domain, indices)?;
     // Distinct domain points make every A'_I(x_i) nonzero.
     batch_inversion(&mut weights);
-    let points: Vec<G1Affine> = indices.iter().map(|&i| single_openings[i]).collect();
-    crate::workcount::record_msm(points.len());
-    Ok(G1Projective::msm_unchecked(&points, &weights).into_affine())
+    let mut openings = [G1Affine::identity(); COUNT];
+    for i in 0..COUNT {
+        let points: Vec<G1Affine> = indices.iter().map(|&j| caches[i][j]).collect();
+        crate::workcount::record_msm(points.len());
+        openings[i] = G1Projective::msm_unchecked(&points, &weights).into_affine();
+    }
+    Ok(openings)
 }
 
 impl KzgParams {
@@ -406,6 +424,55 @@ mod opening_basis_tests {
         assert_eq!(openings.len(), domain.size());
         for i in 0..domain.size() {
             assert_eq!(openings[i], params.open_single(polynomial, domain, i).unwrap().witness);
+        }
+    }
+
+    #[test]
+    fn shared_opening_weights_keep_three_ordered_msms_and_match_dense_quotients() {
+        let params = KzgParams::from_tau(16, Fr::from(7u64)).unwrap();
+        let domain = radix2_domain(8).unwrap();
+        let polynomials = [coefficients(8, 7), coefficients(7, 11), coefficients(6, 19)];
+        let caches = polynomials.each_ref().map(|polynomial| {
+            params.precompute_single_openings(polynomial, &domain).unwrap()
+        });
+        let cache_slices = caches.each_ref().map(Vec::as_slice);
+        for indices in [&[3][..], &[7, 1, 4][..]] {
+            let (separate, separate_work): ([G1Affine; 3], _) = crate::workcount::measure(|| {
+                std::array::from_fn(|i| combine_single_openings(&domain, indices, cache_slices[i]).unwrap())
+            });
+            let (shared, shared_work) = crate::workcount::measure(|| {
+                combine_cached_openings(&domain, indices, cache_slices).unwrap()
+            });
+            assert_eq!(shared, separate);
+            assert!(shared_work.poly_elements > 0);
+            assert_eq!(3 * shared_work.poly_elements, separate_work.poly_elements);
+            assert_eq!(shared_work.msm_points, (3 * indices.len()) as u64);
+            assert_eq!(shared_work.msm_points, separate_work.msm_points);
+            for i in 0..polynomials.len() {
+                assert_eq!(shared[i], params.open_batch(&polynomials[i], &domain, indices).unwrap().witness);
+            }
+        }
+    }
+
+    #[test]
+    fn shared_opening_weights_reject_bad_shapes_before_any_msm() {
+        let domain = radix2_domain(8).unwrap();
+        let cache = [G1Affine::identity(); 8];
+        for indices in [&[][..], &[2, 2][..], &[8][..]] {
+            let (result, work) = crate::workcount::measure(|| {
+                combine_cached_openings(&domain, indices, [&cache[..]; 3])
+            });
+            assert!(result.is_err());
+            assert_eq!(work.msm_points, 0);
+        }
+        for wire in 0..3 {
+            let mut caches = [&cache[..]; 3];
+            caches[wire] = &cache[..7];
+            let (result, work) = crate::workcount::measure(|| {
+                combine_cached_openings(&domain, &[2], caches)
+            });
+            assert!(result.unwrap_err().to_string().contains("cache size differs from domain"));
+            assert_eq!(work.msm_points, 0);
         }
     }
 

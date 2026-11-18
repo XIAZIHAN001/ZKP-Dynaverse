@@ -49,7 +49,13 @@ set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
 execute_process(COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/generate_ntt_owner.py"
     "${ICICLE_NTT_SOURCE}" "${CMAKE_CURRENT_BINARY_DIR}/icicle_ntt_with_owner.cuh"
     COMMAND_ERROR_IS_FATAL ANY)
-add_library(dynaverse_icicle STATIC src/icicle_msm.cu src/icicle_msm_g2.cu src/icicle_ntt.cu src/icicle_resident.cu src/icicle_g2_validation.cu src/icicle_bn254_tower.cu src/icicle_bn254_lines.cu src/icicle_bn254_miller.cu)
+add_library(dynaverse_icicle STATIC src/icicle_msm.cu src/icicle_msm_g2.cu src/icicle_ntt.cu src/icicle_resident.cu src/icicle_g2_validation.cu)
+option(DYNAVERSE_BUILD_PAIRING_PROBES "Build experimental BN254 pairing probes" OFF)
+if(DYNAVERSE_BUILD_PAIRING_PROBES)
+    target_sources(dynaverse_icicle PRIVATE
+        src/icicle_bn254_tower.cu src/icicle_bn254_lines.cu src/icicle_bn254_miller.cu)
+    target_compile_definitions(dynaverse_icicle PRIVATE DYNAVERSE_BUILD_PAIRING_PROBES)
+endif()
 set_source_files_properties(src/icicle_g2_validation.cu PROPERTIES COMPILE_OPTIONS "--ptxas-options=-v")
 set_source_files_properties(src/icicle_ntt.cu PROPERTIES COMPILE_DEFINITIONS "FIELD_ID=1;CURVE_ID=1")
 target_include_directories(dynaverse_icicle PRIVATE include "${ICICLE_INCLUDE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")

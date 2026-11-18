@@ -8,6 +8,7 @@ edition.workspace = true
 [features]
 default = []
 icicle = []
+pairing-probes = ["icicle"]
 
 [dependencies]
 dynaverse-protocol = { path = "../protocol" }

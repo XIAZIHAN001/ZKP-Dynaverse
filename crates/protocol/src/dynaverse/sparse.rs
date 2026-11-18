@@ -35,44 +35,16 @@ impl OperatorBackend for CountedBackend<'_> {
 }
 
 impl DynaverseParams {
+    /// Stage-4 keeps CPU Fr/G2 arithmetic, with no fixed or geometry reuse.
     pub(super) fn prove_delta_sparse(
         &self, anchor: &Witness, entries: &[(usize, Fr)], anchor_wires: &WireCommitments,
         cache: &KzgPrecomputation, backend: &dyn OperatorBackend,
     ) -> Result<DeltaProof> {
-        self.prove_delta_sparse_with_field_backend(anchor,entries,anchor_wires,cache,backend,None)
-    }
-
-    /// Stage-5 opts into explicit small Fr/G2 dispatch. The retained Stage-4
-    /// wrapper above preserves its CPU arithmetic and work-count baseline.
-    #[allow(clippy::too_many_arguments)]
-    pub(super) fn prove_delta_sparse_with_field_backend(
-        &self,anchor:&Witness,entries:&[(usize,Fr)],anchor_wires:&WireCommitments,
-        cache:&KzgPrecomputation,backend:&dyn OperatorBackend,
-        field_backend:Option<&dyn OperatorBackend>,
-    )->Result<DeltaProof> {
-        self.prove_delta_sparse_with_linear(anchor,entries,anchor_wires,cache,backend,field_backend,None)
-    }
-
-    #[allow(clippy::too_many_arguments)]
-    pub(super) fn prove_delta_sparse_with_linear(
-        &self,anchor:&Witness,entries:&[(usize,Fr)],anchor_wires:&WireCommitments,
-        cache:&KzgPrecomputation,backend:&dyn OperatorBackend,
-        field_backend:Option<&dyn OperatorBackend>,fixed:Option<&super::sparse_linear::FixedLinear>,
-    )->Result<DeltaProof> {
-        Ok(self.prove_delta_sparse_cached(anchor,entries,anchor_wires,cache,backend,field_backend,
-            fixed,None,0,false)?.0)
-    }
-
-    #[allow(clippy::too_many_arguments)]
-    pub(super) fn prove_delta_sparse_cached(
-        &self,anchor:&Witness,entries:&[(usize,Fr)],anchor_wires:&WireCommitments,
-        cache:&KzgPrecomputation,backend:&dyn OperatorBackend,
-        field_backend:Option<&dyn OperatorBackend>,fixed:Option<&super::sparse_linear::FixedLinear>,
-        previous:Option<&Arc<SparseGeometry>>,anchor_generation:u64,reuse_geometry:bool,
-    )->Result<(DeltaProof,Option<Arc<SparseGeometry>>,bool)> {
-        let mut trace=crate::incremental_rebuild::SparseProofTimings::default();
-        self.prove_delta_sparse_traced(anchor,entries,anchor_wires,cache,backend,field_backend,
-            fixed,previous,anchor_generation,reuse_geometry,&mut trace)
+        let mut trace = crate::incremental_rebuild::SparseProofTimings::default();
+        let (proof, _, _) = self.prove_delta_sparse_traced(
+            anchor, entries, anchor_wires, cache, backend, None, None, None, 0, false, &mut trace,
+        )?;
+        Ok(proof)
     }
 
     #[allow(clippy::too_many_arguments)]

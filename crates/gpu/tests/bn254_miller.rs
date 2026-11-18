@@ -1,5 +1,5 @@
 //! Admission tests prepared during the source-only stage; not yet executed.
-#![cfg(feature = "icicle")]
+#![cfg(feature = "pairing-probes")]
 
 use ark_bn254::{Bn254, Config, Fq, Fq2, Fq6, Fq12, Fr, G1Affine, G1Projective, G2Affine, G2Projective};
 use ark_ec::{bn::{BnConfig, G2Prepared}, pairing::Pairing, AffineRepr, CurveGroup};
