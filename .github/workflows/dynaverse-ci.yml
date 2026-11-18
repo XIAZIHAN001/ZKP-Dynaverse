@@ -1,0 +1,110 @@
+name: Dynaverse cloud checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/dynaverse-ci.yml'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'rust-toolchain.toml'
+      - 'crates/**'
+      - 'env/**'
+      - 'experiments/adaptive-fullopt/**'
+      - 'native/**'
+      - 'scripts/build_native_icicle.sh'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dynaverse-ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  linux-cpu:
+    name: Linux CPU regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust
+        run: rustup toolchain install 1.89.0 --profile minimal --no-self-update
+      - name: Run locked CPU workspace tests
+        run: cargo +1.89.0 test --locked --workspace --release -- --test-threads=1
+      - name: Run experiment acceptance tests
+        run: python3 -B -m unittest discover -s experiments/adaptive-fullopt -p 'test_*.py' -v
+      - name: Compile opt-in Criterion benchmark
+        run: cargo +1.89.0 bench --locked -p dynaverse-bench --features criterion-bench --bench cpu_dynamo --no-run
+
+  cuda-link:
+    name: CUDA sm_90 compile and link (no GPU execution)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    container:
+      image: nvidia/cuda:12.8.1-devel-ubuntu22.04@sha256:a99a1860ba8e2916e5c3e73b72ec4c4301653a84586e05bfc9a2aa2d58027e97
+    defaults:
+      run:
+        shell: bash
+    env:
+      CUDA_HOME: /usr/local/cuda
+      ICICLE_LIB_DIR: /opt/icicle/arch90
+      CMAKE_BUILD_PARALLEL_LEVEL: '2'
+      CARGO_BUILD_JOBS: '2'
+      RUSTUP_HOME: /opt/rustup
+      CARGO_HOME: /opt/cargo
+    steps:
+      - name: Install build prerequisites
+        run: |
+          apt-get update
+          apt-get install --no-install-recommends -y build-essential ca-certificates curl git ninja-build python3
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - name: Install pinned CMake and Rust
+        run: |
+          cmake_tmp=$(mktemp -d "$RUNNER_TEMP/dynaverse-cmake.XXXXXXXX")
+          curl --fail --silent --show-error --location --retry 3 \
+            https://github.com/Kitware/CMake/releases/download/v3.30.5/cmake-3.30.5-linux-x86_64.tar.gz \
+            --output "$cmake_tmp/cmake.tar.gz"
+          printf '%s  %s\n' f747d9b23e1a252a8beafb4ed2bc2ddf78cff7f04a8e4de19f4ff88e9b51dc9d "$cmake_tmp/cmake.tar.gz" | sha256sum --check
+          mkdir -p /opt/cmake
+          tar -xzf "$cmake_tmp/cmake.tar.gz" -C /opt/cmake --strip-components=1
+          printf '%s\n' /opt/cmake/bin >> "$GITHUB_PATH"
+
+          rustup_tmp=$(mktemp -d "$RUNNER_TEMP/dynaverse-rustup.XXXXXXXX")
+          curl --fail --silent --show-error --location --retry 3 \
+            https://static.rust-lang.org/rustup/archive/1.28.2/x86_64-unknown-linux-gnu/rustup-init \
+            --output "$rustup_tmp/rustup-init"
+          printf '%s  %s\n' 20a06e644b0d9bd2fbdbfd52d42540bdde820ea7df86e92e533c073da0cdd43c "$rustup_tmp/rustup-init" | sha256sum --check
+          chmod +x "$rustup_tmp/rustup-init"
+          "$rustup_tmp/rustup-init" -y --no-modify-path --profile minimal --default-toolchain 1.89.0
+          printf '%s\n' "$CARGO_HOME/bin" >> "$GITHUB_PATH"
+      - name: Compile pinned ICICLE for sm_90 without detecting a device
+        run: |
+          nvcc --version
+          df -h "$GITHUB_WORKSPACE"
+          git init --quiet /opt/src/icicle-src
+          git -C /opt/src/icicle-src fetch --no-tags --depth=1 \
+            https://github.com/ingonyama-zk/icicle.git aacec3f72f14f53dd96d835698d2c87cde3a68b8
+          git -C /opt/src/icicle-src checkout --quiet --detach FETCH_HEAD
+          test "$(git -C /opt/src/icicle-src rev-parse HEAD)" = aacec3f72f14f53dd96d835698d2c87cde3a68b8
+          cmake -S /opt/src/icicle-src/icicle -B "$RUNNER_TEMP/icicle-sm90" -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DCUDA_ARCH=90 -DCURVE=bn254 -DMSM=ON -DNTT=ON -DBUILD_TESTS=OFF
+          cmake --build "$RUNNER_TEMP/icicle-sm90"
+          install -D "$RUNNER_TEMP/icicle-sm90/lib/libingo_curve_bn254.a" "$ICICLE_LIB_DIR/libingo_curve_bn254.a"
+          install -D "$RUNNER_TEMP/icicle-sm90/lib/libingo_field_bn254.a" "$ICICLE_LIB_DIR/libingo_field_bn254.a"
+      - name: Link standard GPU test executables (do not run them)
+        run: |
+          bash scripts/build_native_icicle.sh h200
+          DYNAVERSE_NATIVE_LIB_DIR="$GITHUB_WORKSPACE/build/native-sm90" \
+            cargo +1.89.0 test --locked --release -p dynaverse-gpu --features icicle \
+              --test icicle_backend --test incremental_session --no-run
+      - name: Link optional pairing probe test executables (do not run them)
+        run: |
+          DYNAVERSE_BUILD_PAIRING_PROBES=ON bash scripts/build_native_icicle.sh h200
+          DYNAVERSE_NATIVE_LIB_DIR="$GITHUB_WORKSPACE/build/native-sm90-pairing-probes" \
+            cargo +1.89.0 test --locked --release -p dynaverse-gpu --features pairing-probes \
+              --test bn254_tower --test bn254_lines --test bn254_miller --no-run
