@@ -291,6 +291,7 @@ struct FaultControl {
     foreground_calls: Cell<usize>,
     rollback_fatal: Cell<bool>,
     corrupt_cache: Cell<bool>,
+    corrupt_candidate_g2: Cell<bool>,
 }
 
 impl FaultControl {
@@ -299,6 +300,7 @@ impl FaultControl {
         self.resident_calls.set(0);
         self.foreground_calls.set(0);
         self.rollback_fatal.set(false);
+        self.corrupt_candidate_g2.set(false);
     }
 
     fn arm(&self, fail_at: usize, fatal_rollback: bool) {
@@ -386,6 +388,17 @@ impl RebuildBackend for FaultBackend {
         Ok(())
     }
 
+    fn msm_g2(&mut self, points: &[G2Affine], scalars: BufferId, scalar_offset: usize) -> Result<G2Affine> {
+        self.before_resident_operation()?;
+        let point = self.cpu.msm_g2(points, scalars, scalar_offset)?;
+        if self.control.corrupt_candidate_g2.replace(false) {
+            use ark_ec::{CurveGroup, Group};
+            use ark_bn254::G2Projective;
+            return Ok((G2Projective::from(point) + G2Projective::generator()).into_affine());
+        }
+        Ok(point)
+    }
+
     resident_forward! {
         fn write_fields(id: BufferId, offset: usize, values: &[Fr]) -> Result<()>;
         fn read_fields(id: BufferId, offset: usize, values: &mut [Fr]) -> Result<()>;
@@ -397,7 +410,6 @@ impl RebuildBackend for FaultBackend {
         fn field_zip(op: FieldBinaryOp, left: BufferId, left_offset: usize, right: BufferId, right_offset: usize, dst: BufferId, dst_offset: usize, len: usize) -> Result<()>;
         fn scale_points(points: BufferId, point_offset: usize, scalars: BufferId, scalar_offset: usize, dst: BufferId, dst_offset: usize, len: usize) -> Result<()>;
         fn msm_g1(points: BufferId, point_offset: usize, scalars: BufferId, scalar_offset: usize, len: usize) -> Result<G1Affine>;
-        fn msm_g2(points: &[G2Affine], scalars: BufferId, scalar_offset: usize) -> Result<G2Affine>;
     }
 }
 
@@ -416,6 +428,35 @@ fn initialization_rejects_corrupt_cache_and_bypasses_legacy_host_operators() {
     let error=params.start_incremental_session(&instance,&witness,
         IncrementalConfig::default(),backend).err().unwrap();
     assert!(error.to_string().contains("opening cache check failed"));
+}
+
+#[test]
+fn corrupt_candidate_anchor_is_rejected_and_due_update_can_be_retried() {
+    let n = 8;
+    let (params, instance, witness) = fixture(n, 6902);
+    let control = Rc::new(FaultControl::default());
+    let backend = FaultBackend { cpu: CpuRebuildBackend::default(), control: control.clone() };
+    let config = IncrementalConfig { trace_updates: true, ..Default::default() };
+    let mut session = params.start_incremental_session(&instance, &witness, config, backend).unwrap();
+    let checkpoint = visible(&session);
+    let blocks = *session.block_timings();
+    let trace = *session.update_timings();
+    let k = session.horizon();
+    let update = exact_changes(&witness, n, k);
+
+    // Only the candidate's global G2 result is wrong: foreground proving and
+    // the opening cache checks still run against their own valid inputs.
+    control.corrupt_candidate_g2.set(true);
+    let error = session.update(&update).unwrap_err();
+    assert_eq!(error.to_string(), "incremental candidate anchor failed verification");
+    assert_eq!(visible(&session), checkpoint);
+    assert_eq!(*session.block_timings(), blocks);
+    assert_eq!(*session.update_timings(), trace);
+    assert!(!session.is_faulted());
+
+    let mut states = history(&instance, &witness);
+    apply(&params, &mut session, &mut states, update, empty(), k);
+    assert!(session.last_receipt().swapped && !session.last_receipt().large_batch);
 }
 
 fn pending_session<'p>(

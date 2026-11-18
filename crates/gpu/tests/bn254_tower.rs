@@ -1,5 +1,5 @@
 //! Pending GPU arithmetic admission tests. These are not performance claims.
-#![cfg(feature = "icicle")]
+#![cfg(feature = "pairing-probes")]
 
 use ark_bn254::{Fq, Fq2, Fq6, Fq12};
 use ark_ff::{BigInteger, Field, PrimeField, UniformRand};

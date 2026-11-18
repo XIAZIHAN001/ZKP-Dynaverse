@@ -6,6 +6,8 @@
 use crate::dynamo::{DynamoParams, DynamoPermutation};
 use crate::consistency::{ConsistencyVerifyingKey, SliceConsistencyKey};
 use crate::kzg::KzgParams;
+use crate::trace::{CpuPhase, CpuTrace};
+use crate::OperatorBackend;
 use anyhow::{ensure, Result};
 use ark_bn254::{Fr, G1Affine, G2Affine};
 #[cfg(test)]
@@ -27,6 +29,15 @@ pub struct SharedSrs {
     pub n: usize,
     /// Prover-only bases for sublinear updates; never part of a verifying key.
     pub sparse: SparseUpdateBases,
+}
+
+/// Core material shared by both setups. Dynaverse has no Y monomial table.
+#[derive(Clone, Debug)]
+pub(crate) struct DynaverseSrs {
+    pub(crate) dynamo: DynamoParams,
+    pub(crate) kzg_x: KzgParams,
+    pub(crate) consistency: [SliceConsistencyKey; 6],
+    pub(crate) sparse: SparseUpdateBases,
 }
 
 /// Prover-only bases evaluated at tau_x before the trapdoor is dropped.
@@ -124,9 +135,7 @@ impl SparseUpdateBases {
 
 impl SharedSrs {
     pub fn consistency_verifying_key(&self) -> ConsistencyVerifyingKey {
-        ConsistencyVerifyingKey {
-            slices: std::array::from_fn(|i| self.consistency[i].verifying.clone()),
-        }
+        consistency_verifying_key(&self.consistency)
     }
 
     pub fn setup<R: Rng + ?Sized>(
@@ -138,16 +147,48 @@ impl SharedSrs {
         Self::setup_with_backend(m, n, sigma, rng, None)
     }
 
-    pub(crate) fn setup_with_backend<R: Rng + ?Sized>(m: usize, n: usize,
-        sigma: DynamoPermutation, rng: &mut R,
-        backend: Option<&dyn crate::OperatorBackend>) -> Result<Self> {
-        Self::setup_with_backend_traced(m,n,sigma,rng,backend,&mut crate::trace::CpuTrace::disabled())
+    pub(crate) fn setup_with_backend<R: Rng + ?Sized>(
+        m: usize,
+        n: usize,
+        sigma: DynamoPermutation,
+        rng: &mut R,
+        backend: Option<&dyn OperatorBackend>,
+    ) -> Result<Self> {
+        let (core, kzg_y) = DynaverseSrs::setup_impl(
+            m, n, sigma, rng, backend, &mut CpuTrace::disabled(), true,
+        )?;
+        let DynaverseSrs { dynamo, kzg_x, consistency, sparse } = core;
+        let kzg_y = kzg_y.expect("full shared setup requested Y monomial powers");
+        Ok(Self { dynamo, kzg_x, kzg_y, consistency, m, n, sparse })
+    }
+}
+
+impl DynaverseSrs {
+    pub(crate) fn consistency_verifying_key(&self) -> ConsistencyVerifyingKey {
+        consistency_verifying_key(&self.consistency)
     }
 
-    pub(crate) fn setup_with_backend_traced<R: Rng + ?Sized>(m:usize,n:usize,
-        sigma:DynamoPermutation,rng:&mut R,backend:Option<&dyn crate::OperatorBackend>,
-        trace:&mut crate::trace::CpuTrace)->Result<Self> {
-        use crate::trace::CpuPhase;
+    pub(crate) fn setup_traced<R: Rng + ?Sized>(
+        m: usize,
+        n: usize,
+        sigma: DynamoPermutation,
+        rng: &mut R,
+        backend: Option<&dyn OperatorBackend>,
+        trace: &mut CpuTrace,
+    ) -> Result<Self> {
+        let (core, _) = Self::setup_impl(m, n, sigma, rng, backend, trace, false)?;
+        Ok(core)
+    }
+
+    fn setup_impl<R: Rng + ?Sized>(
+        m: usize,
+        n: usize,
+        sigma: DynamoPermutation,
+        rng: &mut R,
+        backend: Option<&dyn OperatorBackend>,
+        trace: &mut CpuTrace,
+        include_kzg_y: bool,
+    ) -> Result<(Self, Option<KzgParams>)> {
         let started=trace.start();
         ensure!(m > 0 && m.is_power_of_two(), "m must be a nonzero power of two");
         ensure!(n > 0 && n.is_power_of_two(), "n must be a nonzero power of two");
@@ -185,7 +226,13 @@ impl SharedSrs {
         trace.finish(CpuPhase::SetupDynamo,started);
         let started=trace.start();
         let kzg_x = KzgParams::from_tau_with_backend(m - 1, tau_x, backend)?;
-        let kzg_y = KzgParams::from_tau_with_backend(m - 1, tau_y, backend)?;
+        // Dynamo and consistency still use tau_y. Only the Y monomial table
+        // is optional, and SharedSrs builds it here before the remaining bases.
+        let kzg_y = if include_kzg_y {
+            Some(KzgParams::from_tau_with_backend(m - 1, tau_y, backend)?)
+        } else {
+            None
+        };
         trace.finish(CpuPhase::SetupKzg,started);
         let started=trace.start();
         let consistency = SliceConsistencyKey::setup_six(m,n,tau_x,tau_y,backend)?;
@@ -193,8 +240,12 @@ impl SharedSrs {
         let started=trace.start();
         let sparse = SparseUpdateBases::from_trapdoor_with_backend(m, n, tau_x, backend)?;
         trace.finish(CpuPhase::SetupSparse,started);
-        Ok(Self { dynamo, kzg_x, kzg_y, consistency, m, n, sparse })
+        Ok((Self { dynamo, kzg_x, consistency, sparse }, kzg_y))
     }
+}
+
+fn consistency_verifying_key(keys: &[SliceConsistencyKey; 6]) -> ConsistencyVerifyingKey {
+    ConsistencyVerifyingKey { slices: std::array::from_fn(|i| keys[i].verifying.clone()) }
 }
 
 #[cfg(test)]
@@ -281,5 +332,100 @@ mod sparse_basis_tests {
         for (m, n, tau) in [(8, 0, 7u64), (8, 3, 7), (4, 1, 7), (8, 1, 1)] {
             assert!(SparseUpdateBases::from_trapdoor(m, n, Fr::from(tau)).is_err());
         }
+    }
+}
+
+#[cfg(test)]
+mod setup_tests {
+    use super::*;
+    use crate::dynamo::dynamo_verify_with_key;
+    use crate::dynaverse::DynaverseParams;
+    use crate::{toy_circuit::ToyCircuit, BatchMsmRequest};
+    use rand::{rngs::StdRng, RngCore, SeedableRng};
+    use std::cell::Cell;
+
+    #[derive(Default)]
+    struct FixedBaseSpy {
+        g1_points: Cell<usize>,
+        g2_points: Cell<usize>,
+    }
+
+    impl OperatorBackend for FixedBaseSpy {
+        fn fixed_base_g1(&self, scalars: &[Fr]) -> Result<Vec<G1Affine>> {
+            self.g1_points.set(self.g1_points.get() + scalars.len());
+            crate::setup::cpu_g1(scalars)
+        }
+
+        fn fixed_base_g2(&self, scalars: &[Fr]) -> Result<Vec<G2Affine>> {
+            self.g2_points.set(self.g2_points.get() + scalars.len());
+            crate::setup::cpu_g2(scalars)
+        }
+
+        fn msm(&self, _: &[G1Affine], _: &[Fr]) -> Result<G1Affine> {
+            anyhow::bail!("unexpected setup MSM dispatch")
+        }
+
+        fn msm_batch(&self, _: &BatchMsmRequest<'_>) -> Result<Vec<G1Affine>> {
+            anyhow::bail!("unexpected setup batch MSM dispatch")
+        }
+
+        fn ntt(&self, _: &mut [Fr], _: bool) -> Result<()> {
+            anyhow::bail!("unexpected setup NTT dispatch")
+        }
+    }
+
+    #[test]
+    fn dynaverse_setup_skips_y_monomial_powers() {
+        let circuit = ToyCircuit::new(2).unwrap();
+        let m = circuit.m();
+        let n = circuit.n();
+        let full_backend = FixedBaseSpy::default();
+        let private_backend = FixedBaseSpy::default();
+        let mut full_rng = StdRng::seed_from_u64(7102);
+        let mut private_rng = StdRng::seed_from_u64(7102);
+        let full = SharedSrs::setup_with_backend(
+            m, n, circuit.permutation(), &mut full_rng, Some(&full_backend),
+        ).unwrap();
+        let params = DynaverseParams::setup_with_backend(
+            circuit.clone(), &mut private_rng, &private_backend,
+        ).unwrap();
+
+        // Count fixed-base dispatch only, not the CPU-only divisor and VK
+        // preparation in DynaverseParams setup.
+        assert_eq!(full_backend.g1_points.get(), private_backend.g1_points.get() + m);
+        assert_eq!(full_backend.g2_points.get(), private_backend.g2_points.get() + m);
+        assert_eq!(full_rng.next_u64(), private_rng.next_u64());
+        assert_eq!(full.kzg_y.max_degree(), m - 1);
+        assert_eq!(full.kzg_y.rebuild_g1_powers().len(), m);
+        assert_eq!(full.kzg_y.rebuild_g2_powers().len(), m);
+
+        // The full public SRS is still an independent dense commitment oracle
+        // for the private X commitment and Dynamo's unmasked Y commitment.
+        let (instance, witness) = circuit.valid_instance();
+        let proof = params.prove_anchor(&instance, &witness).unwrap();
+        let anchor = &proof.anchor;
+        let mut w = witness.wires;
+        w.resize(m, Fr::zero());
+        let big = crate::domain::radix2_domain(m).unwrap();
+        let sigma = circuit.permutation_ref().as_slice();
+        let h: Vec<Fr> = (0..m).map(|i| w[i] - w[sigma[i]]).collect();
+        assert_eq!(anchor.w_commitment, full.kzg_x.commit(&big.ifft(&w)).unwrap().point);
+        assert_eq!(anchor.h_commitment, full.kzg_y.commit(&big.ifft(&h)).unwrap().point);
+        let small = crate::domain::radix2_domain(n).unwrap();
+        let s5_coefficients = small.ifft(&w[4 * n..5 * n]);
+        assert_eq!(anchor.s5_g2, full.kzg_x.commit_g2(&s5_coefficients).unwrap());
+
+        assert!(dynamo_verify_with_key(&full.dynamo.verifying_key(), &anchor.dynamo).unwrap());
+        let wires = anchor.wires;
+        assert!(full.consistency_verifying_key().verify_six(
+            anchor.w_commitment,
+            &[wires.s1, wires.s2, wires.s3, wires.s4, wires.s5, wires.s6],
+            &anchor.consistency,
+        ));
+        let vk = params.verifying_key();
+        assert!(vk.verify_anchor(&instance, &proof).unwrap());
+        let mut wrong = instance;
+        wrong.public_inputs[0] += Fr::one();
+        assert!(!vk.verify_anchor(&wrong, &proof).unwrap());
     }
 }

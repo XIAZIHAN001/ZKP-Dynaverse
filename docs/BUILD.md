@@ -129,3 +129,32 @@ python3 -B -c 'from pathlib import Path; from analysis import analyze_log; print
 Build ICICLE with architecture `90`, use `env/h200.env`, set `ICICLE_LIB_DIR=/opt/icicle/arch90`, and build the bridge with `bash scripts/build_native_icicle.sh h200`. Set `DYNAVERSE_NATIVE_LIB_DIR=/workspace/build/native-sm90` before building Rust GPU targets.
 
 Schedule the `fullopt` matrix through your own cluster allocation. This public repository intentionally excludes account-specific SSH aliases, Slurm paths, and submission credentials. H200 job 1157 passed the n=256/65536 matrix for the published probe and core sources; see the [acceptance report](SUPPLEMENTAL_TESTS.md). Reproduction on another build or hardware still requires actual execution and raw-event validation.
+
+## Experimental BN254 pairing probes
+
+The ordinary ICICLE build excludes the BN254 field tower, G2 line preparation, and Miller-loop probes. To test them, enable the native CMake option `DYNAVERSE_BUILD_PAIRING_PROBES` (default `OFF`) as well as the Rust feature `pairing-probes`, which implies `icicle`.
+
+From the repository root in the matching CUDA environment, use one of these setups:
+
+```bash
+# Local (sm_120)
+set -a; source env/local.env; set +a
+DYNAVERSE_BUILD_PAIRING_PROBES=ON bash scripts/build_native_icicle.sh local
+export DYNAVERSE_NATIVE_LIB_DIR="$PWD/build/native-sm120-pairing-probes"
+export ICICLE_LIB_DIR=/opt/icicle/arch120
+```
+
+```bash
+# H200 (sm_90)
+set -a; source env/h200.env; set +a
+DYNAVERSE_BUILD_PAIRING_PROBES=ON bash scripts/build_native_icicle.sh h200
+export DYNAVERSE_NATIVE_LIB_DIR="$PWD/build/native-sm90-pairing-probes"
+export ICICLE_LIB_DIR=/opt/icicle/arch90
+```
+
+Run the three integration test suites against the probe-enabled archive, not the ordinary archive:
+
+```bash
+cargo test --locked --release -p dynaverse-gpu --features pairing-probes \
+  --test bn254_tower --test bn254_lines --test bn254_miller -- --test-threads=1
+```

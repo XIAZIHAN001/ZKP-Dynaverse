@@ -7,13 +7,13 @@ use dynaverse_protocol::toy_circuit::ToyCircuit;
 use dynaverse_protocol::trace::CpuTrace;
 use dynaverse_protocol::{AnchorOpeningPolicy, BatchMsmRequest, BatchOpenMode, OperatorBackend, Update, VerificationMode};
 use rand::{rngs::StdRng, SeedableRng};
-use std::cell::Cell;
+use std::cell::{Cell, RefCell};
 
 // Runs actual arkworks MSM. The switch represents a device failure so that the
 // protocol's error/transaction boundary can be tested without requiring CUDA.
 struct CheckedBackend {
     calls: Cell<usize>, fail: Cell<bool>,
-    ntt_calls: Cell<usize>, fail_ntt: Cell<bool>,
+    transforms: RefCell<Vec<(usize, bool)>>, fail_ntt: Cell<bool>,
     batch_calls: Cell<usize>, fail_batch: Cell<bool>,
     short_batch: Cell<bool>,
 }
@@ -21,10 +21,17 @@ struct CheckedBackend {
 impl CheckedBackend {
     fn new() -> Self { Self {
         calls: Cell::new(0), fail: Cell::new(false),
-        ntt_calls: Cell::new(0), fail_ntt: Cell::new(false),
+        transforms: RefCell::new(Vec::new()), fail_ntt: Cell::new(false),
         batch_calls: Cell::new(0), fail_batch: Cell::new(false),
         short_batch: Cell::new(false),
     } }
+
+    fn assert_anchor_iffts(&self, n: usize) {
+        let mut expected = vec![(8 * n, true)];
+        expected.extend([(n, true); 6]);
+        assert_eq!(*self.transforms.borrow(), expected,
+            "anchor must interpolate the full witness and each wire exactly once");
+    }
 }
 
 impl OperatorBackend for CheckedBackend {
@@ -52,7 +59,7 @@ impl OperatorBackend for CheckedBackend {
 
     fn ntt(&self, values: &mut [Fr], inverse: bool) -> Result<()> {
         use ark_poly::{EvaluationDomain, Radix2EvaluationDomain};
-        self.ntt_calls.set(self.ntt_calls.get() + 1);
+        self.transforms.borrow_mut().push((values.len(), inverse));
         ensure!(!self.fail_ntt.get(), "injected NTT failure");
         let domain = Radix2EvaluationDomain::<Fr>::new(values.len()).unwrap();
         let mut result = values.to_vec();
@@ -108,12 +115,13 @@ fn injected_g1_backend_preserves_proofs_rebuilds_and_failure_state() {
     let (instance, witness) = circuit.valid_instance();
     let mut rng = StdRng::seed_from_u64(2904);
     let params = DynaverseParams::setup(circuit, &mut rng).unwrap();
-    let backend = CheckedBackend::new();
     let vk = params.verifying_key();
     for policy in [AnchorOpeningPolicy::Dense, AnchorOpeningPolicy::Precompute] {
+        let backend = CheckedBackend::new();
         let (mut reference, mut reference_aux) = params.prove_with_aux_policy(&instance, &witness, policy).unwrap();
         let (mut candidate, mut candidate_aux) = params.prove_with_aux_traced_with_backend(
             &instance, &witness, policy, &backend, &mut CpuTrace::new()).unwrap();
+        backend.assert_anchor_iffts(n);
         assert_eq!(reference, candidate);
         assert_eq!(reference_aux, candidate_aux);
         for gate in [0usize, 0, 1, 2, 3, 4] {
@@ -131,9 +139,13 @@ fn injected_g1_backend_preserves_proofs_rebuilds_and_failure_state() {
             backend.fail.set(false);
             reference = params.update_proof(&instance, &instance, &old, &update,
                 &reference, &mut reference_aux).unwrap();
+            backend.transforms.borrow_mut().clear();
             candidate = params.update_proof_traced_with_backend(&instance, &instance, &old, &update,
                 &candidate, &mut candidate_aux, VerificationMode::Product, BatchOpenMode::Prepared,
                 &backend, &mut CpuTrace::new()).unwrap();
+            if candidate.delta.is_none() {
+                backend.assert_anchor_iffts(n);
+            }
             assert_eq!(reference, candidate);
             assert_eq!(reference_aux, candidate_aux);
             assert!(vk.verify_reference(&instance, &candidate).unwrap());
@@ -161,7 +173,7 @@ fn selected_backend_runs_protocol_interpolation_and_ntt_failure_is_transactional
     let backend = CheckedBackend::new();
     let (proof, mut aux) = params.prove_with_aux_traced_with_backend(
         &instance, &witness, AnchorOpeningPolicy::Dense, &backend, &mut CpuTrace::new()).unwrap();
-    assert!(backend.ntt_calls.get() >= 7, "selected operator backend must run large and six wire IFFTs");
+    backend.assert_anchor_iffts(n);
     assert_eq!(proof, params.prove_anchor(&instance, &witness).unwrap());
     let value = witness.wires[4 * n] + Fr::from(1u64);
     let update = Update { indices: vec![4 * n, 5 * n],

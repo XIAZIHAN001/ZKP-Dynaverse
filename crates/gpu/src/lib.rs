@@ -11,11 +11,11 @@ pub use arkworks::ArkworksBackend;
 mod fixed_base_cpu;
 pub use fixed_base_cpu::FixedBaseCpuBackend;
 pub mod g2_validation;
-#[cfg(feature = "icicle")]
+#[cfg(feature = "pairing-probes")]
 pub mod bn254_tower;
-#[cfg(feature = "icicle")]
+#[cfg(feature = "pairing-probes")]
 pub mod bn254_lines;
-#[cfg(feature = "icicle")]
+#[cfg(feature = "pairing-probes")]
 pub mod bn254_miller;
 pub use g2_validation::{G2ValidationMode,G2ValidationStats,G2ValidationHostStats,G2ValidationTraffic};
 

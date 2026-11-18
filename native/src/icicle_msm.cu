@@ -11,9 +11,11 @@
 #include "icicle_transform_packet.cuh"
 #include "icicle_setup.cuh"
 #include "icicle_g2_validation.cuh"
+#ifdef DYNAVERSE_BUILD_PAIRING_PROBES
 #include "icicle_bn254_tower_probe.cuh"
 #include "icicle_bn254_lines_probe.cuh"
 #include "icicle_bn254_miller_probe.cuh"
+#endif
 #include <cuda.h>
 #include <algorithm>
 #include <chrono>
@@ -653,6 +655,7 @@ extern "C" int dvgpu_bn254_g2_validation_inspect(void* opaque,const uint8_t* wir
       catch (...) { backend->retire(); return fail(-3,"unknown G2 validation exception",error,capacity); }
 }
 
+#ifdef DYNAVERSE_BUILD_PAIRING_PROBES
 extern "C" int dvgpu_bn254_tower_inspect(void* opaque, uint32_t degree, uint32_t operation, uint32_t power,
     const uint8_t* left, size_t left_bytes, const uint8_t* right, size_t right_bytes,
     uint8_t* output, size_t output_bytes, uint32_t* statuses, size_t statuses_count,
@@ -745,6 +748,7 @@ extern "C" int dvgpu_bn254_miller_inspect(void* opaque,const uint8_t* p,size_t p
       catch(const std::exception& e){backend->retire();return fail(-2,e.what(),error,capacity);}
       catch(...){backend->retire();return fail(-3,"unknown BN254 Miller exception",error,capacity);}
 }
+#endif
 
 // Bounded mathematical diagnostic entry; not part of SRS publication.
 extern "C" int dvgpu_g2_psi_probe(void* opaque,const uint8_t* points,size_t n,

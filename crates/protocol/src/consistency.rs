@@ -294,11 +294,39 @@ impl SliceConsistencyKey {
             d: points[3], a_degree: points[4], b_degree: points[5], d_degree: points[6] })
     }
 
+    /// Only the dense anchor takes this path: all six slices use the same full
+    /// witness and the same full-vector degree bases from one SharedSrs setup.
+    pub(crate) fn prove_anchor_slices(
+        keys: &[Self; 6], full: &[Fr], backend: &impl OperatorBackend,
+    ) -> Result<ConsistencyProof> {
+        let first = &keys[0];
+        let n = first.n;
+        ensure!(n.checked_mul(keys.len()).is_some_and(|end| end <= full.len()),
+            "full vector too short for six wire slices");
+        let first_proof = first.prove(full, &full[..n], backend)?;
+        let mut slices = [first_proof; 6];
+        for i in 1..keys.len() {
+            let key = &keys[i];
+            ensure!(Arc::ptr_eq(&first.a_degree_bases, &key.a_degree_bases),
+                "anchor slices must share full-vector degree bases");
+            slices[i] = key.prove_dense(full, &full[i * n..(i + 1) * n], backend,
+                Some(first_proof.a_degree))?;
+        }
+        Ok(ConsistencyProof { slices })
+    }
+
     pub fn prove(
         &self,
         full: &[Fr],
         small: &[Fr],
         backend: &impl OperatorBackend,
+    ) -> Result<SliceConsistencyProof> {
+        self.prove_dense(full, small, backend, None)
+    }
+
+    fn prove_dense(
+        &self, full: &[Fr], small: &[Fr], backend: &impl OperatorBackend,
+        a_degree: Option<G1Affine>,
     ) -> Result<SliceConsistencyProof> {
         ensure!(full.len() == self.m, "full vector length differs from m");
         ensure!(small.len() == self.n, "slice length differs from n");
@@ -307,7 +335,10 @@ impl SliceConsistencyKey {
             qcd: backend.msm(&self.qcd_bases, small)?,
             qbd: backend.msm(&self.qbd_bases, small)?,
             d: backend.msm(&self.d_bases, small)?,
-            a_degree: backend.msm(&self.a_degree_bases, full)?,
+            a_degree: match a_degree {
+                Some(point) => point,
+                None => backend.msm(&self.a_degree_bases, full)?,
+            },
             b_degree: backend.msm(&self.b_degree_bases, small)?,
             d_degree: backend.msm(&self.d_degree_bases, small)?,
         })

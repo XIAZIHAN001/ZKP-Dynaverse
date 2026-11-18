@@ -1,5 +1,5 @@
 //! Pending source-stage admission tests. No performance or GPU pairing claim.
-#![cfg(feature = "icicle")]
+#![cfg(feature = "pairing-probes")]
 
 use ark_bn254::{Bn254, Config, Fq, Fq2, Fr, G1Affine, G2Affine, G2Projective};
 use ark_ec::{bn::G2Prepared, pairing::Pairing, AffineRepr, CurveGroup};

@@ -7,13 +7,11 @@ use dynaverse_protocol::dynaverse::DynaverseParams;
 use dynaverse_protocol::toy_circuit::ToyCircuit;
 use dynaverse_protocol::{AnchorOpeningPolicy, BatchMsmRequest, DynaverseProof, Instance, OperatorBackend, ProverAux, Update};
 use rand::{rngs::StdRng, SeedableRng};
-use std::{cell::Cell, rc::Rc, sync::{mpsc, Arc, atomic::{AtomicBool, AtomicUsize, Ordering}}, thread, time::{Duration, Instant}};
+use std::{rc::Rc, sync::{mpsc, Arc, atomic::{AtomicBool, AtomicUsize, Ordering}}, thread, time::{Duration, Instant}};
 
 // Constructed within the worker: Rc deliberately makes this backend !Send.
-struct LocalOracle { _local: Rc<()>, fail: bool, dropped: Option<Arc<AtomicUsize>>,
-    corrupt_cache: bool, ntt_calls: Cell<usize> }
-impl LocalOracle { fn new() -> Self { Self { _local: Rc::new(()), fail: false, dropped: None,
-    corrupt_cache: false, ntt_calls: Cell::new(0) } } }
+struct LocalOracle { _local: Rc<()>, fail: bool, dropped: Option<Arc<AtomicUsize>> }
+impl LocalOracle { fn new() -> Self { Self { _local: Rc::new(()), fail: false, dropped: None } } }
 impl Drop for LocalOracle {
     fn drop(&mut self) { if let Some(count) = &self.dropped { count.fetch_add(1, Ordering::SeqCst); } }
 }
@@ -30,8 +28,6 @@ impl OperatorBackend for LocalOracle {
     }
     fn ntt(&self, values: &mut [Fr], inverse: bool) -> Result<()> {
         ensure!(!self.fail, "injected worker operator failure");
-        self.ntt_calls.set(self.ntt_calls.get() + 1);
-        if self.corrupt_cache && self.ntt_calls.get() > 7 { values.fill(Fr::from(0u64)); return Ok(()); }
         let domain = Radix2EvaluationDomain::<Fr>::new(values.len()).unwrap();
         let transformed = if inverse { domain.ifft(values) } else { domain.fft(values) };
         values.copy_from_slice(&transformed); Ok(())
@@ -155,19 +151,6 @@ fn prefetch_is_due_only_after_progress_and_worker_panic_is_explicit() {
 }
 
 #[test]
-fn corrupted_private_cache_is_rejected_before_publication() {
-    let (params, instance, mut proof, mut aux) = setup(AnchorOpeningPolicy::Precompute);
-    update(&params, &instance, &mut proof, &mut aux, 1);
-    let mut worker = BackgroundRebuilder::new(params, || {
-        let mut backend = LocalOracle::new(); backend.corrupt_cache = true; Ok(backend)
-    }).unwrap();
-    assert!(worker.start(&aux).unwrap()); let before = aux.clone(); let before_proof = proof.clone();
-    let error = poll(&mut worker, &mut proof, &mut aux).unwrap_err();
-    assert!(error.to_string().contains("cache differs from CPU"), "{error:#}");
-    assert_eq!(aux, before); assert_eq!(proof, before_proof);
-}
-
-#[test]
 fn candidate_far_from_current_witness_is_discarded_even_without_foreground_rebuild() {
     let (params, instance, mut proof, mut aux) = setup_at(64, AnchorOpeningPolicy::Dense);
     update(&params, &instance, &mut proof, &mut aux, 1);
@@ -223,7 +206,10 @@ fn reverting_to_older_snapshot_keeps_zero_delta_for_generation_gap() {
     release_tx.send(()).unwrap();
     assert_eq!(poll(&mut worker, &mut proof, &mut aux).unwrap(),
         SwapOutcome::Swapped { anchor_generation: 1, current_generation: 3 });
-    assert!(proof.delta.is_some(), "generation gap requires a zero delta proof after witness reversion");
+    let delta = proof.delta.as_ref().expect("generation gap requires a zero delta proof after witness reversion");
+    assert_eq!(delta.anchor_openings.s4, proof.anchor.wires.s4);
+    assert_eq!(delta.anchor_openings.s5, proof.anchor.wires.s5);
+    assert_eq!(delta.anchor_openings.s6, proof.anchor.wires.s6);
     assert!(params.verifying_key().verify_reference(&instance, &proof).unwrap());
     assert_eq!(*aux.current_witness(), snapshot);
 }

@@ -129,3 +129,32 @@ python3 -B -c 'from pathlib import Path; from analysis import analyze_log; print
 ICICLE使用架构`90`构建，加载`env/h200.env`，设置`ICICLE_LIB_DIR=/opt/icicle/arch90`，通过`bash scripts/build_native_icicle.sh h200`构建桥接库。构建Rust GPU目标前，设置`DYNAVERSE_NATIVE_LIB_DIR=/workspace/build/native-sm90`。
 
 请在自己的集群资源分配中调度`fullopt`矩阵。公开仓库不包含账户专用的SSH别名、Slurm目录和提交凭据。H200作业1157已对公开探针及对应核心源码完成n=256/65536验收，见[验收报告](SUPPLEMENTAL_TESTS.md)。在其他构建或硬件上复现仍需实际运行并核对原始事件。
+
+## 实验性 BN254 配对探针
+
+普通 ICICLE 构建不包含 BN254 扩域运算、G2 线函数预计算和 Miller 循环这三种探针。测试时需同时开启原生 CMake 选项 `DYNAVERSE_BUILD_PAIRING_PROBES`（默认 `OFF`）和 Rust feature `pairing-probes`（自动启用 `icicle`）。
+
+在对应的 CUDA 环境中，从仓库根目录选择一组命令执行：
+
+```bash
+# 本地 (sm_120)
+set -a; source env/local.env; set +a
+DYNAVERSE_BUILD_PAIRING_PROBES=ON bash scripts/build_native_icicle.sh local
+export DYNAVERSE_NATIVE_LIB_DIR="$PWD/build/native-sm120-pairing-probes"
+export ICICLE_LIB_DIR=/opt/icicle/arch120
+```
+
+```bash
+# H200 (sm_90)
+set -a; source env/h200.env; set +a
+DYNAVERSE_BUILD_PAIRING_PROBES=ON bash scripts/build_native_icicle.sh h200
+export DYNAVERSE_NATIVE_LIB_DIR="$PWD/build/native-sm90-pairing-probes"
+export ICICLE_LIB_DIR=/opt/icicle/arch90
+```
+
+链接支持探针的归档（而不是普通归档），运行三组集成测试：
+
+```bash
+cargo test --locked --release -p dynaverse-gpu --features pairing-probes \
+  --test bn254_tower --test bn254_lines --test bn254_miller -- --test-threads=1
+```
